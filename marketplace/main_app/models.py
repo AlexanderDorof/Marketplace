@@ -49,7 +49,7 @@ class Car(Vehicle):
         return f"{self.brand} {self.model} {self.year_produced}"
 
     def get_absolute_url(self):
-        return reverse('car_url', kwargs={'id': self.id, 'brand': self.brand})
+        return reverse('vehicle_url', kwargs={'id': self.id, 'brand': self.brand})
 
     class Meta:
         verbose_name = "Машина"
@@ -69,7 +69,7 @@ class Motocycle(Vehicle):
         return f"{self.brand} {self.model} {self.year_produced}"
 
     def get_absolute_url(self):
-        return reverse('car_url', kwargs={'id': self.id, 'brand': self.brand})
+        return reverse('vehicle_url', kwargs={'id': self.id, 'brand': self.brand})
 
     class Meta:
         verbose_name = "Мотоцикл"
@@ -131,6 +131,9 @@ class Service(models.Model):
     class Meta:
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
+
+    def get_absolute_url(self):
+        return reverse('service_url', kwargs={'id': self.id})
 
 
 class User(models.Model):
