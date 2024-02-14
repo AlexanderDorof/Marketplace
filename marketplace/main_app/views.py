@@ -72,6 +72,6 @@ class CarEditView(UpdateView):
 
 class CarDeleteView(DeleteView):
     model = Car
-    success_url = reverse_lazy('car_list')  # URL, на который перенаправлять после успешного удаления машины
+    success_url = reverse_lazy('cars')  # URL, на который перенаправлять после успешного удаления машины
     template_name = 'main_app/car_confirm_delete.html'  # Шаблон для подтверждения удаления
 
