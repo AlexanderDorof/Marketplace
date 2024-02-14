@@ -1,11 +1,12 @@
 {% load static %}
 
+
 <div class="col-lg-4 col-md-6 p-4">
     <div class="card border-primary rounded custom-shadow">
         <img src="{{ item.photo.url }}" class="card-img-top" alt="...">
         <div class="card-body">
-            <a href="{{ item.get_absolute_url }}">
-                <p class="card-title">{{ item.brand }} {{ item.model}}</p>
+            <a href="{% url 'car_detail_page' pk=item.pk %}">
+                <p class="card-title">{{ item.brand }} {{ item.model }}</p>
             </a>
             <p class="card-text text-truncate">Описание: {{ item.description }}</p>
             <p class="product_id">id: {{ item.pk }}</p>
