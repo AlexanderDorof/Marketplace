@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from .forms import AddCarForm
 from .models import *
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
@@ -23,11 +24,15 @@ class CarsList(ListView):
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
 
-
-class CarDetailView(DetailView):
+class CarDetailView(LoginRequiredMixin, DetailView):
     model = Car
     template_name = 'main_app/full_car_description.html'
     context_object_name = 'car'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_moderator'] = self.request.user.groups.filter(name='moderator').exists() or self.request.user.groups.filter(name='admin').exists()
+        return context
 
 
 
@@ -63,11 +68,13 @@ class AddPage(CreateView):
     template_name = 'main_app/publish.html'
 
 
+
 class CarEditView(UpdateView):
     model = Car
     fields = ['brand']  # Поля, которые вы хотите редактировать
     template_name = 'main_app/publish.html'  # Шаблон для редактирования машины
     success_url = reverse_lazy('car_detail')  # URL-адрес для перенаправления после успешного редактирования
+
 
 
 class CarDeleteView(DeleteView):

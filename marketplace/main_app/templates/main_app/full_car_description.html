@@ -22,8 +22,10 @@
                         <div class="d-flex justify-content-between">
                             <p><strong>{{ car.price }} $</strong></p>
                             <div>
-                                <a href="{% url 'edit_car' pk=car.pk %}" class="btn btn-primary">Редактировать</a>
-                                <a href="{% url 'delete_car' pk=car.pk %}" class="btn btn-danger">Удалить</a>
+                                {% if is_moderator %}
+                                    <a href="{% url 'edit_car' pk=car.pk %}" class="btn btn-primary">Редактировать</a>
+                                    <a href="{% url 'delete_car' pk=car.pk %}" class="btn btn-danger">Удалить</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -32,4 +34,3 @@
         </div>
     </div>
 </body>
-</html>
