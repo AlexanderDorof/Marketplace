@@ -4,6 +4,7 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User as DjangoUser
 
 
 class Vehicle(models.Model):
@@ -163,6 +164,7 @@ class User(models.Model):
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
     favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
+    user_django = models.OneToOneField(DjangoUser, on_delete=models.SET_NULL, related_name='user_django', blank=True, null=True)
 
     def __str__(self):
         return f"{self.surname} {self.name} {self.second_name if self.second_name else ''}"

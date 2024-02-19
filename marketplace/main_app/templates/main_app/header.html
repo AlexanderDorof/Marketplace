@@ -37,16 +37,20 @@
                            data-bs-toggle="dropdown" aria-expanded="false">
                             Мой профиль
                         </a>
+                        {% if is_registered %}
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a></li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'profile' %}">Личный кабинет</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'register:profile' %}">Личный кабинет</a></li>
                             <li><a class="dropdown-item  text-white" href="{% url 'publish' %}">Опубликовать объявление</a></li>
+                            {% if is_admin %}
                             <li><a class="dropdown-item  text-white" href="{% url 'adminpanel' %}">Админ панель</a></li>
+                            {% endif %}
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item  text-white" href="{% url 'logout' %}">Выйти</a></li>
                         </ul>
+                        {% endif %}
                     </li>
                 </ul>
 
@@ -56,7 +60,7 @@
                 </form>
 
 
-                <a class="enter btn btn-dark" href="{% url 'login' %}">Войти</a>
+                <a class="enter btn btn-dark" href="{% url 'register:register' %}">Войти</a>
             </div>
         </div>
     </nav>

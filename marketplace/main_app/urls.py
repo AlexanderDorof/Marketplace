@@ -19,8 +19,5 @@ urlpatterns = [
     path('motos/edit/<slug:slug>/', MotoEditView.as_view(), name='edit_moto'),
     path('car/delete/<slug:slug>/', CarDeleteView.as_view(), name='delete_car'),  # Для удаления машины
     path('motocycle/delete/<slug:slug>/', MotoDeleteView.as_view(), name='delete_moto'),  # Для удаления машины
-    path('profile/', index, name='profile'),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('adminpanel/', index, name='adminpanel'),
 ]

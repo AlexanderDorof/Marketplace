@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from icecream import ic
+from main_app.models import User as CustomUser
+from main_app.models import Favorite
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -13,19 +15,17 @@ class UserRegistrationForm(forms.ModelForm):
         # fields = '__all__'
         fields = ('username', 'first_name', 'email')
 
-    # def clean_password2(self):
-    #     cd = self.cleaned_data
-    #     if cd['password'] != cd['password2']:
-    #         raise forms.ValidationError(r'Passwords don\'t match.')
-    #     return cd['password2']
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError(r'Passwords don\'t match.')
+        return cd['password2']
 
-    def save(self, commit=True):
+    def save(self, password, *, commit=True):
         user = super().save(commit=False)
-
-        # Additional custom logic here (e.g., creating a related record)
         if commit:
-
+            user.set_password(password)
             user.save()
-
-            # Create a related record in your own database
+            favorite = Favorite.objects.create()
+            CustomUser.objects.create(name=user.username, surname='Smith', favorite=favorite, user_django=user)
         return user
