@@ -1,0 +1,22 @@
+{% extends 'main_app/base.html' %}
+
+
+
+
+{% block content %}
+{% get_favorite_models as items %}
+
+<div class="container">
+    <div class="row mt-1">
+        <div class="col-lg-10">
+            <div class="row">
+                {% for item in items %}
+                    {% include 'marketplace/item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="height:100px;"></div>
+{% endblock %}

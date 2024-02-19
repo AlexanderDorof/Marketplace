@@ -1,0 +1,63 @@
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Wheels&Deals</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Информация
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item  text-white" href="{% url 'contacts' %}">Контактная
+                                информация</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'info' %}">Про нас</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Каталог
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item  text-white" href="{% url 'cars' %}">Машины</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'motos' %}">Мотоциклы</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'services' %}">Услуги</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Мой профиль
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'profile' %}">Личный кабинет</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'publish' %}">Опубликовать объявление</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'adminpanel' %}">Админ панель</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'logout' %}">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
+                </form>
+
+
+                <a class="enter btn btn-dark" href="{% url 'login' %}">Войти</a>
+            </div>
+        </div>
+    </nav>
+</header>
