@@ -1,0 +1,41 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="border-primary rounded custom-shadow ">
+                    <img src="{{ item.photo.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ item.brand }} {{ item.model }}</h1>
+                        <p class="card-text text-truncate">Описание: {{ item.description }}</p>
+                        <p class="product_id">id: {{ item.pk }}</p>
+                        <p class="card-text">Тип двигателя: {{ item.engine_type }}</p>
+                        <p class="card-text">Мощность двигателя: {{ item.engine_power }}</p>
+                        <p class="card-text">Подержанное транспортное средство: {{ item.used_car }}</p>
+                        <p class="card-text">Пробег: {{ item.distance }}</p>
+                        <p class="card-text">Цвет: {{ item.color }}</p>
+                        <p class="card-text">Год выпуска: {{ item.year_produced }}</p>
+                        <p class="card-text">Гарантия: {{ item.garantee }}</p>
+                        <div class="d-flex justify-content-between">
+                            <p><strong>{{ item.price }} $</strong></p>
+                            <div>
+                                {% if is_moderator %}
+                                <a href="{% url edit_ref slug=item.slug %}" class="btn btn-primary">Редактировать</a>
+                                <a href="{% url delete_ref slug=item.slug %}" class="btn btn-danger">Удалить</a>
+                                {% endif %}
+
+                                <div style="height:100px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock content %}
