@@ -45,6 +45,7 @@ class Car(Vehicle):
                               default="default_pic/no_image_available.jpg")
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
 
+
     def __str__(self):
         return f"{self.brand} {self.model} {self.year_produced}"
 
@@ -145,7 +146,7 @@ class User(models.Model):
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
     favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
-
+    email = models.EmailField(default='asdsasadasd@gmail.com')
     def __str__(self):
         return f"{self.surname} {self.name} {self.second_name if self.second_name else ''}"
 

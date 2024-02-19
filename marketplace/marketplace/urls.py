@@ -1,11 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from marketplace.settings import *
+
+from .settings import *
+
+# from ..marketplace.settings import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_app.urls')),
+    path('signals/', include('signals.urls'))
 ]
 
 if DEBUG:
