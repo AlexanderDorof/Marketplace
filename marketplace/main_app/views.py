@@ -24,14 +24,26 @@ class CarsList(ListView):
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
 
-class CarDetailView(LoginRequiredMixin, DetailView):
+class CarDetailView(DetailView):
     model = Car
     template_name = 'main_app/full_car_description.html'
     context_object_name = 'car'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_moderator'] = self.request.user.groups.filter(name='moderator').exists() or self.request.user.groups.filter(name='admin').exists()
+        # context['is_moderator'] = self.request.user.groups.filter(name='moderator').exists() or self.request.user.groups.filter(name='admin').exists()
+        context['is_moderator'] = True
+        return context
+
+class MotoDetailView(DetailView):
+    model = Motocycle
+    template_name = 'main_app/full_moto_description.html'
+    context_object_name = 'car'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['is_moderator'] = self.request.user.groups.filter(name='moderator').exists() or self.request.user.groups.filter(name='admin').exists()
+        context['is_moderator'] = True
         return context
 
 
@@ -71,14 +83,30 @@ class AddPage(CreateView):
 
 class CarEditView(UpdateView):
     model = Car
-    fields = ['brand']  # Поля, которые вы хотите редактировать
-    template_name = 'main_app/publish.html'  # Шаблон для редактирования машины
-    success_url = reverse_lazy('car_detail')  # URL-адрес для перенаправления после успешного редактирования
+    fields = ['brand', 'model']  # Поля, которые вы хотите редактировать
+    template_name = 'main_app/update.html'  # Шаблон для редактирования машины
+    success_url = reverse_lazy('cars')  # URL-адрес для перенаправления после успешного редактирования
+
+class MotoEditView(UpdateView):
+    model = Motocycle
+    context_object_name = 'car'
+    fields = ['brand', 'model']  # Поля, которые вы хотите редактировать
+    template_name = 'main_app/update.html'  # Шаблон для редактирования машины
+    success_url = reverse_lazy('motos')  # URL-адрес для перенаправления после успешного редактирования
 
 
 
 class CarDeleteView(DeleteView):
     model = Car
+    extra_context = {'title': 'Confirm Delete'}
+    context_object_name = 'item'
     success_url = reverse_lazy('cars')  # URL, на который перенаправлять после успешного удаления машины
-    template_name = 'main_app/car_confirm_delete.html'  # Шаблон для подтверждения удаления
+    template_name = 'main_app/confirm_delete.html'  # Шаблон для подтверждения удаления
+
+class MotoDeleteView(DeleteView):
+    model = Motocycle
+    extra_context = {'title': 'Confirm Delete'}
+    context_object_name = 'item'
+    success_url = reverse_lazy('motos')  # URL, на который перенаправлять после успешного удаления машины
+    template_name = 'main_app/confirm_delete.html'  # Шаблон для подтверждения удаления
 

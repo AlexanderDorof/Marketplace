@@ -1,8 +1,9 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm
+from .forms import UserRegistrationForm
 from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
 
 
 @login_required
@@ -11,9 +12,10 @@ def profile_view(request):
 
 
 class RegisterView(FormView):
-    form_class = RegisterForm
+    # form_class = UserCreationForm
+    form_class = UserRegistrationForm
     template_name = 'register.html'
-    success_url = reverse_lazy("register:profile")
+    success_url = reverse_lazy("main:home")
 
     def form_valid(self, form):
         form.save()
