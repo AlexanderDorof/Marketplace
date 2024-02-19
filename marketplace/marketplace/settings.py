@@ -27,9 +27,11 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_filters',
     'rest_framework',
+    'signals',
 
     # apps:
     'main_app',
+    'custpanel',
     'crud_db',
     'register',
     'rest_api',
