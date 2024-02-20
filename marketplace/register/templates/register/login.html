@@ -1,0 +1,28 @@
+{% extends "main_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+
+
+    <div class="container p-5 my-5 bg-dark text-white">
+        <h1>Вход в систему</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="next" value="{% url 'home' %}">
+            <button class="btn btn-primary mt-3" type="submit">Войти</button>
+        </form>
+        <div class="d-grid mt-5">
+            <a href="{% url 'register:register' %}" class="btn btn-primary btn-block">Регистрация</a>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
+
+
+
+
+    <h2>Вход</h2>
+

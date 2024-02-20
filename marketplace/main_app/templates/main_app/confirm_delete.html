@@ -1,0 +1,25 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Confirm Delete</h5>
+                        <p class="card-text">Are you sure you want to delete <strong>{{ item }}</strong>?</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                            <a href="{{ item.get_absolute_url }}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
