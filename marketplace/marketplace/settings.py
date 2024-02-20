@@ -22,13 +22,18 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'register',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # pip install:
+    'crispy_forms',
+
+    # apps:
     'main_app',
+    'register',
 ]
 
 MIDDLEWARE = [
