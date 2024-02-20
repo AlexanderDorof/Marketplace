@@ -143,7 +143,6 @@ class AddCar(DataMixin, CreateView):
         initial = super().get_initial()
         pk = self.request.user.pk
         user = User.objects.get(user_django__pk=pk)
-        ic(user)
         initial['seller'] = user
         initial['used_car'] = True
         return initial
@@ -158,7 +157,6 @@ class AddMoto(DataMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        ic([field.name for field in AddMotoForm()._meta.fields])
         c_def = self.get_user_context()
         context = {**context, **c_def}
         return context
@@ -167,8 +165,8 @@ class AddMoto(DataMixin, CreateView):
         initial = super().get_initial()
         pk = self.request.user.pk
         user = User.objects.get(user_django__pk=pk)
-        ic(user)
         initial['seller'] = user
+        initial['used_car'] = True
         return initial
 
 
@@ -177,9 +175,9 @@ class AddMoto(DataMixin, CreateView):
 class CarEditView(DataMixin, UpdateView):
     model = Car
     extra_context = {'title': 'Редактирование записи'}
-    fields = "__all__" # Поля, которые вы хотите редактировать
-    template_name = 'main_app/update.html'  # Шаблон для редактирования машины
-    success_url = reverse_lazy('cars')  # URL-адрес для перенаправления после успешного редактирования
+    fields = "__all__"
+    template_name = 'main_app/update.html'
+    success_url = reverse_lazy('cars')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -191,9 +189,9 @@ class CarEditView(DataMixin, UpdateView):
 class MotoEditView(DataMixin, UpdateView):
     model = Motocycle
     extra_context = {'title': 'Редактирование записи'}
-    fields = "__all__" # Поля, которые вы хотите редактировать
-    template_name = 'main_app/update.html'  # Шаблон для редактирования машины
-    success_url = reverse_lazy('motos')  # URL-адрес для перенаправления после успешного редактирования
+    fields = "__all__"
+    template_name = 'main_app/update.html'
+    success_url = reverse_lazy('motos')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

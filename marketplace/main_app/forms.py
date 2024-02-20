@@ -24,8 +24,9 @@ class AddCarForm(forms.ModelForm):
 class AddMotoForm(forms.ModelForm):
     class Meta:
         model = Motocycle
-        fields = '__all__'
+        exclude = ["used_car", 'seller']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.instance.seller = self.initial.get('seller')
+        self.instance.used_car = self.initial.get('used_car')

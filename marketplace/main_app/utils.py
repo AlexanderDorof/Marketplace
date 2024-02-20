@@ -16,6 +16,7 @@ class DataMixin:
             pk = self.request.user.pk
             user = User.objects.get(user_django__pk=pk)
             context['django_user_pk'] = user.pk
+            context['django_user'] = user
         return context
 
 

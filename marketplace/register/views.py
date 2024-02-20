@@ -12,10 +12,7 @@ from main_app.models import User as CustomUser
 from .utils import DataMixin
 
 
-
-
 class RegisterView(FormView):
-
     form_class = UserRegistrationForm
     template_name = 'register/register.html'
     success_url = reverse_lazy("register:profile")
@@ -30,16 +27,18 @@ class CustomLogoutView(LogoutView):
     extra_context = {'title': 'Выход...'}
     template_name = 'register/logout.html'
 
+
 class CustomLoginView(LoginView):
     extra_context = {'title': 'Войти на сайт'}
     template_name = 'register/login.html'
 
+
 class UserEditProfileView(DataMixin, UpdateView):
     model = CustomUser
     extra_context = {'title': 'Редактирование профиля'}
-    fields = "__all__" # Поля, которые вы хотите редактировать
-    template_name = 'register/profile.html'  # Шаблон для редактирования машины
-    success_url = reverse_lazy('home')  # URL-адрес для перенаправления после успешного редактирования
+    fields = ['name', 'second_name', 'surname', 'age', 'photo']
+    template_name = 'register/profile.html'
+    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
