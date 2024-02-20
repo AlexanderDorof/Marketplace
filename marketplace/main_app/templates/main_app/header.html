@@ -1,4 +1,4 @@
-<header>
+<header id="header">
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Wheels&Deals</a>
@@ -40,9 +40,16 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a></li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'register:profile' %}">Личный кабинет</a></li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'publish' %}">Опубликовать объявление</a></li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="{% url 'register:profile' django_user_pk %}">Личный
+                                кабинет</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="" data-bs-toggle="modal" data-bs-target="#myModal">Опубликовать объявление</a>
+                            </li>
                             {% if is_admin %}
                             <li><a class="dropdown-item  text-white" href="{% url 'adminpanel' %}">Админ панель</a></li>
                             {% endif %}
@@ -61,9 +68,12 @@
                 </form>
 
 
-
                 {% if not is_authenticated %}
-                <a class="enter btn btn-dark" href="{% url 'register:register' %}">Регистрация</a>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <il>
+                <a class="btn btn-dark" href="{% url 'register:register' %}">Регистрация</a>
+                    </il>
+                </ul>
                 {% endif %}
             </div>
         </div>

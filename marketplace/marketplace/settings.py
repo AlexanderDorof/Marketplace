@@ -28,6 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # pip install:
+    'crispy_forms',
+
+    # apps:
     'main_app',
     'register',
 ]

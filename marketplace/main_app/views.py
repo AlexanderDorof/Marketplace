@@ -3,7 +3,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from icecream import ic
 from django.db.models import Q
 
-from .forms import AddCarForm
+from .forms import AddCarForm, AddMotoForm
 from .models import *
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -127,15 +127,51 @@ class FavoriteList(DataMixin, ListView):
         return cars + motos
 
 
-class AddPage(DataMixin, CreateView):
+class AddCar(DataMixin, CreateView):
     form_class = AddCarForm
     template_name = 'main_app/publish.html'
+    extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context()
         context = {**context, **c_def}
         return context
+
+
+    def get_initial(self):
+        initial = super().get_initial()
+        pk = self.request.user.pk
+        user = User.objects.get(user_django__pk=pk)
+        ic(user)
+        initial['seller'] = user
+        initial['used_car'] = True
+        return initial
+
+
+
+class AddMoto(DataMixin, CreateView):
+    form_class = AddMotoForm
+
+    template_name = 'main_app/publish.html'
+    extra_context = {'title': 'Создать объявление', 'vehicle': 'мотоцикл'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ic([field.name for field in AddMotoForm()._meta.fields])
+        c_def = self.get_user_context()
+        context = {**context, **c_def}
+        return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        pk = self.request.user.pk
+        user = User.objects.get(user_django__pk=pk)
+        ic(user)
+        initial['seller'] = user
+        return initial
+
+
 
 
 class CarEditView(DataMixin, UpdateView):

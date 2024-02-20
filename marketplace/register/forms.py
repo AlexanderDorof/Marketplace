@@ -13,7 +13,6 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        # fields = '__all__'
         fields = ('username', 'first_name', 'email')
 
     def clean_password2(self):
@@ -32,3 +31,5 @@ class UserRegistrationForm(forms.ModelForm):
             favorite = Favorite.objects.create()
             CustomUser.objects.create(name=user.username, surname='Smith', favorite=favorite, user_django=user)
         return user
+
+
