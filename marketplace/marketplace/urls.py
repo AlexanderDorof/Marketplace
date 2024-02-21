@@ -9,7 +9,9 @@ from .settings import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_app.urls')),
-    path('signals/', include('signals.urls'))
+    path('signals/', include('signals.urls')),
+    path('panel/', include('custpanel.urls')),
+
 ]
 
 if DEBUG:

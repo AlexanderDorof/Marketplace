@@ -1,0 +1,31 @@
+<!-- car_change.html -->
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'custpanel/css/form.css' %}">
+    <title>Change Car</title>
+</head>
+<body>
+    <div class="form">
+        <h2>Change Car</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="car">Select a car to Change:</label>
+            <select name="car" id="car">
+                {% for car in cars %}
+                    <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }}- ({{ car.seller.username }})</option>
+                {% endfor %}
+            </select>
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn">Change Car</button>
+        </form>
+
+        <a href="{% url 'car_models' %}" class="btn">Back to Car Models</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+body {
+    background: burlywood;
+
+}
+
+aside {
+   float: left;
+   /*margin: 0 auto;*/
+   background: darkslategrey;
+   width: 20%;
+   padding: 1.5%;
+   height: 100vh;
+   color: #fff;
+   border-right: 5px solid midnightblue;
+   overflow: hidden;
+   margin: 0
+}
+
+
+
+.form{
+    border: 5px solid  rgb(255, 192, 203); /* Добавляем рамку с цветом midnightblue */
+   padding: 20px; /* Задаем отступ внутри рамки */
+   text-align: center;
+
+
+}
+.form ul {
+   list-style: none; /* Применяется к элементу списка внутри .form */
+}
+
+
+
+.back{
+   background: #26a269;
+   width: 200px;
+   margin-left: 1700px;
+}
