@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from icecream import ic
@@ -20,6 +21,17 @@ def info(request):
     context = funcmixin(request, title='О магазине')
     return render(request, 'main_app/info.html', context=context)
 
+def add_to_favorite(request):
+    item_pk = request.GET.get('pk')
+    item_type = request.GET.get('vehicle')
+    pk = request.user.pk
+    user = User.objects.get(user_django__pk=pk)
+    if item_type == 'car':
+        user.favorite.favorite_cars.add(Car.objects.get(pk=item_pk))
+    elif item_type == 'moto':
+        user.favorite.favorite_moto.add(Motocycle.objects.get(pk=item_pk))
+    return HttpResponse()
+
 
 def contacts(request):
     context = funcmixin(request, title='Контакты')
@@ -28,7 +40,7 @@ def contacts(request):
 
 class CarsList(DataMixin, ListView):
     model = Car
-    extra_context = {'title': 'Каталог машин', 'item_name': 'main_app/vehicle.html'}
+    extra_context = {'title': 'Каталог машин', 'item_name': 'main_app/vehicle.html', 'type': 'car'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
 
@@ -83,7 +95,7 @@ class ServiceDetailView(DataMixin, DetailView):
 
 class MotosList(DataMixin, ListView):
     model = Motocycle
-    extra_context = {'title': 'Каталог мотоциклов', 'item_name': 'main_app/vehicle.html'}
+    extra_context = {'title': 'Каталог мотоциклов', 'item_name': 'main_app/vehicle.html', 'type': 'moto'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
 

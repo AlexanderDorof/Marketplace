@@ -31,5 +31,6 @@ urlpatterns = [
     # authorized users
     path('favorite/', FavoriteList.as_view(), name='favorite'),  # AuthorizedPermission
     path('adminpanel/', index, name='adminpanel'),  # AdminPermission
+    path('ajax/', add_to_favorite, name='ajax'),  # AdminPermission
 ]
 
