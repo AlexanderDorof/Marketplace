@@ -47,7 +47,7 @@ class Vehicle(models.Model):
 
 
 class Car(Vehicle):
-    BodyType = (("Sedan", "Седан"), ("Hatchback", "Хэтчбэк"), ("Pickup", "Пикап"), ("Cabrio", "Кабиолет"))
+    BodyType = (("Sedan", "Седан"), ("Hatchback", "Хэтчбэк"), ("Pickup", "Пикап"), ("Cabrio", "Кабриолет"))
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     DriveType = (("Front", "Переднеприводный"), ("Back", "Заднеприводный"), ("Full", "Полноприводный"))
     body_type = models.CharField(choices=BodyType, max_length=15, default="Sedan",

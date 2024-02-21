@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
 from django.shortcuts import render
@@ -33,12 +34,13 @@ class CustomLoginView(LoginView):
     template_name = 'register/login.html'
 
 
-class UserEditProfileView(DataMixin, UpdateView):
+class UserEditProfileView(LoginRequiredMixin, DataMixin, UpdateView):
     model = CustomUser
     extra_context = {'title': 'Редактирование профиля'}
     fields = ['name', 'second_name', 'surname', 'age', 'photo']
     template_name = 'register/profile.html'
     success_url = reverse_lazy('home')
+    login_url = "register:login"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

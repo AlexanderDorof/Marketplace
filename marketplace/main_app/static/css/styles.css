@@ -65,3 +65,8 @@ main {
 	color: black;
 	text-decoration: none;
 }
+
+.enlage:hover {
+    box-shadow: 2px 2px 19px 10px Red;
+    transition: all .5s ease-in-out;
+}

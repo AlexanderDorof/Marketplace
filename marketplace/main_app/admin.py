@@ -28,6 +28,7 @@ class CustomItem(admin.ModelAdmin):
 
 class CustomService(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    list_display = ('title', "is_available")
 
 admin.site.register(Car, CustomCar)
 admin.site.register(Motocycle, CustomMoto)
