@@ -6,11 +6,19 @@
 
 
 <main>
-    <form class="description" action="{% url 'publish' %}"  method="post">
+    <div class="container">
+      <h1 class="display-6 p-3"><strong>Продать мой {{ vehicle }}</strong></h1>
+    </div>
+
+    <form class="description" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
+        <table>{{ form.as_table }}</table>
+        <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
+
+    <div>
+        <div style="height:100px;"></div>
+    </div>
 </main>
 
 {% endblock %}

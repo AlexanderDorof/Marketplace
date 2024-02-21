@@ -1,4 +1,4 @@
-<header>
+<header id="header">
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Wheels&Deals</a>
@@ -33,20 +33,32 @@
                     </li>
 
                     <li class="nav-item dropdown ">
+                        {% if is_authenticated %}
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Мой профиль
+                            Мой профиль - <span style="color: #0c7d63; text-shadow: 1px;"> <i>{{ username }}</i></span>
                         </a>
+
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a></li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'profile' %}">Личный кабинет</a></li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'publish' %}">Опубликовать объявление</a></li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="{% url 'register:profile' django_user_pk %}">Личный
+                                кабинет</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item  text-white" href="" data-bs-toggle="modal" data-bs-target="#myModal">Опубликовать объявление</a>
+                            </li>
+                            {% if is_admin %}
                             <li><a class="dropdown-item  text-white" href="{% url 'adminpanel' %}">Админ панель</a></li>
+                            {% endif %}
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item  text-white" href="{% url 'logout' %}">Выйти</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'register:logout' %}">Выйти</a></li>
                         </ul>
+                        {% endif %}
                     </li>
                 </ul>
 
@@ -56,7 +68,13 @@
                 </form>
 
 
-                <a class="enter btn btn-dark" href="{% url 'login' %}">Войти</a>
+                {% if not is_authenticated %}
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <il>
+                <a class="btn btn-dark" href="{% url 'register:register' %}">Регистрация</a>
+                    </il>
+                </ul>
+                {% endif %}
             </div>
         </div>
     </nav>

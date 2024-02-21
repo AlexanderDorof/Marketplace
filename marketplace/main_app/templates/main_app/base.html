@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'static_imgs/tire_favicon.ico' %}">
     <title> {{ title }} </title>
+
 </head>
 <body>
 
@@ -18,9 +19,31 @@
 {% endblock %}
 
 
+<a class="arrow_up btn btn-outline-success" href="#header">UP</a>
 {% include 'main_app/footer.html' %}
-
+{% include 'main_app/modalwindow.html' %}
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).on('click', '#favorite', function() {
+        const itemId = $(this).data('item-id');
+        const type = $(this).data('vehicle-type');
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/',
+            data: { pk: itemId, vehicle: type }, // Send the item ID to the view
+            success: function(response) {
+                // Handle the response (if needed)
+                console.log('Function executed successfully:', response);
+            },
+            error: function(error) {
+                console.error('Error executing function:', error);
+            }
+        });
+    });
+</script>
+
+
 </body>
 </html>
