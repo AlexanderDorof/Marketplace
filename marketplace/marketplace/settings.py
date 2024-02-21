@@ -27,13 +27,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 
     # pip install:
     'crispy_forms',
+    'django_filters',
 
     # apps:
     'main_app',
     'register',
+    'rest_api',
 ]
 
 MIDDLEWARE = [
