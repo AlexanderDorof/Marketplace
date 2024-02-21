@@ -30,6 +30,6 @@ urlpatterns = [
 
     # authorized users
     path('favorite/', FavoriteList.as_view(), name='favorite'),  # AuthorizedPermission
-    path('adminpanel/', index, name='adminpanel'),  # AdminPermission todo persmission
+    path('adminpanel/', index, name='adminpanel'),  # AdminPermission
 ]
 
