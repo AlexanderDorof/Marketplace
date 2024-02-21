@@ -8,6 +8,7 @@ from .models import *
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils import *
+from .permissions import AuthorPermissionsMixin
 
 
 def index(request):
@@ -107,10 +108,11 @@ class ServicesList(DataMixin, ListView):
         return context
 
 
-class FavoriteList(DataMixin, ListView):
+class FavoriteList(LoginRequiredMixin, DataMixin, ListView):
     extra_context = {'title': 'Избранное', 'item_name': 'main_app/vehicle.html'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
+    login_url = "register:login"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -127,10 +129,12 @@ class FavoriteList(DataMixin, ListView):
         return cars + motos
 
 
-class AddCar(DataMixin, CreateView):
+class AddCar(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCarForm
     template_name = 'main_app/publish.html'
     extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
+    login_url = "register:login"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -149,11 +153,11 @@ class AddCar(DataMixin, CreateView):
 
 
 
-class AddMoto(DataMixin, CreateView):
+class AddMoto(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddMotoForm
-
     template_name = 'main_app/publish.html'
     extra_context = {'title': 'Создать объявление', 'vehicle': 'мотоцикл'}
+    login_url = "register:login"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -172,7 +176,7 @@ class AddMoto(DataMixin, CreateView):
 
 
 
-class CarEditView(DataMixin, UpdateView):
+class CarEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     model = Car
     extra_context = {'title': 'Редактирование записи'}
     fields = "__all__"
@@ -186,7 +190,7 @@ class CarEditView(DataMixin, UpdateView):
         return context
 
 
-class MotoEditView(DataMixin, UpdateView):
+class MotoEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     model = Motocycle
     extra_context = {'title': 'Редактирование записи'}
     fields = "__all__"
@@ -200,7 +204,7 @@ class MotoEditView(DataMixin, UpdateView):
         return context
 
 
-class CarDeleteView(DataMixin, DeleteView):
+class CarDeleteView(AuthorPermissionsMixin, DataMixin, DeleteView):
     model = Car
     extra_context = {'title': 'Подтвердить удаление'}
     context_object_name = 'item'
@@ -214,7 +218,7 @@ class CarDeleteView(DataMixin, DeleteView):
         return context
 
 
-class MotoDeleteView(DataMixin, DeleteView):
+class MotoDeleteView(AuthorPermissionsMixin, DataMixin, DeleteView):
     model = Motocycle
     extra_context = {'title': 'Подтвердить удаление'}
     context_object_name = 'item'
