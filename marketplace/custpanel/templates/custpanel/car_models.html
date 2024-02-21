@@ -1,0 +1,20 @@
+<!-- car_models.html -->
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'custpanel/css/form.css' %}">
+    <title>Car Models</title>
+</head>
+<body>
+    <div class="form">
+        <h2>Car Models</h2>
+
+        <a href="{% url 'car_create' %}" class="btn">Create New Car</a>
+        <a href="{% url 'car_delete' %}" class="btn">Delete Car </a>
+        <a href="{% url 'car_change' %}" class="btn">Change Car </a>
+
+
+    </div>
+</body>
+</html>

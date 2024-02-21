@@ -31,6 +31,8 @@ INSTALLED_APPS = [
 
     # apps:
     'main_app',
+    'signals',
+    'custpanel',
     'custpanel',
     'crud_db',
     'register',
