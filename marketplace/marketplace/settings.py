@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     # pip install:
     'crispy_forms',
+    'crispy_bootstrap5',
     'django_filters',
 
     # apps:
@@ -129,4 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGIN_REDIRECT_URL = reverse_lazy("web:profile")
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 
