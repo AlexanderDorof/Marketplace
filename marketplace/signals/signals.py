@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
 login = 'blackbloodyring@gmail.com'
-password = 'ccljltqmecoqsnml'
+password = ''
 sender_email = login
 sender_password = password
 
