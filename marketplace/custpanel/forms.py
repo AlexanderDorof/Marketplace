@@ -7,3 +7,7 @@ class CarForm(forms.ModelForm):
         model = Car
         fields = '__all__'
 
+class MotocycleForm(forms.ModelForm):
+    class Meta:
+        model = Motocycle
+        fields = '__all__'

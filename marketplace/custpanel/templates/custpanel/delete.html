@@ -1,0 +1,50 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'custpanel/css/blue_model.css' %}">
+    <title>Delete Model</title>
+</head>
+<body>
+    <div class="form">
+        <h2>Delete Car</h2>
+        <br>
+
+        <!-- Форма для удаления модели Car -->
+     <!-- Форма для удаления модели Car -->
+<form method="post" action="{% url 'delete' %}">
+    {% csrf_token %}
+    <div class="form_centre">
+        <label for="car">Select a car</label>
+        <select name="car" id="car">
+            {% for car in cars %}
+                <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }} - ({{ car.seller.name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn">Delete Car</button>
+</form>
+
+<!-- Форма для удаления модели Motocycle -->
+<form method="post" action="{% url 'delete' %}">
+    {% csrf_token %}
+    <div class="form_centre">
+        <label for="motocycle">Select a motocycle</label>
+        <select name="motocycle" id="motocycle">
+            {% for motocycle in motocycles %}
+                <option value="{{ motocycle.id }}">{{ motocycle.brand }} - {{ motocycle.model }} - ({{ motocycle.seller.name }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn">Delete Motocycle</button>
+</form>
+
+        <a href="{% url 'models' %}" class="btn">Back to Models</a>
+    </div>
+</body>
+</html>
