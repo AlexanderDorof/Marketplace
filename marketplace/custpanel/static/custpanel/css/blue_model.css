@@ -1,0 +1,50 @@
+body {
+    background: #ADD8E6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto; /* Добавить вертикальную прокрутку для body */
+}
+
+.form {
+    border: 5px solid blue;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    position: absolute; /* Заменить fixed на absolute */
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.form ul {
+    list-style: none;
+    padding: 0;
+}
+
+.form li {
+    margin-bottom: 10px;
+}
+
+.form label {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form input, .form select {
+    width: 200px;
+    padding: 5px;
+}
+
+.form button {
+    width: auto;
+    padding: 10px 20px;
+}
+
+.form h2 {
+    margin-bottom: 20px;
+}

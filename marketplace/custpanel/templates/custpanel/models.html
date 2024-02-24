@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'custpanel/css/models.css' %}">
+    <title>Car Models</title>
+</head>
+<body>
+<div class="form">
+    <h2>Car Models</h2>
+    <div class="form2">
+        <a href="{% url 'create' %}" class="btn">Create  Models</a>
+        <a href="{% url 'delete' %}" class="btn">Delete  Models </a>
+        <a href="{% url 'change' %}" class="btn">Change  Models </a>
+        <a href="{% url 'list' %}" class="btn">List  Models </a>
+        <br>
+    </div>
+
+</div>
+</body>
+</html>

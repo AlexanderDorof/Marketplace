@@ -4,48 +4,60 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
-def car_models(request):
+def models(request):
     car_form = CarForm()
-    return render(request, 'custpanel/car_models.html', {'car_form': car_form})
+    return render(request, 'custpanel/models.html', {'car_form': car_form})
 
 
-def car_create(request):
+def create(request):
     if request.method == 'POST':
         form = CarForm(request.POST)
+        motocycle_form = MotocycleForm(request.POST)
+
         if form.is_valid():
             form.save()
-            return redirect('car_models')  # После создания машины возвращаемся к списку
+            return redirect('models')
+
+        if motocycle_form.is_valid() and 'Motocycle_create' in request.POST:
+            motocycle_form.save()
+            return redirect('models')
+
     else:
-        form = CarForm()  # При GET запросе создаем пустую форму
+        form = CarForm()
+        motocycle_form = MotocycleForm()
 
-    return render(request, 'custpanel/car_create.html', {'form': form})
-
-
-
+    return render(request, 'custpanel/create.html', {'form': form, 'motocycle_form': motocycle_form})
 
 
-def car_delete(request):
+
+
+def delete(request):
     if request.method == 'POST':
-        # Получите значения из формы (например, car_id)
-        car_id = request.POST.get('car')
+        # Проверяем, к какой модели относится запрос
+        if 'car' in request.POST:
+            model_id = request.POST.get('car')
+            model = get_object_or_404(Car, id=model_id)
+        elif 'motocycle' in request.POST:
+            model_id = request.POST.get('motocycle')
+            model = get_object_or_404(Motocycle, id=model_id)
+        else:
+            # Возможно, добавьте дополнительные обработки, если это необходимо
+            pass
 
-        # Ищем автомобиль по значению
-        car = get_object_or_404(Car, id=car_id)
+        model.delete()
+        return redirect('models')
 
-        # Удаление автомобиля
-        car.delete()
+    cars = Car.objects.all()
+    motocycles = Motocycle.objects.all()
 
-        return redirect('car_models')  # Перенаправляем на страницу со списком машин
-
-    else:
-        # Если это GET-запрос, отображаем форму выбора модели для удаления
-        cars = Car.objects.all()  # Получаем список всех машин
-        return render(request, 'custpanel/car_delete.html', {'cars': cars})
-
-# views.py
+    return render(request, 'custpanel/delete.html', {'cars': cars, 'motocycles': motocycles})
 
 
-def car_change(request):
+
+
+
+
+def change(request):
     if request.method == 'POST':
         car_id = request.POST.get('car')
         car = get_object_or_404(Car, id=car_id)
@@ -53,16 +65,28 @@ def car_change(request):
         form = CarForm(request.POST, instance=car)
         if form.is_valid():
             form.save()
-            return redirect('car_models')
+            return redirect('models')
     else:
         cars = Car.objects.all()
         form = CarForm()
 
-    return render(request, 'custpanel/car_change.html', {'cars': cars, 'form': form})
+    return render(request, 'custpanel/change.html', {'cars': cars, 'form': form})
+
+
+def list(request):
+        new = Car.objects.all()
+        return render(request, 'custpanel/list.html', {'news': new})
 
 
 
-
-def book_list(request):
-    return render(request, 'custpanel/custom.html',)
+# def Motocycle_create(request):
+#     if request.method == 'POST':
+#         form = MotocycleForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('models')
+#     else:
+#         form = MotocycleForm()
+#
+#     return render(request, 'custpanel/create.html', {'form': form})
 

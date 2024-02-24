@@ -1,0 +1,63 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'custpanel/css/blue_model.css' %}">
+    <title>Change Car</title>
+</head>
+<body>
+<div class="form">
+    <h2>Change Car</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form_centre">
+            <label for="car">Select a car to Change:</label>
+            <select name="car" id="car">
+                {% for car in cars %}
+                <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }}- ({{ car.seller.name }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% csrf_token %}
+        {{ form.brand.label_tag }} {{ form.brand }}
+        <br>
+        {{ form.model.label_tag }} {{ form.model }}
+        <br>
+        {{ form.description.label_tag }} {{ form.description }}
+        <br>
+        {{ form.used_car.label_tag }} {{ form.used_car }}
+        <br>
+        {{ form.distance.label_tag }} {{ form.distance }}
+        <br>
+        {{ form.year_produced.label_tag }} {{ form.year_produced }}
+        <br>
+        {{ form.guarantee.label_tag }} {{ form.guarantee }}
+        <br>
+        {{ form.engine_type.label_tag }} {{ form.engine_type }}
+        <br>
+        {{ form.engine_power.label_tag }} {{ form.engine_power }}
+        <br>
+        {{ form.color.label_tag }} {{ form.color }}
+        <br>
+        {{ form.price.label_tag }} {{ form.price }}
+        <br>
+        {{ form.body_type.label_tag }} {{ form.body_type }}
+        <br>
+        {{ form.drive_type.label_tag }} {{ form.drive_type }}
+        <br>
+        {{ form.photo.label_tag }} {{ form.photo }}
+        <br>
+        {{ form.seller.label_tag }} {{ form.seller }}
+        <br>
+
+        <button type="submit" class="btn">Change Car</button>
+    </form>
+
+    <a href="{% url 'models' %}" class="btn">Back to Car Models</a>
+</div>
+</body>
+</html>
