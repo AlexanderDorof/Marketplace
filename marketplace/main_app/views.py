@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils import *
 from .permissions import AuthorPermissionsMixin
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -43,11 +44,15 @@ class CarsList(DataMixin, ListView):
     extra_context = {'title': 'Каталог машин', 'item_name': 'main_app/vehicle.html', 'type': 'car'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
+    paginate_by = 12 # Устанавливаем количество объектов на страницу
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        car_list = Car.objects.all().order_by('id')
+        paginator = Paginator(car_list, self.paginate_by)
+        page = self.request.GET.get('page')
+        cars = paginator.get_page(page)
+        context['cars'] = cars
         return context
 
 
