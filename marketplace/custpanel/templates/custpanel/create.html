@@ -90,6 +90,29 @@
             <a href="{% url 'models' %}" class="btn">Back to  Models</a>
         </form>
 
+         <h2>Add New Service</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ service.title.label_tag }} {{ service.title }}
+            <br>
+            {{ service.description.label_tag }} {{ service.description }}
+            <br>
+            {{ service.guarantee.label_tag }} {{ service.guarantee }}
+            <br>
+            {{ service.price.label_tag }} {{ service.price }}
+            <br>
+            {{ service.is_available.label_tag }} {{ service.is_available }}
+            <br>
+            {{ service.in_charge.label_tag }} {{ service.in_charge }}
+            <br>
+            {{ service.cars_service.label_tag }} {{ service.cars_service }}
+            <br>
+            {{ service.motorcycles_service.label_tag }} {{ service.motorcycles_service }}
+            <br>
+            <button type="submit" name="Service_create">Create</button>
+            <br>
+            <a href="{% url 'models' %}" class="btn">Back to  Models</a>
+        </form>
     </div>
 </body>
 </html>

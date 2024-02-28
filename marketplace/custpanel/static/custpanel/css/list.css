@@ -2,7 +2,14 @@ body {
     background: #ADD8E6;
 }
 
+.car-container {
+    max-height: 600px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .car-table {
+    max-height: 600px;
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -13,9 +20,15 @@ body {
     border: 3px solid blue;
     padding: 8px;
     text-align: center;
+    word-wrap: break-word;
+    overflow: hidden; /* добавлено для скрытия лишнего текста */
 }
 
 .car-table th {
     background: #ADD8E6;
 }
 
+.flower-image {
+    max-height: 100px; /* можно изменить значение в зависимости от требований */
+    width: auto;
+}
