@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="form">
+
     <h2>Change Car</h2>
 
     <form method="post">
@@ -55,6 +56,55 @@
         <br>
 
         <button type="submit" class="btn">Change Car</button>
+
+    </form>
+
+    <h2>Change Motocycle</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form_centre">
+            <label for="motocycle">Select a motocycle to Change:</label>
+            <select name="motocycle" id="motocycle">
+                 {% for motocycle in motocycles %}
+                <option value="{{ motocycle.id }}">{{ motocycle.brand }} - {{ motocycle.model }} - ({{ motocycle.seller.name }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+         {% csrf_token %}
+            {{ motocycle_form.brand.label_tag }} {{ motocycle_form.brand }}
+            <br>
+            {{ motocycle_form.model.label_tag }} {{ motocycle_form.model }}
+            <br>
+            {{ motocycle_form.description.label_tag }} {{ motocycle_form.description }}
+            <br>
+            <!-- ... Другие поля формы для формы ... -->
+            {{ motocycle_form.used_car.label_tag }} {{ motocycle_form.used_car }}
+            <br>
+            {{ motocycle_form.distance.label_tag }} {{ motocycle_form.distance }}
+            <br>
+            {{ motocycle_form.year_produced.label_tag }} {{ motocycle_form.year_produced }}
+            <br>
+            {{ motocycle_form.guarantee.label_tag }} {{ motocycle_form.guarantee }}
+            <br>
+            {{ motocycle_form.engine_type.label_tag }} {{ motocycle_form.engine_type }}
+            <br>
+            {{ motocycle_form.engine_power.label_tag }} {{ motocycle_form.engine_power }}
+            <br>
+            {{ motocycle_form.color.label_tag }} {{ motocycle_form.color }}
+            <br>
+            {{ motocycle_form.price.label_tag }} {{ motocycle_form.price }}
+            <br>
+            {{ motocycle_form.body_type.label_tag }} {{ motocycle_form.body_type }}
+            <br>
+            {{ motocycle_form.drive_type.label_tag }} {{ motocycle_form.drive_type }}
+            <br>
+            {{ motocycle_form.photo.label_tag }} {{ motocycle_form.photo }}
+            <br>
+            {{ motocycle_form.seller.label_tag }} {{ motocycle_form.seller }}
+            <br>
+        <button type="submit" class="btn">Change Motocycle</button>
     </form>
 
     <a href="{% url 'models' %}" class="btn">Back to Car Models</a>

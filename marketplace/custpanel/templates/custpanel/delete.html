@@ -29,6 +29,8 @@
 </form>
 
 <!-- Форма для удаления модели Motocycle -->
+        <h2>Delete Car</h2>
+        <br>
 <form method="post" action="{% url 'delete' %}">
     {% csrf_token %}
     <div class="form_centre">

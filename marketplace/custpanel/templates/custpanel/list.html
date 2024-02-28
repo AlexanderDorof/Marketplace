@@ -4,11 +4,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{% static 'custpanel/css/list.css' %}">
-    <title>Delete Car</title>
+    <title>Car Models List</title>
 </head>
-<body>
+<body class="car-container">
     <table class="car-table">
         <thead>
+            <h1>Car Models List</h1>
             <tr>
                 <th>#</th>
                 <th>Марка</th>
@@ -23,6 +24,28 @@
                 <td>{{ el.brand }}</td>
                 <td>{{ el.model }}</td>
                 <td><img src="{{ el.photo.url }}" class="flower-image"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="car-table">
+        <thead>
+            <h1>Motocycle Models List</h1>
+            <tr>
+                <th>#</th>
+                <th>Марка</th>
+                <th>Модель</th>
+                <th>Картинка</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for motocycle in motocycles %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ motocycle.brand }}</td>
+                <td>{{ motocycle.model }}</td>
+                <td><img src="{{ motocycle.photo.url }}" class="flower-image"></td>
             </tr>
             {% endfor %}
         </tbody>
