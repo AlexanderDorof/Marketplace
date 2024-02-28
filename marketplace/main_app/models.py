@@ -145,7 +145,7 @@ class User(models.Model):
     date_registration = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
-    favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
+    favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(default='asdsasadasd@gmail.com')
     def __str__(self):
         return f"{self.surname} {self.name} {self.second_name if self.second_name else ''}"
