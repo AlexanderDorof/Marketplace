@@ -10,10 +10,16 @@ def models(request):
 
 
 def create(request):
+    form = CarForm()
+    motocycle_form = MotocycleForm()
+    service_form = ServiceForm()
+    user_form = UserForm()
+
     if request.method == 'POST':
         form = CarForm(request.POST)
         motocycle_form = MotocycleForm(request.POST)
-        service = ServiceForm(request.POST)
+        service_form = ServiceForm(request.POST)
+        user_form = UserForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -23,16 +29,20 @@ def create(request):
             motocycle_form.save()
             return redirect('models')
 
-        if service.is_valid() and 'Service_create' in request.POST:
-            service.save()
+        if service_form.is_valid() and 'Service_create' in request.POST:
+            service_form.save()
             return redirect('models')
 
-    else:
-        form = CarForm()
-        motocycle_form = MotocycleForm()
-        service = ServiceForm
+        if user_form.is_valid() and 'User_create' in request.POST:
+            user_form.save()
+            print("User created successfully!")  # Отладочное сообщение
+            return redirect('models')
+        else:
+            print("User form is not valid:", user_form.errors)  # Отладочное сообщение об ошибке
 
-    return render(request, 'custpanel/create.html', {'form': form, 'motocycle_form': motocycle_form, 'service': service})
+    return render(request, 'custpanel/create.html', {'form': form, 'motocycle_form': motocycle_form, 'service': service_form, 'user': user_form})
+
+
 
 
 
@@ -40,12 +50,20 @@ def create(request):
 def delete(request):
     if request.method == 'POST':
         # Проверяем, к какой модели относится запрос
-        if 'car' in request.POST:
+        model_type = request.POST.get('model_type', None)
+
+        if model_type == 'car':
             model_id = request.POST.get('car')
             model = get_object_or_404(Car, id=model_id)
-        elif 'motocycle' in request.POST:
+        elif model_type == 'motocycle':
             model_id = request.POST.get('motocycle')
             model = get_object_or_404(Motocycle, id=model_id)
+        elif model_type == 'service':
+            model_id = request.POST.get('service')
+            model = get_object_or_404(Service, id=model_id)
+        elif model_type == 'user':
+            model_id = request.POST.get('user')
+            model = get_object_or_404(User, id=model_id)
         else:
             # Возможно, добавьте дополнительные обработки, если это необходимо
             pass
@@ -55,8 +73,10 @@ def delete(request):
 
     cars = Car.objects.all()
     motocycles = Motocycle.objects.all()
+    service = Service.objects.all()
+    users = User.objects.all()
 
-    return render(request, 'custpanel/delete.html', {'cars': cars, 'motocycles': motocycles})
+    return render(request, 'custpanel/delete.html', {'cars': cars, 'motocycles': motocycles, 'service': service, 'users': users})
 
 
 
@@ -81,19 +101,47 @@ def change(request):
             if motocycle_form.is_valid():
                 motocycle_form.save()
                 return redirect('models')
+
+        elif 'service' in request.POST:
+            service_id = request.POST.get('service')
+            service = get_object_or_404(Service, id=service_id)
+
+            service_form = ServiceForm(request.POST, instance=service)
+            if service_form.is_valid():
+                service_form.save()
+                return redirect('models')
+
+        elif 'user' in request.POST:
+            user_id = request.POST.get('user')
+            user = get_object_or_404(User, id=user_id)
+
+            user_form = UserForm(request.POST, instance=user)
+            if  user_form.is_valid():
+                user_form.save()
+                return redirect('models')
+
+
     else:
         cars = Car.objects.all()
-        motocycles = Motocycle.objects.all()
         form = CarForm()
+        motocycles = Motocycle.objects.all()
         motocycle_form = MotocycleForm()
+        service = Service.objects.all()
+        service_form = ServiceForm()
+        user = User.objects.all()
+        user_form = UserForm()
 
-    return render(request, 'custpanel/change.html', {'cars': cars, 'motocycles': motocycles, 'form': form, 'motocycle_form': motocycle_form})
+
+    return render(request, 'custpanel/change.html', {'cars': cars, 'motocycles': motocycles, 'form': form, 'motocycle_form': motocycle_form, 'service': service, 'service_form': service_form, 'user': user, 'user_form': user_form})
+
 
 
 def list(request):
         new = Car.objects.all()
         motocycles = Motocycle.objects.all()
-        return render(request, 'custpanel/list.html', {'news': new, 'motocycles': motocycles})
+        service = Service.objects.all()
+        user = User.objects.all()
+        return render(request, 'custpanel/list.html', {'news': new, 'motocycles': motocycles, 'service':service,  'user': user})
 
 
 
