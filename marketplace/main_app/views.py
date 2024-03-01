@@ -48,20 +48,17 @@ def contacts(request):
     return render(request, 'main_app/contacts.html', context=context)
 
 
-class CarsList(DataMixin, ListView):
+class CarsList(DataMixin, PaginationMixin, ListView):
     model = Car
     extra_context = {'title': 'Каталог машин', 'item_name': 'main_app/vehicle.html'}
-    context_object_name = 'items'
     template_name = 'main_app/cards.html'
-    paginate_by = 12 # Устанавливаем количество объектов на страницу
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        car_list = Car.objects.all().order_by('id')
-        paginator = Paginator(car_list, self.paginate_by)
-        page = self.request.GET.get('page')
-        cars = paginator.get_page(page)
-        context['cars'] = cars
+        c_def = self.get_user_context()
+        context = {**context, **c_def}
+        context['items'] = self.paginated_object(self.model)
         return context
 
 
@@ -85,6 +82,7 @@ class MotoDetailView(DataMixin, DetailView):
     template_name = 'main_app/item_description.html'
     context_object_name = 'item'
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Описание товара'
@@ -100,6 +98,7 @@ class ServiceDetailView(DataMixin, DetailView):
     template_name = 'main_app/service_description.html'
     context_object_name = 'item'
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Описание услуги'
@@ -108,42 +107,47 @@ class ServiceDetailView(DataMixin, DetailView):
         return context
 
 
-class MotosList(DataMixin, ListView):
+class MotosList(DataMixin, PaginationMixin, ListView):
     model = Motocycle
     extra_context = {'title': 'Каталог мотоциклов', 'item_name': 'main_app/vehicle.html'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context()
         context = {**context, **c_def}
+        context['items'] = self.paginated_object(self.model)
         return context
 
 
-class ServicesList(DataMixin, ListView):
+class ServicesList(DataMixin, PaginationMixin, ListView):
     model = Service
     extra_context = {'title': 'Услуги', 'item_name': 'main_app/service.html'}
     context_object_name = 'items'
     template_name = 'main_app/cards.html'
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context()
         context = {**context, **c_def}
+        context['items'] = self.paginated_object(self.model)
         return context
 
 
-class FavoriteList(LoginRequiredMixin, DataMixin, ListView):
+class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
     extra_context = {'title': 'Избранное', 'item_name': 'main_app/vehicle.html'}
-    context_object_name = 'items'
     template_name = 'main_app/cards.html'
     login_url = "register:login"
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context()
         context = {**context, **c_def}
+        context['items'] = self.paginated_object(0, queryset=self.get_queryset())
         return context
 
     def get_queryset(self):
