@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from icecream import ic
 
 from .models import User
@@ -19,8 +20,15 @@ class DataMixin:
             context['django_user'] = user
         return context
 
-
-
+class PaginationMixin:
+    def paginated_object(self, obj, queryset=None):
+        if not queryset:
+            item_list = obj.objects.all().order_by('id')
+        else:
+            item_list = queryset
+        paginator = Paginator(item_list, self.paginate_by)
+        page = self.request.GET.get('page')
+        return paginator.get_page(page)
 
 def funcmixin(request, **kwargs):
     context = kwargs
