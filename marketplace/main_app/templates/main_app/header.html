@@ -2,27 +2,23 @@
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Wheels&Deals</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Информация
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item  text-white" href="{% url 'contacts' %}">Контактная
-                                информация</a></li>
+                                    информация</a></li>
                             <li><a class="dropdown-item  text-white" href="{% url 'info' %}">Про нас</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Каталог
                         </a>
                         <ul class="dropdown-menu">
@@ -31,21 +27,18 @@
                             <li><a class="dropdown-item  text-white" href="{% url 'services' %}">Услуги</a></li>
                         </ul>
                     </li>
-
                     <li class="nav-item dropdown ">
                         {% if is_authenticated %}
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Мой профиль - <span style="color: #0c7d63; text-shadow: 1px;"> <i>{{ username }}</i></span>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item  text-white" href="{% url 'favorite' %}">Избранное</a>
                             </li>
                             <li>
                                 <a class="dropdown-item  text-white" href="{% url 'register:profile' django_user_pk %}">Личный
-                                кабинет</a>
+                                    кабинет</a>
                             </li>
                             <li>
                                 <a class="dropdown-item  text-white" href="" data-bs-toggle="modal" data-bs-target="#myModal">Опубликовать объявление</a>
@@ -61,17 +54,14 @@
                         {% endif %}
                     </li>
                 </ul>
-
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
                 </form>
-
-
                 {% if not is_authenticated %}
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <il>
-                <a class="btn btn-dark" href="{% url 'register:register' %}">Регистрация</a>
+                        <a class="btn btn-dark" href="{% url 'register:register' %}">Регистрация</a>
                     </il>
                 </ul>
                 {% endif %}

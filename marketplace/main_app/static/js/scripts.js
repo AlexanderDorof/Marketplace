@@ -18,4 +18,4 @@ $(document).on('click', '#favorite', function() {
 function changeImage(id, heart) {
     let image = document.getElementById(id)
     image.src = image.src.endsWith(heart) ? "/static/static_imgs/add-to-favorites-icon.svg" : heart;
-    }
+}
