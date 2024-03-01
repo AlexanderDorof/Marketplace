@@ -2,8 +2,6 @@ import os
 
 from celery import Celery
 
-
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'us_cel.settings')
 
 app = Celery('email_sender')

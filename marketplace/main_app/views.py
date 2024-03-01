@@ -1,16 +1,13 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from icecream import ic
-from django.db.models import Q
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddCarForm, AddMotoForm
 from .models import *
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils import *
 from .permissions import AuthorPermissionsMixin
-from django.core.paginator import Paginator
 
 
 def index(request):
@@ -56,9 +53,9 @@ class CarsList(DataMixin, PaginationMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
-        context['items'] = self.paginated_object(self.model)
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
+        context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
         return context
 
 
@@ -72,8 +69,8 @@ class CarDetailView(DataMixin, DetailView):
         context['title'] = 'Описание товара'
         context['edit_ref'] = 'edit_car'
         context['delete_ref'] = 'delete_car'
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -82,14 +79,13 @@ class MotoDetailView(DataMixin, DetailView):
     template_name = 'main_app/item_description.html'
     context_object_name = 'item'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Описание товара'
         context['edit_ref'] = 'edit_moto'
         context['delete_ref'] = 'delete_moto'
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -98,12 +94,11 @@ class ServiceDetailView(DataMixin, DetailView):
     template_name = 'main_app/service_description.html'
     context_object_name = 'item'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Описание услуги'
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -116,9 +111,9 @@ class MotosList(DataMixin, PaginationMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
-        context['items'] = self.paginated_object(self.model)
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
+        context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
         return context
 
 
@@ -131,9 +126,9 @@ class ServicesList(DataMixin, PaginationMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
-        context['items'] = self.paginated_object(self.model)
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
+        context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
         return context
 
 
@@ -145,9 +140,9 @@ class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
-        context['items'] = self.paginated_object(0, queryset=self.get_queryset())
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
+        context['items'] = self.paginated_object(queryset=self.get_queryset())
         return context
 
     def get_queryset(self):
@@ -167,8 +162,8 @@ class AddCar(LoginRequiredMixin, DataMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
     def get_initial(self):
@@ -188,8 +183,8 @@ class AddMoto(LoginRequiredMixin, DataMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
     def get_initial(self):
@@ -210,8 +205,8 @@ class CarEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -224,8 +219,8 @@ class MotoEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -233,13 +228,13 @@ class CarDeleteView(AuthorPermissionsMixin, DataMixin, DeleteView):
     model = Car
     extra_context = {'title': 'Подтвердить удаление'}
     context_object_name = 'item'
-    success_url = reverse_lazy('cars')  # URL, на который перенаправлять после успешного удаления машины
-    template_name = 'main_app/confirm_delete.html'  # Шаблон для подтверждения удаления
+    success_url = reverse_lazy('cars')  # URL-name, redirected after successful deletion
+    template_name = 'main_app/confirm_delete.html'  # Template for confirmation deletion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context
 
 
@@ -247,11 +242,11 @@ class MotoDeleteView(AuthorPermissionsMixin, DataMixin, DeleteView):
     model = Motocycle
     extra_context = {'title': 'Подтвердить удаление'}
     context_object_name = 'item'
-    success_url = reverse_lazy('motos')  # URL, на который перенаправлять после успешного удаления машины
-    template_name = 'main_app/confirm_delete.html'  # Шаблон для подтверждения удаления
+    success_url = reverse_lazy('motos')  # URL-name, redirected after successful deletion
+    template_name = 'main_app/confirm_delete.html'  # Template for confirmation deletion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
-        context = {**context, **c_def}
+        user_auth_mixin = self.get_user_context()
+        context = {**context, **user_auth_mixin}
         return context

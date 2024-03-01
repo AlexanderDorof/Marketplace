@@ -1,10 +1,12 @@
-from django.urls import path, include
+from django.urls import path
+
 from .views import *
 
 urlpatterns = [
     path('', index, name='home'),
-    path('info', info, name='info'),
-    path('contacts', contacts, name='contacts'),
+    path('info/', info, name='info'),
+    path('contacts/', contacts, name='contacts'),
+    path('ajax/', add_to_favorite, name='ajax'),
 
     # display all models
     path('cars/', CarsList.as_view(), name='cars'),
@@ -31,6 +33,5 @@ urlpatterns = [
     # authorized users
     path('favorite/', FavoriteList.as_view(), name='favorite'),  # AuthorizedPermission
     path('adminpanel/', index, name='adminpanel'),  # AdminPermission
-    path('ajax/', add_to_favorite, name='ajax'),  # AdminPermission
-]
 
+]

@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils import timezone
@@ -8,6 +9,7 @@ from django.contrib.auth.models import User as DjangoUser
 
 
 class Vehicle(models.Model):
+    # consts
     ColorsType = (
         ('red', 'Red'),
         ('blue', 'Blue'),
@@ -20,42 +22,47 @@ class Vehicle(models.Model):
         ('gray', 'Gray'),
         ('teal', 'Teal'),
     )
-    EngineType = [("Electricity", "Электромобиль"), ("Oil", "ДВС")]
+    EngineType = (('Electricity', 'Электромобиль'), ('Oil', 'ДВС'))
+
     brand = models.CharField(max_length=50, verbose_name='Марка')
     model = models.CharField(max_length=25, verbose_name='Модель')
     description = models.TextField(blank=True, default='Нет описания',
-                                   help_text="Обязательно укажите поврежения \nавтомобиля (при наличии)",
+                                   help_text='Обязательно укажите поврежения автомобиля (при наличии)',
                                    verbose_name='Описание')
     used_car = models.BooleanField(default=False, verbose_name='Поддержанное т/с')
-    distance = models.IntegerField(default=0, help_text="км", verbose_name='Пробег')
+    distance = models.IntegerField(default=0, help_text='км', verbose_name='Пробег')
     year_produced = models.PositiveSmallIntegerField(blank=True, default=2000,
                                                      validators=[MaxValueValidator(datetime.now().year),
                                                                  MinValueValidator(1900)],
                                                      verbose_name='Год выпуска')
     guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
     engine_type = models.CharField(choices=EngineType, max_length=15, default='Oil',
-                                   help_text="ДВС или электрокар", verbose_name='Тип двигателя')
-    engine_power = models.PositiveSmallIntegerField(help_text="В лошадиных силах(л/с)", default=1600,
+                                   help_text='ДВС или электрокар', verbose_name='Тип двигателя')
+    engine_power = models.PositiveSmallIntegerField(help_text='В лошадиных силах(л/с)', default=1600,
                                                     verbose_name='Мощность двигателя')
     color = models.CharField(blank=True, choices=ColorsType, max_length=15, default='red',
-                             help_text="В соответствии с техпаспортом",
+                             help_text='В соответствии с техпаспортом',
                              verbose_name='Цвет')
-    price = models.PositiveSmallIntegerField(default=1000, help_text="В долларах ($)", verbose_name='Цена')
+    price = models.PositiveSmallIntegerField(default=1000, help_text='В долларах ($)', verbose_name='Цена')
 
     class Meta:
         abstract = True
 
 
 class Car(Vehicle):
-    BodyType = (("Sedan", "Седан"), ("Hatchback", "Хэтчбэк"), ("Pickup", "Пикап"), ("Cabrio", "Кабриолет"))
-    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
+    # consts
+    BodyType = (('Sedan', 'Седан'), ('Hatchback', 'Хэтчбэк'), ('Pickup', 'Пикап'), ('Cabrio', 'Кабриолет'))
     DriveType = (("Front", "Переднеприводный"), ("Back", "Заднеприводный"), ("Full", "Полноприводный"))
+
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     body_type = models.CharField(choices=BodyType, max_length=15, default="Sedan",
                                  help_text="В соответствии с техпаспортом",
                                  verbose_name='Тип кузова')
     drive_type = models.CharField(choices=DriveType, max_length=15, default="Front", verbose_name='Тип привода')
     photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
                               default="default_pic/no_image_available.jpg")
+
+    # related models
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
 
     def __str__(self):
@@ -65,18 +72,22 @@ class Car(Vehicle):
         return reverse('car_url', kwargs={'slug': self.slug})
 
     class Meta:
-        verbose_name = "Машина"
-        verbose_name_plural = "Машины"
+        verbose_name = 'Машина'
+        verbose_name_plural = 'Машины'
 
 
 class Motocycle(Vehicle):
-    BodyType = [("Sport", "Спортивный"), ("Classic", "Классический")]
+    # consts
+    BodyType = (("Sport", "Спортивный"), ("Classic", "Классический"))
+
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     body_type = models.CharField(choices=BodyType, max_length=15, default="Sport",
                                  help_text="В соответствии с техпаспортом",
                                  verbose_name='Типы')
-    photo = models.ImageField(blank=True, upload_to="photos/motos/%Y/%m/%d",
-                              default="default_pic/no_image_available.jpg")
+    photo = models.ImageField(blank=True, upload_to='photos/motos/%Y/%m/%d',
+                              default='default_pic/no_image_available.jpg')
+
+    # related models
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
 
     def __str__(self):
@@ -128,7 +139,9 @@ class Item_for_moto(Item):
 
 
 class Service(models.Model):
-    Specialists = [("Smirnov", "Смирнов И.И."), ("Sidorov", "Сидоров А.К.")]
+    # consts
+    Specialists = (("Smirnov", "Смирнов И.И."), ("Sidorov", "Сидоров А.К."))
+
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     description = models.TextField(blank=True, default='no description',
@@ -139,6 +152,8 @@ class Service(models.Model):
                                 help_text="В долларах ($)", verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Доступно сейчас')
     in_charge = models.CharField(max_length=255, default="Смирнов И.И.", verbose_name='Исполнитель')
+
+    # related models
     cars_service = models.ManyToManyField(Car, blank=True, verbose_name='Подходит для:')
     motorcycles_service = models.ManyToManyField(Motocycle, blank=True, verbose_name='Подходит для:')
 
@@ -164,6 +179,8 @@ class User(models.Model):
     date_registration = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
+
+    # related models
     favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
     user_django = models.OneToOneField(DjangoUser, on_delete=models.SET_NULL, related_name='user_django', blank=True,
                                        null=True)
@@ -181,6 +198,7 @@ class Favorite(models.Model):
     favorite_moto = models.ManyToManyField(Motocycle, blank=True, verbose_name='Избранное мотоциклы')
 
     def __str__(self):
+        """if user created in admin panel and no favorite instance is associated with it - exception is raised"""
         try:
             user = User.objects.get(favorite__pk=self.pk)
             return f"Избранное: {user}"
