@@ -3,6 +3,7 @@ from .forms import *
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 def models(request):
     car_form = CarForm()
@@ -135,13 +136,34 @@ def change(request):
     return render(request, 'custpanel/change.html', {'cars': cars, 'motocycles': motocycles, 'form': form, 'motocycle_form': motocycle_form, 'service': service, 'service_form': service_form, 'user': user, 'user_form': user_form})
 
 
-
 def list(request):
-        new = Car.objects.all()
-        motocycles = Motocycle.objects.all()
-        service = Service.objects.all()
-        user = User.objects.all()
-        return render(request, 'custpanel/list.html', {'news': new, 'motocycles': motocycles, 'service':service,  'user': user})
+    cars = Car.objects.all()
+    # Предположим, что вы хотите отображать по 10 автомобилей на странице
+    paginator = Paginator(cars, 10)
+    # Получите номер страницы из параметра запроса, или используйте 1, если он не предоставлен
+    page_number = request.GET.get('page', 1)
+    # Получите объект страницы для текущего номера страницы
+    cars_page = paginator.get_page(page_number)
+
+    motocycles = Motocycle.objects.all()
+    motocycles_paginator = Paginator(motocycles, 10)
+    motocycles_page_number = request.GET.get('motocycles_page', 1)
+    motocycles_page = motocycles_paginator.get_page(motocycles_page_number)
+
+
+    service = Service.objects.all()
+    service_paginator = Paginator(service, 10)
+    service_page_number = request.GET.get('service_page', 1)
+    service_page = service_paginator.get_page(service_page_number)
+
+
+    user = User.objects.all()
+    users_paginator = Paginator(user, 10)
+    users_page_number = request.GET.get('users_page', 1)
+    users_page = users_paginator.get_page(users_page_number)
+
+    return render(request, 'custpanel/list.html',
+                  {'cars': cars, 'motocycles': motocycles, 'service': service, 'user': user, 'cars_page': cars_page,'motocycles_page': motocycles_page,'service_page':service_page,'users_page':users_page})
 
 
 

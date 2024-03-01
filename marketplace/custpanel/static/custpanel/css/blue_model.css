@@ -5,20 +5,51 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow-y: auto; /* Добавить вертикальную прокрутку для body */
+    overflow-y: auto;
+}
+
+.container {
+
+    display: flex;
+    justify-content: center; /* Center the columns horizontally */
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+    margin-top: 20px; /* Adjust margin from the top */
+}
+
+.form-column {
+    flex: 1;
+    margin: 0 10px;
 }
 
 .form {
+    border-radius: 25px;
     border: 5px solid blue;
     padding: 20px;
     text-align: center;
     overflow-y: auto;
-    position: absolute; /* Заменить fixed на absolute */
-    top: 2%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    height: 800px; /* Set a fixed height as per your design */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.formH {
+    border-radius: 25px;
+    border: 5px solid blue;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    position: relative;
+    height: 500px; /* Set a fixed height as per your design */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+
+/* Other styles remain unchanged */
 .form ul {
     list-style: none;
     padding: 0;
@@ -37,9 +68,8 @@ body {
 
 .form input, .form select {
     width: 200px;
-    padding: 5px;
+    padding: 3px;
 }
-
 .form button {
     width: auto;
     padding: 10px 20px;

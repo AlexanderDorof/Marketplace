@@ -4,18 +4,17 @@ body {
 }
 
 
-
 .form{
     border: 5px solid  blue; /* Добавляем рамку с цветом midnightblue */
    padding: 20px; /* Задаем отступ внутри рамки */
    text-align: center;
+   border-radius: 25px;
+   margin: 200px;
 }
 
 .form ul {
    list-style: none; /* Применяется к элементу списка внутри .form */
 }
-
-
 
 
 .form {
@@ -40,3 +39,27 @@ body {
     background-color: #0056b3; /* Изменяем цвет фона при наведении курсора */
 }
 
+
+
+
+*{
+    padding: 0;
+    margin: 0;
+}
+.animated-background{
+    background:linear-gradient(to right, #833ab4, #fd1d1d , #fcb045);
+    background-size:400% 400%;
+    animation:animate-background 10s infinite ease-in-out;
+    height: 100vh;
+}
+@keyframes  animate-background{
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100%  50%;
+    }
+    100%{
+        background-position:0 50%;
+    }
+}
