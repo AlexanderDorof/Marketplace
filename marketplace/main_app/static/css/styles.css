@@ -13,7 +13,7 @@ footer {
     width: 100%;
     background-color: #343a40;
     padding: 10px 0;
-  }
+}
 
 .enter {
     position: fixed;
@@ -27,8 +27,6 @@ footer {
     z-index: 5;
     width: 5%;
 }
-
-
 
 main {
 	background-color: Azure;

@@ -1,8 +1,6 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
 {% load simple_tags %}
-
-
 {% block content %}
 {% user_is_seller item.seller django_user as is_owner %}
 <main>
@@ -26,12 +24,10 @@
                         <div class="d-flex justify-content-between">
                             <p><strong>{{ item.price }} $</strong></p>
                             <div>
-
                                 {% if is_moderator or is_owner %}
                                 <a href="{% url edit_ref slug=item.slug %}" class="btn btn-primary">Редактировать</a>
                                 <a href="{% url delete_ref slug=item.slug %}" class="btn btn-danger">Удалить</a>
                                 {% endif %}
-
                                 <div style="height:100px;"></div>
                             </div>
                         </div>
@@ -40,6 +36,5 @@
             </div>
         </div>
     </div>
-
 </main>
 {% endblock content %}
