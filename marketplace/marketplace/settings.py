@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     # apps:
     'main_app',
+    'crud_db',
     'register',
     'rest_api',
 ]
