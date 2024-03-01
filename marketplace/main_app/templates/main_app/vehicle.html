@@ -1,4 +1,7 @@
 {% load static %}
+{% load simple_tags %}
+{% in_favorite item user.pk as fav %}
+
 
 
 <div class="col-lg-4 col-md-6 p-4">
@@ -17,9 +20,9 @@
             <div class="d-flex justify-content-between">
                 <p><strong>{{ item.price }} $</strong></p>
                 {% if is_authenticated %}
-                <a id="favorite" data-item-id="{{ item.pk }}" data-vehicle-type="{{ type }}"
+                <a id="favorite" data-item-id="{{ item.pk }}" data-vehicle-type="{{ item|model_name }}"
                    class="btn add-to-cart">
-                    <img class="mx-1 enlage" src="{% static 'static_imgs/add-to-favorites-icon.svg' %}"
+                    <img class="mx-1 enlage" id="myimage_{{ item.pk }}" src="{% static fav %}"
                          alt="Favorite icon"
                          width="32" height="32">
                 </a>

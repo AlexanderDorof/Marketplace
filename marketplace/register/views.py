@@ -16,7 +16,7 @@ from .utils import DataMixin
 class RegisterView(FormView):
     form_class = UserRegistrationForm
     template_name = 'register/register.html'
-    success_url = reverse_lazy("register:profile")
+    success_url = reverse_lazy("register:login")
 
     def form_valid(self, form):
         password = form.cleaned_data['password']
