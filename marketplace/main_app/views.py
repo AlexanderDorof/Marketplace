@@ -1,13 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import AddCarForm, AddMotoForm
 from .models import *
 from .utils import *
-from .permissions import AuthorPermissionsMixin
+
 
 
 def index(request):

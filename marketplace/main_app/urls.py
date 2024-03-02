@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .views import *
-from main_app.management.insert_db import insertcars, insertmotos
+
 
 urlpatterns = [
     path('', index, name='home'),

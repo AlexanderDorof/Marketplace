@@ -1,14 +1,10 @@
+from .forms import UserRegistrationForm
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from icecream import ic
-
-from .forms import UserRegistrationForm
 from django.views.generic.edit import FormView, UpdateView
-from django.contrib.auth.models import User
-from icecream import ic
+
 from main_app.models import User as CustomUser
 from .utils import DataMixin
 

@@ -1,12 +1,3 @@
-import os
-import random
-from django.utils.text import slugify
-
-from django.http import HttpResponse
-from icecream import ic
-
-from main_app.models import Car, Motocycle
-
 cars_brand_models = {
     "Toyota": ["Camry", "Corolla", "RAV4", "Highlander", "Tacoma", "Sienna", "Prius", "C-HR", "4Runner",
                "Land Cruiser"],
@@ -21,7 +12,7 @@ cars_brand_models = {
     "Audi": ["A4", "Q5", "A3", "Q7", "A6", "Q3", "A5", "Q8", "TT", "e-tron"],
     "Hyundai": ["Elantra", "Tucson", "Sonata", "Santa Fe", "Kona", "Palisade", "Veloster", "Accent", "Venue", "IONIQ"]
 }
-motos_brand_models = {
+motors_brand_models = {
     'Honda': ['Honda CB Shine', 'Honda Activa', 'Honda CBR 250RR', 'Honda CRF 250L', 'Honda Rebel 500',
               'Honda Africa Twin', 'Honda CB650R', 'Honda CB1000R', 'Honda Gold Wing', 'Honda Fireblade (CBR1000RR)'],
     'Yamaha': ['Yamaha YZF-R15', 'Yamaha MT-15', 'Yamaha FZ-S', 'Yamaha FZ25', 'Yamaha R3', 'Yamaha FZ16', 'Yamaha R1',
@@ -41,45 +32,25 @@ motos_brand_models = {
     'BMW Motorrad': ['BMW S 1000 RR', 'BMW R 1250 GS', 'BMW F 850 GS', 'BMW G 310 GS', 'BMW R nineT', 'BMW K 1600 GTL',
                      'BMW S 1000 XR', 'BMW F 900 R', 'BMW R 18', 'BMW G 310 R']}
 
-photo_cars = next(os.walk(r'C:\Users\Alexander\Desktop\Project MarketPlace\Marketplace\photo_cars'))[2]
-photo_motos = next(os.walk(r'C:\Users\Alexander\Desktop\Project MarketPlace\Marketplace\photo_motocycles'))[2]
-
-
-def insertcars(requests):
-    for i in range(50):
-        brands = list(cars_brand_models.keys())
-        brand = random.choice(brands)
-        model = random.choice(cars_brand_models[brand])
-        engine_type = random.choice(('Electricity', 'Oil'))
-        year_produced = random.randint(1990, 2024)
-        distance = random.randint(0, 100_000)
-        engine_power = random.randint(1000, 5000)
-        price = random.randint(5_000, 50_000)
-        body_type = random.choice(('Sedan', 'Hatchback', 'Pickup', 'Cabrio'))
-        drive_type = random.choice(('Front', 'Back', 'Full'))
-        photo = fr'photos/cars/2024/03/01/{random.choice(photo_cars)}'
-        slug = f'{brand}-{model}-{price}'
-        slug = slugify(slug)
-        Car.objects.create(brand=brand, model=model, body_type=body_type, drive_type=drive_type,
-                           engine_type=engine_type, distance=distance, year_produced=year_produced,
-                           engine_power=engine_power, slug=slug,
-                           price=price, photo=photo, seller_id=1)
-    return HttpResponse('Hello world')
-
-
-def insertmotos(requests):
-    for i in range(50):
-        brands = list(motos_brand_models.keys())
-        brand = random.choice(brands)
-        model = random.choice(motos_brand_models[brand])
-        year_produced = random.randint(1990, 2024)
-        engine_power = random.randint(1000, 5000)
-        price = random.randint(5_000, 50_000)
-        photo = fr'photos/motos/2024/03/01/{random.choice(photo_motos)}'
-        ic(photo_motos)
-        slug = f'{brand}-{model}-{price}'
-        slug = slugify(slug)
-        Motocycle.objects.create(brand=brand, model=model, year_produced=year_produced, engine_power=engine_power,
-                                 slug=slug,
-                                 price=price, photo=photo, seller_id=1)
-    return HttpResponse('Hello world')
+services_title = ['Замена масла', 'Смена резины с летней на зимнюю', 'Смена резины с зимней на летнюю',
+                  'Замена масла и фильтра масла',
+                  'Замена свечей зажигания',
+                  'Замена воздушного фильтра',
+                  'Замена топливного фильтра',
+                  'Балансировка колес',
+                  'Развал-схождение',
+                  'Замена тормозных колодок и дисков',
+                  'Замена антифриза',
+                  'Замена ремня ГРМ',
+                  'Диагностика и ремонт электрики',
+                  'Замена амортизаторов',
+                  'Замена рулевых тяг и наконечников',
+                  'Замена ремня кондиционера',
+                  'Чистка форсунок топливной системы',
+                  'Замена рулевой рейки',
+                  'Замена трансмиссионного масла',
+                  'Замена ремня генератора',
+                  'Замена подшипников колес',
+                  'Чистка и обслуживание системы кондиционирования',
+                  'Замена топливного насоса',
+                  ]
