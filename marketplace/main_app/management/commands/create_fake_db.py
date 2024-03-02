@@ -14,9 +14,8 @@ class Command(BaseCommand):
         django.setup()
 
         cars_amount = 500
-        motors_amount = 300
-        services_amount = 50
-        insertcars(num=50, filename='cars_new')
+        motors_amount = 200
+        services_amount = 60
         insertcars(num=cars_amount)
         insertmotors(num=motors_amount)
         insertservices(num=services_amount)

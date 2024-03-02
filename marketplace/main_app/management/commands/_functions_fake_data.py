@@ -2,6 +2,7 @@ import os
 import random
 
 from django.utils.text import slugify
+from icecream import ic
 
 from main_app.models import Car, Motocycle, User, Service
 from ._fake_data import cars_brand_models, motors_brand_models, services_title
@@ -11,6 +12,21 @@ from marketplace.settings import BASE_DIR
 def users_id():
     users = User.objects.all()
     return [user.id for user in users]
+
+
+def russian_to_english_transliteration(russian_sentence):
+    # Define a mapping of Russian letters to their English equivalents
+    translit_map = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+        'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
+        'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+        'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+        'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+        'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+        'э': 'e', 'ю': 'yu', 'я': 'ya'
+    }
+
+    return ''.join(translit_map.get(letter, letter) for letter in russian_sentence.lower())
 
 
 def insertcars(num=20, filename='cars_mini'):
@@ -66,7 +82,7 @@ def insertservices(num=5):
         title = random.choice(services_title)
         is_available = random.choices((True, False), weights=[0.95, 0.05], k=1)[0]
         price = random.randint(5, 1_000)
-        slug = f'{title}-{price}-{in_charge}'
+        slug = russian_to_english_transliteration(f'{title}-{price}-{in_charge}')
         slug = slugify(slug)
         Service.objects.create(title=title, in_charge=in_charge, is_available=is_available,
                                slug=slug,
