@@ -1,0 +1,65 @@
+body {
+    background: #ADD8E6;
+
+}
+
+
+.form{
+    border: 5px solid  blue; /* Добавляем рамку с цветом midnightblue */
+   padding: 20px; /* Задаем отступ внутри рамки */
+   text-align: center;
+   border-radius: 25px;
+   margin: 200px;
+}
+
+.form ul {
+   list-style: none; /* Применяется к элементу списка внутри .form */
+}
+
+
+.form {
+    text-align: center; /* Центрируем содержимое по горизонтали */
+}
+
+.form2 a {
+    display: block; /* Размещаем каждую ссылку на новой строке */
+    margin-bottom: 10px; /* Добавляем отступ между ссылками */
+}
+
+/* Стилизация кнопок (пример) */
+.form2 a {
+    text-decoration: none; /* Убираем стандартное оформление ссылок */
+    background-color: #007BFF; /* Цвет фона для кнопок */
+    color: #fff; /* Цвет текста для кнопок */
+    padding: 10px 20px; /* Задаем отступы внутри кнопок */
+    border-radius: 5px; /* Закругляем углы кнопок */
+}
+
+.form2 a:hover {
+    background-color: #0056b3; /* Изменяем цвет фона при наведении курсора */
+}
+
+
+
+
+*{
+    padding: 0;
+    margin: 0;
+}
+.animated-background{
+    background:linear-gradient(to right, #833ab4, #fd1d1d , #fcb045);
+    background-size:400% 400%;
+    animation:animate-background 10s infinite ease-in-out;
+    height: 100vh;
+}
+@keyframes  animate-background{
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100%  50%;
+    }
+    100%{
+        background-position:0 50%;
+    }
+}

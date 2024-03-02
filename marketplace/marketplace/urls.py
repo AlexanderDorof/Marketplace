@@ -9,6 +9,9 @@ urlpatterns = [
     path('', include('main_app.urls')),
     path('registration/', include('register.urls')),
     path('api/', include('rest_api.urls')),
+    path('signals/', include('signals.urls')),
+    path('models/', include('custpanel.urls')),
+
 ]
 
 if DEBUG:

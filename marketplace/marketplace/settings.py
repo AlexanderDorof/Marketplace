@@ -28,8 +28,11 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
 
+
     # apps:
     'main_app',
+    'signals',
+    'custpanel',
     'crud_db',
     'register',
     'rest_api',
