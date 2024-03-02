@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'main_app',
     'signals',
     'custpanel',
-    'custpanel',
     'crud_db',
     'register',
     'rest_api',
