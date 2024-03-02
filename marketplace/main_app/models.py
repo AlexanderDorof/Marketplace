@@ -52,11 +52,11 @@ class Vehicle(models.Model):
 class Car(Vehicle):
     # consts
     BodyType = (('Sedan', 'Седан'), ('Hatchback', 'Хэтчбэк'), ('Pickup', 'Пикап'), ('Cabrio', 'Кабриолет'))
-    DriveType = (("Front", "Переднеприводный"), ("Back", "Заднеприводный"), ("Full", "Полноприводный"))
+    DriveType = (('Front', 'Переднеприводный'), ('Back', 'Заднеприводный'), ('Full', 'Полноприводный'))
 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
-    body_type = models.CharField(choices=BodyType, max_length=15, default="Sedan",
-                                 help_text="В соответствии с техпаспортом",
+    body_type = models.CharField(choices=BodyType, max_length=15, default='Sedan',
+                                 help_text='В соответствии с техпаспортом',
                                  verbose_name='Тип кузова')
     drive_type = models.CharField(choices=DriveType, max_length=15, default="Front", verbose_name='Тип привода')
     photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
@@ -105,11 +105,11 @@ class Item(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     description = models.TextField(blank=True, default='no description',
-                                   help_text="Для чего предназначено, опишите плюсы и минусы",
+                                   help_text='Для чего предназначено, опишите плюсы и минусы',
                                    verbose_name='Описание')
     guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
-                                help_text="В долларах ($)", verbose_name='Цена')
+                                help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Имеется в наличии')
 
     class Meta:
@@ -134,24 +134,24 @@ class Item_for_moto(Item):
         return f"{self.title}"
 
     class Meta:
-        verbose_name = "Доп для мотоцикла"
-        verbose_name_plural = "Допы для мотоцикла"
+        verbose_name = 'Доп для мотоцикла'
+        verbose_name_plural = 'Допы для мотоцикла'
 
 
 class Service(models.Model):
     # consts
-    Specialists = (("Smirnov", "Смирнов И.И."), ("Sidorov", "Сидоров А.К."))
+    Specialists = (('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
 
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     description = models.TextField(blank=True, default='no description',
-                                   help_text="Для чего предназначено, опишите плюсы и минусы",
+                                   help_text='Для чего предназначено, опишите плюсы и минусы',
                                    verbose_name='Описание')
     guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
-                                help_text="В долларах ($)", verbose_name='Цена')
+                                help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Доступно сейчас')
-    in_charge = models.CharField(max_length=255, default="Смирнов И.И.", verbose_name='Исполнитель')
+    in_charge = models.CharField(max_length=255, default="Smirnov", verbose_name='Исполнитель', choices=Specialists)
 
     # related models
     cars_service = models.ManyToManyField(Car, blank=True, verbose_name='Подходит для:')
