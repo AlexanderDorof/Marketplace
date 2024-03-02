@@ -1,4 +1,3 @@
-from icecream import ic
 from main_app.models import User
 
 

@@ -1,8 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-from icecream import ic
+
 from main_app.models import User as CustomUser
 from main_app.models import Favorite
 

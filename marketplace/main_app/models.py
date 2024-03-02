@@ -1,11 +1,11 @@
 from datetime import datetime
 
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
-from django.utils import timezone
 from django.contrib.auth.models import User as DjangoUser
+from django.utils import timezone
+from django.urls import reverse
+from django.db import models
 
 
 class Vehicle(models.Model):
