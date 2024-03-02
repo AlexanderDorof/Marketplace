@@ -10,7 +10,7 @@ urlpatterns = [
     path('registration/', include('register.urls')),
     path('api/', include('rest_api.urls')),
     path('signals/', include('signals.urls')),
-    path('models/', include('custpanel.urls')),
+    path('admin-panel/', include('custpanel.urls', namespace='admin-panel')),
 
 ]
 

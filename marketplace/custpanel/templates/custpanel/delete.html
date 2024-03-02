@@ -11,7 +11,7 @@
         <div class="form-column">
             <div class="formH">
                 <h2>Delete Car</h2>
-                <form method="post" action="{% url 'delete' %}">
+                <form method="post" action="{% url 'admin-panel:delete' %}">
                     {% csrf_token %}
                     <div class="form_centre">
                         <label for="car">Select a Car</label>
@@ -25,14 +25,14 @@
                     <br>
                     <button type="submit" class="btn">Delete Car</button>
                 </form>
-                <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
             </div>
         </div>
 
         <div class="form-column">
             <div class="formH">
                 <h2>Delete Motocycle</h2>
-                <form method="post" action="{% url 'delete' %}">
+                <form method="post" action="{% url 'admin-panel:delete' %}">
                     {% csrf_token %}
                     <input type="hidden" name="model_type" value="motocycle">
                     <div class="form_centre">
@@ -47,14 +47,14 @@
                     <br>
                     <button type="submit" class="btn">Delete Motocycle</button>
                 </form>
-                <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
             </div>
         </div>
 
         <div class="form-column">
             <div class="formH">
                 <h2>Delete Service</h2>
-                <form method="post" action="{% url 'delete' %}">
+                <form method="post" action="{% url 'admin-panel:delete' %}">
                     {% csrf_token %}
                     <input type="hidden" name="model_type" value="service">
                     <div class="form_centre">
@@ -69,14 +69,14 @@
                     <br>
                     <button type="submit" class="btn">Delete Service</button>
                 </form>
-                <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
             </div>
         </div>
 
         <div class="form-column">
             <div class="formH">
                 <h2>Delete User</h2>
-                <form method="post" action="{% url 'delete' %}">
+                <form method="post" action="{% url 'admin-panel:delete' %}">
                     {% csrf_token %}
                     <input type="hidden" name="model_type" value="user">
                     <div class="form_centre">
@@ -91,7 +91,7 @@
                     <br>
                     <button type="submit" class="btn">Delete User</button>
                 </form>
-                <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
             </div>
         </div>
     </div>

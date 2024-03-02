@@ -30,7 +30,7 @@
                     {{ form.photo.label_tag }} {{ form.photo }}<br>
                     {{ form.seller.label_tag }} {{ form.seller }}<br>
                     <button type="submit">Create</button><br>
-                    <a href="{% url 'models' %}" class="btn">Back to  Models</a>
+                    <a href="{% url 'admin-panel:models' %}" class="btn">Back to  Models</a>
                 </form>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     {{ motocycle_form.photo.label_tag }} {{ motocycle_form.photo }}<br>
                     {{ motocycle_form.seller.label_tag }} {{ motocycle_form.seller }}<br>
                     <button type="submit" name="Motocycle_create">Create</button><br>
-                    <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                    <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
                 </form>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     {{ service.cars_service.label_tag }} {{ service.cars_service }}<br>
                     {{ service.motorcycles_service.label_tag }} {{ service.motorcycles_service }}<br>
                     <button type="submit" name="Service_create">Create</button><br>
-                    <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                    <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
                 </form>
             </div>
         </div>
@@ -96,7 +96,7 @@
                     {{ user.favorite.label_tag }} {{ user.favorite }}<br>
                     {{ user.email.label_tag }} {{ user.email }}<br>
                     <button type="submit" name="User_create">Create</button><br>
-                    <a href="{% url 'models' %}" class="btn">Back to Models</a>
+                    <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
                 </form>
             </div>
         </div>
