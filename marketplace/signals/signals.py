@@ -1,9 +1,10 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from main_app.models import Car,Motocycle,Service
+from main_app.models import Car, Motocycle, Service
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
@@ -11,6 +12,7 @@ login = 'blackbloodyring@gmail.com'
 password = ''
 sender_email = login
 sender_password = password
+
 
 @receiver(post_save, sender=Car)
 def car_created(sender, instance, created, **kwargs):
@@ -35,6 +37,7 @@ def car_created(sender, instance, created, **kwargs):
             server.starttls()
             server.login(sender_email, sender_password)
             server.send_message(message)
+
 
 @receiver(post_save, sender=Motocycle)
 def Motocycle_created(sender, instance, created, **kwargs):
