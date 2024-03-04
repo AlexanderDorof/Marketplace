@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
 
-
     # apps:
     'main_app',
     'signals',
@@ -126,3 +125,36 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# REDIS conts
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+REDID_DB = 0
+
+# Celery - prefix with CELERY_
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDID_DB}'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_TRACK_STARTED = True
+
+# Email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.yandex.ru"  # add your own settings here
+EMAIL_PORT = "465"  # add your own settings here
+EMAIL_USE_SSL= True  # add your own settings here
+
+EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # add your own settings here
+EMAIL_HOST_PASSWORD = 'ygcntjgqcugypxix'  # add your own settings here
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # your email address
+EMAIL_SERVER = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+
+
+login_email = 'aleksandar.dorofeichik@yandex.ru'
+password = 'ygcntjgqcugypxix'
+recepient_email = 'venussd96@gmail.com'
