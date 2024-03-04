@@ -147,14 +147,9 @@ EMAIL_PORT = "465"  # add your own settings here
 EMAIL_USE_SSL= True  # add your own settings here
 
 EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # add your own settings here
-EMAIL_HOST_PASSWORD = 'ygcntjgqcugypxix'  # add your own settings here
+EMAIL_HOST_PASSWORD = ''  # add your own settings here
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # your email address
 EMAIL_SERVER = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
-
-
-login_email = 'aleksandar.dorofeichik@yandex.ru'
-password = 'ygcntjgqcugypxix'
-recepient_email = 'venussd96@gmail.com'
