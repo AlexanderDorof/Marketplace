@@ -51,6 +51,7 @@ class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
+        send_email_task.delay('message get')
         context = super().get_context_data(**kwargs)
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
