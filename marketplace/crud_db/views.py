@@ -22,6 +22,26 @@ class VehicleList(DataMixin, PaginationMixin, ListView):
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
         context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
+
+        page_number = context['items'].number
+        num_pages = context['items'].paginator.num_pages
+
+        context['page_range'] = [1]  # Всегда добавляем первую страницу
+
+        # Определяем диапазон страниц в зависимости от текущей страницы
+        if num_pages <= 7:
+            context['page_range'] += list(range(2, num_pages + 1))
+        elif page_number <= 3:
+            context['page_range'] += list(range(2, 5))
+            context['page_range'] += [None, num_pages]
+        elif page_number >= num_pages - 2:
+            context['page_range'] += [None, num_pages - 3]
+            context['page_range'] += list(range(num_pages - 2, num_pages + 1))
+        else:
+            context['page_range'] += [None, page_number - 2, page_number - 1, page_number]
+            context['page_range'] += list(range(page_number + 1, page_number + 3))
+            context['page_range'] += [None, num_pages]
+
         return context
 
 
