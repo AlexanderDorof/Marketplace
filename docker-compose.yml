@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  django:
+    container_name: django
+    build:
+      context: ./marketplace
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./marketplace:/usr/src/marketplace/
+    ports:
+      - 8000:8000
