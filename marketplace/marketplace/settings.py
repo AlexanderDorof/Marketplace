@@ -112,6 +112,11 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = []
 
+# for docker containers and deploing on server (works if DEBUG=False) otherwise static files are not loaded
+# STATIC_ROOT = ''
+# STATICFILES_DIRS = ['static',]
+
+
 # Media files: photos
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

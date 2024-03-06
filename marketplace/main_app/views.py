@@ -10,9 +10,6 @@ from .tasks import send_email_task
 
 
 def index(request):
-    from marketplace.settings import STATIC_ROOT, BASE_DIR
-    print(BASE_DIR)
-    print(STATIC_ROOT)
     context = funcmixin(request, title='Главная страница')
     return render(request, 'main_app/index.html', context=context)
 
