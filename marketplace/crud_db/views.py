@@ -90,7 +90,6 @@ class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     extra_context = {'title': 'Редактирование записи'}
     fields = '__all__'
     template_name = 'main_app/update.html'
-    # success_url = reverse_lazy('cars')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
