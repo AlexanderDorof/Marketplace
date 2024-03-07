@@ -34,6 +34,8 @@
                 <div><p><b>Мощность двигателя</b>: {{ item.engine_power }}</p></div>
                 <div><p><b>Цвет</b>: {{ item.color }}</p></div>
                 <div><p><b>Тип кузова</b>: {{ item.body_type }}</p></div>
+                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
+
             </div>
             </td>
         </tr>

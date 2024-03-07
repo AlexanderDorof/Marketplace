@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.paginator import Paginator
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 
 from .forms import *
 from .utils import PaginationMixin
@@ -10,6 +9,26 @@ def admin_home(request):
     context = {'title': 'Панель администратора'}
     return render(request, 'custpanel/index.html', context=context)
 
+# CREATE
+
+class AddItem(CreateView):
+    form_class = CarForm
+    template_name = 'custpanel/create.html'
+    extra_context = {'title': 'Создать объявление'}
+    login_url = 'register:login'
+    vehicle = 'sdf'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vehicle'] = self.vehicle
+        return context
+
+
+
+
+AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
+AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
+AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
 
 def create(request):
     form = CarForm()

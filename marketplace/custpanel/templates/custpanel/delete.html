@@ -1,100 +1,96 @@
+{% extends 'custpanel/base.html' %}
 {% load static %}
+{% block content %}
+<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning">Вернуться на главную</a>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{% static 'custpanel/css/blue_model.css' %}">
-    <title>Delete Model</title>
-</head>
-<body>
-    <div class="container">
-        <div class="form-column">
-            <div class="formH">
-                <h2>Delete Car</h2>
-                <form method="post" action="{% url 'admin-panel:delete' %}">
-                    {% csrf_token %}
-                    <div class="form_centre">
-                        <label for="car">Select a Car</label>
-                        <select name="car" id="car">
-                            {% for car in cars %}
-                                <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }} - ({{ car.seller.name }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-                    <br>
-                    <button type="submit" class="btn">Delete Car</button>
-                </form>
-                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
-            </div>
-        </div>
-
-        <div class="form-column">
-            <div class="formH">
-                <h2>Delete Motocycle</h2>
-                <form method="post" action="{% url 'admin-panel:delete' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="model_type" value="motocycle">
-                    <div class="form_centre">
-                        <label for="motocycle">Select a Motocycle</label>
-                        <select name="motocycle" id="motocycle">
-                            {% for motocycle in motocycles %}
-                                <option value="{{ motocycle.id }}">{{ motocycle.brand }} - {{ motocycle.model }} - ({{ motocycle.seller.name }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-                    <br>
-                    <button type="submit" class="btn">Delete Motocycle</button>
-                </form>
-                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
-            </div>
-        </div>
-
-        <div class="form-column">
-            <div class="formH">
-                <h2>Delete Service</h2>
-                <form method="post" action="{% url 'admin-panel:delete' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="model_type" value="service">
-                    <div class="form_centre">
-                        <label for="service">Select a Service</label>
-                        <select name="service" id="service">
-                            {% for s in service %}
-                                <option value="{{ s.id }}">{{ s.title }} </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-                    <br>
-                    <button type="submit" class="btn">Delete Service</button>
-                </form>
-                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
-            </div>
-        </div>
-
-        <div class="form-column">
-            <div class="formH">
-                <h2>Delete User</h2>
-                <form method="post" action="{% url 'admin-panel:delete' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="model_type" value="user">
-                    <div class="form_centre">
-                        <label for="user">Select a User</label>
-                        <select name="user" id="user">
-                            {% for user_instance in users %}
-                                <option value="{{ user_instance.id }}">{{ user_instance.name }} - {{ user_instance.second_name }} - {{ user_instance.surname }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-                    <br>
-                    <button type="submit" class="btn">Delete User</button>
-                </form>
-                <a href="{% url 'admin-panel:models' %}" class="btn">Back to Models</a>
-            </div>
+<div class="container">
+    <div class="form-column">
+        <div class="formH">
+            <h2>Delete Car</h2>
+            <form method="post" action="{% url 'admin-panel:delete' %}">
+                {% csrf_token %}
+                <div class="form_centre">
+                    <label for="car">Select a Car</label>
+                    <select name="car" id="car">
+                        {% for car in cars %}
+                        <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }} - ({{ car.seller.name }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-danger">Delete Car</button>
+            </form>
         </div>
     </div>
 
-</body>
-</html>
+    <div class="form-column">
+        <div class="formH">
+            <h2>Delete Motocycle</h2>
+            <form method="post" action="{% url 'admin-panel:delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="model_type" value="motocycle">
+                <div class="form_centre">
+                    <label for="motocycle">Select a Motocycle</label>
+                    <select name="motocycle" id="motocycle">
+                        {% for motocycle in motocycles %}
+                        <option value="{{ motocycle.id }}">{{ motocycle.brand }} - {{ motocycle.model }} - ({{
+                            motocycle.seller.name }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-danger">Delete Motocycle</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-column">
+        <div class="formH">
+            <h2>Delete Service</h2>
+            <form method="post" action="{% url 'admin-panel:delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="model_type" value="service">
+                <div class="form_centre">
+                    <label for="service">Select a Service</label>
+                    <select name="service" id="service">
+                        {% for s in service %}
+                        <option value="{{ s.id }}">{{ s.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-danger">Delete Service</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-column">
+        <div class="formH">
+            <h2>Delete User</h2>
+            <form method="post" action="{% url 'admin-panel:delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="model_type" value="user">
+                <div class="form_centre">
+                    <label for="user">Select a User</label>
+                    <select name="user" id="user">
+                        {% for user_instance in users %}
+                        <option value="{{ user_instance.id }}">{{ user_instance.name }} - {{ user_instance.second_name
+                            }} - {{ user_instance.surname }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-danger">Delete User</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
