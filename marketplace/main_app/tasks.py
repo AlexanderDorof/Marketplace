@@ -16,7 +16,7 @@ def send_email_task(self, message):
     time.sleep(5)
     print(logger)
     logger.info("About to send_mail")
-    send_mail('test subject', p, DEFAULT_FROM_EMAIL, [recepient_email], fail_silently=False)
+    # send_mail('test subject', p, DEFAULT_FROM_EMAIL, [recepient_email], fail_silently=False)
     return "wonderful"
     # logger.info(f"from={DEFAULT_FROM_EMAIL}, {to=}, {subject=}, {message=}")
     # try:
