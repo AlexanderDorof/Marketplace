@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from icecream import ic
 
 from main_app.forms import AddCarForm, AddMotoForm
 from main_app.models import *
@@ -22,25 +23,8 @@ class VehicleList(DataMixin, PaginationMixin, ListView):
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
         context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
-
-        page_number = context['items'].number
-        num_pages = context['items'].paginator.num_pages
-
-        context['page_range'] = [1]  # Всегда добавляем первую страницу
-
-        # Определяем диапазон страниц в зависимости от текущей страницы
-        if num_pages <= 7:
-            context['page_range'] += list(range(2, num_pages + 1))
-        elif page_number <= 3:
-            context['page_range'] += list(range(2, 5))
-            context['page_range'] += [None, num_pages]
-        elif page_number >= num_pages - 2:
-            context['page_range'] += [None, num_pages - 3]
-            context['page_range'] += list(range(num_pages - 2, num_pages + 1))
-        else:
-            context['page_range'] += [None, page_number - 2, page_number - 1, page_number]
-            context['page_range'] += list(range(page_number + 1, page_number + 3))
-            context['page_range'] += [None, num_pages]
+        context['page_range'] = self.paginate_page_range(total_pages=context['items'].paginator.num_pages,
+                                                         page_number=context['items'].number)
 
         return context
 
@@ -79,7 +63,7 @@ class AddItem(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCarForm
     template_name = 'main_app/publish.html'
     extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
-    login_url = "register:login"
+    login_url = 'register:login'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,9 +88,8 @@ AddMoto = type('AddMoto', (AddItem,), {'form_class': AddMotoForm, 'vehicle': 'м
 
 class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     extra_context = {'title': 'Редактирование записи'}
-    fields = "__all__"
+    fields = '__all__'
     template_name = 'main_app/update.html'
-
     # success_url = reverse_lazy('cars')
 
     def get_context_data(self, **kwargs):
