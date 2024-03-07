@@ -51,11 +51,13 @@ class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
-        send_email_task.delay('message get')
+        # send_email_task.delay('message get')
         context = super().get_context_data(**kwargs)
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
         context['items'] = self.paginated_object(queryset=self.get_queryset())
+        context['page_range'] = self.paginate_page_range(total_pages=context['items'].paginator.num_pages,
+                                                         page_number=context['items'].number)
         return context
 
     def get_queryset(self):
