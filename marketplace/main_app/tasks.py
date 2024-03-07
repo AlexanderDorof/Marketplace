@@ -1,15 +1,15 @@
 import time
 
-from marketplace.celery import app
+from django.core.mail import send_mail, BadHeaderError
 from celery.utils.log import get_task_logger
 
-from django.core.mail import send_mail, BadHeaderError
 from marketplace.settings import DEFAULT_FROM_EMAIL, recepient_email
-
+from marketplace.celery import app
 
 logger = get_task_logger(__name__)
 p = f'From: {DEFAULT_FROM_EMAIL}\nTo: {recepient_email}\nSubject: {123231}\n\ntest message'
 
+# send_email_task.delay('message get')
 @app.task(bind=True)
 def send_email_task(self, message):
     print("task executed", message)
