@@ -35,6 +35,7 @@
                 <div><p><b>Цвет</b>: {{ item.color }}</p></div>
                 <div><p><b>Тип кузова</b>: {{ item.body_type }}</p></div>
                 <div><p><b>Тип привода</b>: {{ item.drive_type }}</p></div>
+                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
             </div>
             </td>
         </tr>

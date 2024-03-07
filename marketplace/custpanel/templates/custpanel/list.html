@@ -1,8 +1,9 @@
 {% extends 'custpanel/base.html' %}
-{% load simple_tags %}
+
 
 {% block content %}
     <h1 class="text-center">{{ title }}</h1>
+    <a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning">Вернуться на главную</a>
     {% include 'custpanel/pagination.html' %}
 <div class="container">
 
