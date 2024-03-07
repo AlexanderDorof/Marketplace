@@ -36,7 +36,7 @@ def add_to_favorite(request):
         else:
             moto_instance = Motocycle.objects.get(pk=item_pk)
             user.favorite.favorite_moto.remove(moto_instance)
-    return JsonResponse({"image": "/static/static_imgs/heart-icon.svg", "pk": item_pk})
+    return JsonResponse({'image': '/static/static_imgs/heart-icon.svg', 'pk': item_pk})
 
 
 def contacts(request):
@@ -47,11 +47,10 @@ def contacts(request):
 class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
     extra_context = {'title': 'Избранное', 'item_name': 'main_app/vehicle.html'}
     template_name = 'main_app/cards.html'
-    login_url = "register:login"
+    login_url = 'register:login'
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
-        send_email_task.delay('message get')
         context = super().get_context_data(**kwargs)
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}

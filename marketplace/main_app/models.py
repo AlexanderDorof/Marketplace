@@ -60,13 +60,13 @@ class Car(Vehicle):
                                  verbose_name='Тип кузова')
     drive_type = models.CharField(choices=DriveType, max_length=15, default="Front", verbose_name='Тип привода')
     photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
-                              default="default_pic/no_image_available.jpg")
+                              default='default_pic/no_image_available.jpg')
 
     # related models
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
 
     def __str__(self):
-        return f"{self.brand} {self.model} {self.year_produced}"
+        return f'{self.brand} {self.model} {self.year_produced}'
 
     def get_absolute_url(self):
         return reverse('car_url', kwargs={'slug': self.slug})
@@ -78,11 +78,11 @@ class Car(Vehicle):
 
 class Motocycle(Vehicle):
     # consts
-    BodyType = (("Sport", "Спортивный"), ("Classic", "Классический"))
+    BodyType = (('Sport', 'Спортивный'), ('Classic', 'Классический'))
 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     body_type = models.CharField(choices=BodyType, max_length=15, default="Sport",
-                                 help_text="В соответствии с техпаспортом",
+                                 help_text='В соответствии с техпаспортом',
                                  verbose_name='Типы')
     photo = models.ImageField(blank=True, upload_to='photos/motos/%Y/%m/%d',
                               default='default_pic/no_image_available.jpg')
@@ -97,8 +97,8 @@ class Motocycle(Vehicle):
         return reverse('moto_url', kwargs={'slug': self.slug})
 
     class Meta:
-        verbose_name = "Мотоцикл"
-        verbose_name_plural = "Мотоциклы"
+        verbose_name = 'Мотоцикл'
+        verbose_name_plural = 'Мотоциклы'
 
 
 class Item(models.Model):

@@ -68,7 +68,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'marketplace.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -78,7 +77,6 @@ DATABASES = {
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -96,7 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -131,8 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-# REDIS conts
+# REDIS consts
 REDIS_HOST = 'redis'
+# REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'
 REDID_DB = 0
 
@@ -146,15 +144,16 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
 
 # Email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.yandex.ru"  # add your own settings here
-EMAIL_PORT = "465"  # add your own settings here
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'  # yandex is used as email host
+EMAIL_PORT = '465'  # yandex requires 465 port because it uses SSL (587 port is used for TLS protocol)
 EMAIL_USE_SSL = True  # add your own settings here
 
-EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # add your own settings here
-EMAIL_HOST_PASSWORD = ''  # add your own settings here
+EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # my email address on yandex
+EMAIL_HOST_PASSWORD = ''  # password
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # your email address
+# environment variables - without'em django smtp protocol doesn't work
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # my email address
 EMAIL_SERVER = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
