@@ -1,14 +1,19 @@
 {% extends 'custpanel/base.html' %}
 {% block content %}
 <div class="form">
-        <h2>Models</h2>
-        <div class="form2">
-            <a href="{% url 'admin-panel:list' %}" class="btn btn-primary">List  Models </a>
-            <a href="{% url 'admin-panel:create' %}" class="btn btn-primary">Create  Models</a>
-            <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Delete  Models </a>
-            <a href="{% url 'admin-panel:change' %}" class="btn btn-primary">Change  Models </a>
-            <br>
+    <h2>{{title}}</h2>
+    <p>Выберите категорию</p>
+    <div class="form2">
+        <div class="container">
+            <a href="{% url 'admin-panel:list-cars' %}" class="btn btn-primary">Список машин</a>
+            <a href="{% url 'admin-panel:list-motorcycles' %}" class="btn btn-primary">Список мотоциклов</a>
+            <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary">Список Услуг</a>
         </div>
-        <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на сайт</a>
+        <a href="{% url 'admin-panel:create' %}" class="btn btn-primary">Create Models</a>
+        <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Delete Models </a>
+        <a href="{% url 'admin-panel:change' %}" class="btn btn-primary">Change Models </a>
+        <br>
+    </div>
+    <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на сайт</a>
 </div>
 {% endblock %}
