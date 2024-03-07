@@ -1,0 +1,42 @@
+<table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Фото</th>
+            <th>Год выпуска</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.brand }}</td>
+            <td>{{ item.model }}</td>
+            <td><img src="{{ item.photo.url }}" class="flower-image"></td>
+            <td>{{ item.year_produced }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo-{{ forloop.counter }}">Развернуть</button>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="7">
+            <div id="demo-{{ forloop.counter }}" class="collapse">
+                <div><p><b>Описание</b>: {{ item.description }}</p></div>
+                <div><p><b>Пробег</b>: {{ item.distance }}</p></div>
+                <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
+                <div><p><b>Тип двигателя</b>: {{ item.engine_type }}</p></div>
+                <div><p><b>Мощность двигателя</b>: {{ item.engine_power }}</p></div>
+                <div><p><b>Цвет</b>: {{ item.color }}</p></div>
+                <div><p><b>Тип кузова</b>: {{ item.body_type }}</p></div>
+            </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>

@@ -11,7 +11,9 @@ urlpatterns = [
     path('create/', create, name='create'),
     path('delete/', delete, name='delete'),
     path('change/', change, name='change'),
-    path('list/', CarsList.as_view(), name='list'),
+    path('list/cars/', CarsList.as_view(), name='list-cars'),
+    path('list/motorcycles/', MotorcyclesList.as_view(), name='list-motorcycles'),
+    path('list/services/', ServicesList.as_view(), name='list-services'),
 
 ]
 
