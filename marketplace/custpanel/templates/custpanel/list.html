@@ -1,112 +1,54 @@
-{% load static %}
+{% extends 'custpanel/base.html' %}
+{% load simple_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{% static 'custpanel/css/list.css' %}">
-    <title>Car Models List</title>
-</head>
-<body class="car-container">
-<table class="car-table">
-    <thead>
-    <h1>Car Models List</h1>
-    <tr>
-        <th>#</th>
-        <th>Марка</th>
-        <th>Модель</th>
-        <th>Картинка</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for el in cars_page %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ el.brand }}</td>
-        <td>{{ el.model }}</td>
-        <td><img src="{{ el.photo.url }}" class="flower-image"></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% include 'custpanel/pagination.html' with page=cars_page %}
+{% block content %}
+    <h1 class="text-center">{{ title }}</h1>
+    {% include 'custpanel/pagination.html' %}
+<div class="container">
 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Фото</th>
+            <th>Год выпуска</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.brand }}</td>
+            <td>{{ item.model }}</td>
+            <td><img src="{{ item.photo.url }}" class="flower-image"></td>
+            <td>{{ item.year_produced }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo-{{ forloop.counter }}">Развернуть</button>
+            </td>
 
+        </tr>
+        <tr>
+            <td colspan="7">
+            <div id="demo-{{ forloop.counter }}" class="collapse">
+                <div><p><b>Описание</b>: {{ item.description }}</p></div>
+                <div><p><b>Пробег</b>: {{ item.distance }}</p></div>
+                <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
+                <div><p><b>Тип двигателя</b>: {{ item.engine_type }}</p></div>
+                <div><p><b>Мощность двигателя</b>: {{ item.engine_power }}</p></div>
+                <div><p><b>Цвет</b>: {{ item.color }}</p></div>
+            </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<table class="car-table">
-    <thead>
-    <h1>Motocycle Models List</h1>
-    <tr>
-        <th>#</th>
-        <th>Марка</th>
-        <th>Модель</th>
-        <th>Картинка</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for motocycle in motocycles %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ motocycle.brand }}</td>
-        <td>{{ motocycle.model }}</td>
-        <td><img src="{{ motocycle.photo.url }}" class="flower-image"></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% include 'custpanel/pagination.html' with page=motocycles_page %}
-
-<table class="car-table">
-    <thead>
-    <h1>Service Models List</h1>
-    <tr>
-        <th>#</th>
-        <th>Название</th>
-        <th>Цена</th>
-        <th>Гарантийный срок</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for service in service %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ service.title }}</td>
-        <td>{{ service.price }}</td>
-        <td>{{ service.guarantee }}</td>
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% include 'custpanel/pagination.html' with page=service_page %}
-
-<table class="car-table">
-    <thead>
-    <h1>Service Models User</h1>
-    <tr>
-        <th>#</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Отчество</th>
-        <th>email</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in user %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.surname }}</td>
-        <td>{{ user.second_name }}</td>
-        <td>{{ user.email }}</td>
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% include 'custpanel/pagination.html' with page=users_page %}
-
-
-</body>
-</html>
+</div>
+{% include 'custpanel/pagination.html' %}
+{% endblock %}
 
