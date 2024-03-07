@@ -10,7 +10,7 @@ from django.db import models
 
 class Vehicle(models.Model):
     # consts
-    ColorsType = (
+    COLOR_STYPE = (
         ('red', 'Red'),
         ('blue', 'Blue'),
         ('green', 'Green'),
@@ -22,7 +22,7 @@ class Vehicle(models.Model):
         ('gray', 'Gray'),
         ('teal', 'Teal'),
     )
-    EngineType = (('Electricity', 'Электромобиль'), ('Oil', 'ДВС'))
+    ENGINE_TYPE = (('Electricity', 'Электромобиль'), ('Oil', 'ДВС'))
 
     brand = models.CharField(max_length=50, verbose_name='Марка')
     model = models.CharField(max_length=25, verbose_name='Модель')
@@ -36,11 +36,11 @@ class Vehicle(models.Model):
                                                                  MinValueValidator(1900)],
                                                      verbose_name='Год выпуска')
     guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
-    engine_type = models.CharField(choices=EngineType, max_length=15, default='Oil',
+    engine_type = models.CharField(choices=ENGINE_TYPE, max_length=15, default='Oil',
                                    help_text='ДВС или электрокар', verbose_name='Тип двигателя')
     engine_power = models.PositiveSmallIntegerField(help_text='В лошадиных силах(л/с)', default=1600,
                                                     verbose_name='Мощность двигателя')
-    color = models.CharField(blank=True, choices=ColorsType, max_length=15, default='red',
+    color = models.CharField(blank=True, choices=COLOR_STYPE, max_length=15, default='red',
                              help_text='В соответствии с техпаспортом',
                              verbose_name='Цвет')
     price = models.PositiveSmallIntegerField(default=1000, help_text='В долларах ($)', verbose_name='Цена')
@@ -51,14 +51,14 @@ class Vehicle(models.Model):
 
 class Car(Vehicle):
     # consts
-    BodyType = (('Sedan', 'Седан'), ('Hatchback', 'Хэтчбэк'), ('Pickup', 'Пикап'), ('Cabrio', 'Кабриолет'))
-    DriveType = (('Front', 'Переднеприводный'), ('Back', 'Заднеприводный'), ('Full', 'Полноприводный'))
+    BODY_TYPE = (('Sedan', 'Седан'), ('Hatchback', 'Хэтчбэк'), ('Pickup', 'Пикап'), ('Cabrio', 'Кабриолет'))
+    DRIVE_TYPE = (('Front', 'Переднеприводный'), ('Back', 'Заднеприводный'), ('Full', 'Полноприводный'))
 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
-    body_type = models.CharField(choices=BodyType, max_length=15, default='Sedan',
+    body_type = models.CharField(choices=BODY_TYPE, max_length=15, default='Sedan',
                                  help_text='В соответствии с техпаспортом',
                                  verbose_name='Тип кузова')
-    drive_type = models.CharField(choices=DriveType, max_length=15, default="Front", verbose_name='Тип привода')
+    drive_type = models.CharField(choices=DRIVE_TYPE, max_length=15, default="Front", verbose_name='Тип привода')
     photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
                               default='default_pic/no_image_available.jpg')
 
@@ -78,10 +78,10 @@ class Car(Vehicle):
 
 class Motocycle(Vehicle):
     # consts
-    BodyType = (('Sport', 'Спортивный'), ('Classic', 'Классический'))
+    BODY_TYPE = (('Sport', 'Спортивный'), ('Classic', 'Классический'))
 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
-    body_type = models.CharField(choices=BodyType, max_length=15, default="Sport",
+    body_type = models.CharField(choices=BODY_TYPE, max_length=15, default="Sport",
                                  help_text='В соответствии с техпаспортом',
                                  verbose_name='Типы')
     photo = models.ImageField(blank=True, upload_to='photos/motos/%Y/%m/%d',
@@ -120,18 +120,18 @@ class Item_for_car(Item):
     car_fit = models.ManyToManyField(Car, verbose_name='Подходит для:')
 
     def __str__(self):
-        return f"{self.title}"
+        return f'{self.title}'
 
     class Meta:
-        verbose_name = "Доп для машины"
-        verbose_name_plural = "Допы для машины"
+        verbose_name = 'Доп для машины'
+        verbose_name_plural = 'Допы для машины'
 
 
 class Item_for_moto(Item):
     moto_fit = models.ManyToManyField(Motocycle, verbose_name='Подходит для:')
 
     def __str__(self):
-        return f"{self.title}"
+        return f'{self.title}'
 
     class Meta:
         verbose_name = 'Доп для мотоцикла'
@@ -140,7 +140,8 @@ class Item_for_moto(Item):
 
 class Service(models.Model):
     # consts
-    Specialists = (('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
+    SPECIALISTS = (
+    ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
 
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
@@ -151,18 +152,18 @@ class Service(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
                                 help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Доступно сейчас')
-    in_charge = models.CharField(max_length=255, default="Smirnov", verbose_name='Исполнитель', choices=Specialists)
+    in_charge = models.CharField(max_length=255, default="Smirnov", verbose_name='Исполнитель', choices=SPECIALISTS)
 
     # related models
     cars_service = models.ManyToManyField(Car, blank=True, verbose_name='Подходит для:')
     motorcycles_service = models.ManyToManyField(Motocycle, blank=True, verbose_name='Подходит для:')
 
     def __str__(self):
-        return f"{self.title}"
+        return f'{self.title}'
 
     class Meta:
-        verbose_name = "Услуга"
-        verbose_name_plural = "Услуги"
+        verbose_name = 'Услуга'
+        verbose_name_plural = 'Услуги'
 
     def get_absolute_url(self):
         return reverse('service_url', kwargs={'slug': self.slug})
@@ -174,7 +175,7 @@ class User(models.Model):
     surname = models.CharField(max_length=255, verbose_name='Фамилия')
     age = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(120)],
                                            verbose_name='Возраст')
-    photo = models.ImageField(blank=True, upload_to="photos/users/%Y/%m/%d",
+    photo = models.ImageField(blank=True, upload_to='photos/users/%Y/%m/%d',
                               default="default_pic/no_image_available.jpg")
     date_registration = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
@@ -189,8 +190,8 @@ class User(models.Model):
         return f"{self.surname} {self.name} {self.second_name if self.second_name else ''}"
 
     class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
 
 class Favorite(models.Model):
@@ -201,10 +202,10 @@ class Favorite(models.Model):
         """if user created in admin panel and no favorite instance is associated with it - exception is raised"""
         try:
             user = User.objects.get(favorite__pk=self.pk)
-            return f"Избранное: {user}"
+            return f'Избранное: {user}'
         except ObjectDoesNotExist:
             return f"{self.pk}"
 
     class Meta:
-        verbose_name = "Список избранного"
-        verbose_name_plural = "Списки избранного"
+        verbose_name = 'Список избранного'
+        verbose_name_plural = 'Списки избранного'

@@ -1,18 +1,28 @@
 from django.urls import path
+
 from .views import *
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 app_name = 'admin-panel'
 
 urlpatterns = [
 
-    path('', models, name='models'),
-    path('create/', create, name='create'),
+    path('', admin_home, name='admin_home'),
+
+    # display list
+    path('list/cars/', CarsList.as_view(), name='list-cars'),
+    path('list/motorcycles/', MotorcyclesList.as_view(), name='list-motorcycles'),
+    path('list/services/', ServicesList.as_view(), name='list-services'),
+
+    # publish item
+    path('create/car/', AddCar.as_view(), name='create-car'),
+    path('create/motorcycle/', AddMoto.as_view(), name='create-motorcycle'),
+    path('create/service/', AddService.as_view(), name='create-service'),
+
+
     path('delete/', delete, name='delete'),
     path('change/', change, name='change'),
-    path('list/', list, name='list'),
+
 
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

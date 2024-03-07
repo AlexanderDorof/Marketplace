@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from icecream import ic
 
 from main_app.forms import AddCarForm, AddMotoForm
 from main_app.models import *
@@ -22,6 +23,9 @@ class VehicleList(DataMixin, PaginationMixin, ListView):
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
         context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
+        context['page_range'] = self.paginate_page_range(total_pages=context['items'].paginator.num_pages,
+                                                         page_number=context['items'].number)
+
         return context
 
 
@@ -59,7 +63,7 @@ class AddItem(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCarForm
     template_name = 'main_app/publish.html'
     extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
-    login_url = "register:login"
+    login_url = 'register:login'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -84,10 +88,8 @@ AddMoto = type('AddMoto', (AddItem,), {'form_class': AddMotoForm, 'vehicle': 'м
 
 class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     extra_context = {'title': 'Редактирование записи'}
-    fields = "__all__"
+    fields = '__all__'
     template_name = 'main_app/update.html'
-
-    # success_url = reverse_lazy('cars')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
