@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = secretkeys.SECRET_KEY
 
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_filters',
     'rest_framework',
-
 
     # apps:
     'main_app',
@@ -69,7 +68,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'marketplace.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -79,7 +77,6 @@ DATABASES = {
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -97,7 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -113,6 +109,11 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = []
 
+# for docker containers and deploing on server (works if DEBUG=False) otherwise static files are not loaded
+# STATIC_ROOT = ''
+# STATICFILES_DIRS = ['static',]
+
+
 # Media files: photos
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -126,3 +127,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# REDIS consts
+REDIS_HOST = 'redis'
+# REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+REDID_DB = 0
+
+# Celery - prefix with CELERY_
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDID_DB}'  # redis://redis:6379/0
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_TRACK_STARTED = True
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'  # yandex is used as email host
+EMAIL_PORT = '465'  # yandex requires 465 port because it uses SSL (587 port is used for TLS protocol)
+EMAIL_USE_SSL = True  # add your own settings here
+
+EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # my email address on yandex
+EMAIL_HOST_PASSWORD = ''  # password
+
+# environment variables - without'em django smtp protocol doesn't work
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # my email address
+EMAIL_SERVER = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+recepient_email = EMAIL_HOST_USER

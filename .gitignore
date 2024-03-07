@@ -64,6 +64,7 @@ local_settings.py
 db.sqlite3-journal
  marketplace/media/photos/cars/2024/
  marketplace/media/photos/motos/2024/
+ marketplace/static/
 # marketplace/media/photos/
 # Flask stuff:
 instance/

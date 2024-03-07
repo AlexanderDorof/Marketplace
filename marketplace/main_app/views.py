@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 from .utils import *
+from .tasks import send_email_task
 
 
 
@@ -35,7 +36,7 @@ def add_to_favorite(request):
         else:
             moto_instance = Motocycle.objects.get(pk=item_pk)
             user.favorite.favorite_moto.remove(moto_instance)
-    return JsonResponse({"image": "/static/static_imgs/heart-icon.svg", "pk": item_pk})
+    return JsonResponse({'image': '/static/static_imgs/heart-icon.svg', 'pk': item_pk})
 
 
 def contacts(request):
@@ -46,7 +47,7 @@ def contacts(request):
 class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
     extra_context = {'title': 'Избранное', 'item_name': 'main_app/vehicle.html'}
     template_name = 'main_app/cards.html'
-    login_url = "register:login"
+    login_url = 'register:login'
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
