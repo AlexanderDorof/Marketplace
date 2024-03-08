@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
+from django.forms import FileInput, NumberInput, TextInput
 
 from main_app.models import User as CustomUser
 from main_app.models import Favorite
@@ -32,3 +32,14 @@ class UserRegistrationForm(forms.ModelForm):
         return user
 
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['name', 'second_name', 'surname', 'age', 'photo']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control'}),
+            'second_name': TextInput(attrs={'class': 'form-control'}),
+            'surname': TextInput(attrs={'class': 'form-control'}),
+            'age': NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'photo': FileInput(attrs={'class': 'form-control form-control-lg'}),
+        }

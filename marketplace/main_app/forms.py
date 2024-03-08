@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import Textarea, FileInput, Select, NumberInput, Widget, TextInput
+from django.forms import Textarea, FileInput, Select, NumberInput, TextInput
 
 from .models import *
 
