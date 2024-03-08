@@ -60,7 +60,7 @@ class Car(Vehicle):
                                  verbose_name='Тип кузова')
     drive_type = models.CharField(choices=DRIVE_TYPE, max_length=15, default="Front", verbose_name='Тип привода')
     photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
-                              default='default_pic/no_image_available.jpg')
+                              default='default_pic/no_image_available.jpg', verbose_name='Фотография')
 
     # related models
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
@@ -85,7 +85,7 @@ class Motocycle(Vehicle):
                                  help_text='В соответствии с техпаспортом',
                                  verbose_name='Типы')
     photo = models.ImageField(blank=True, upload_to='photos/motos/%Y/%m/%d',
-                              default='default_pic/no_image_available.jpg')
+                              default='default_pic/no_image_available.jpg', verbose_name='Фотография')
 
     # related models
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
@@ -176,7 +176,7 @@ class User(models.Model):
     age = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(120)],
                                            verbose_name='Возраст')
     photo = models.ImageField(blank=True, upload_to='photos/users/%Y/%m/%d',
-                              default="default_pic/no_image_available.jpg")
+                              default="default_pic/no_image_available.jpg", verbose_name='Фотография')
     date_registration = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
