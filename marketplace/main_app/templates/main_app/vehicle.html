@@ -1,6 +1,8 @@
 {% load static %}
 {% load simple_tags %}
-{% in_favorite item user.pk as fav %}
+{% if is_authenticated %}
+    {% in_favorite item user.pk as fav %}
+{% endif %}
 <div class="col-lg-4 col-md-6 p-4">
     <div class="my_card card border-primary rounded custom-shadow">
         <a href="{{ item.get_absolute_url }}">
