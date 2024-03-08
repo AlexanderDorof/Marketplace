@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView
 
 from .forms import *
+from .permissions import AdminPermissionsMixin
 from .utils import PaginationMixin
 
 
@@ -11,7 +12,7 @@ def admin_home(request):
 
 # CREATE
 
-class AddItem(CreateView):
+class AddItem(AdminPermissionsMixin, CreateView):
     form_class = CarForm
     template_name = 'custpanel/create.html'
     extra_context = {'title': 'Создать объявление'}
@@ -30,39 +31,6 @@ AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'авто
 AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
 AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
 
-def create(request):
-    form = CarForm()
-    motocycle_form = MotocycleForm()
-    service_form = ServiceForm()
-    user_form = UserForm()
-
-    if request.method == 'POST':
-        form = CarForm(request.POST)
-        motocycle_form = MotocycleForm(request.POST)
-        service_form = ServiceForm(request.POST)
-        user_form = UserForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('admin_home')
-
-        if motocycle_form.is_valid() and 'Motocycle_create' in request.POST:
-            motocycle_form.save()
-            return redirect('admin_home')
-
-        if service_form.is_valid() and 'Service_create' in request.POST:
-            service_form.save()
-            return redirect('admin_home')
-
-        if user_form.is_valid() and 'User_create' in request.POST:
-            user_form.save()
-            print("User created successfully!")  # Отладочное сообщение
-            return redirect('admin_home')
-        else:
-            print("User form is not valid:", user_form.errors)  # Отладочное сообщение об ошибке
-
-    return render(request, 'custpanel/create.html',
-                  {'form': form, 'motocycle_form': motocycle_form, 'service': service_form, 'user': user_form})
 
 
 def delete(request):
@@ -152,7 +120,7 @@ def change(request):
 
 
 # display from db
-class VehicleList(PaginationMixin, ListView):
+class VehicleList(AdminPermissionsMixin, PaginationMixin, ListView):
     template_name = 'custpanel/list.html'
     paginate_by = 20
     item_name = 'custpanel/list/list-cars.html'

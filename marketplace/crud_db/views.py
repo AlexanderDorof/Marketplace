@@ -38,6 +38,8 @@ ServicesList = type('ServicesList', (VehicleList,),
 class ItemDetailView(DataMixin, DetailView):
     template_name = 'main_app/item_description.html'
     context_object_name = 'item'
+    edit_ref = ''
+    delete_ref = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,7 +55,7 @@ CarDetailView = type('CarDetailList', (ItemDetailView,),
                      {'model': Car, 'edit_ref': 'edit_car', 'delete_ref': 'delete_car'})
 MotoDetailView = type('MotoDetailView', (ItemDetailView,),
                       {'model': Motocycle, 'edit_ref': 'edit_moto', 'delete_ref': 'delete_moto'})
-ServiceDetailView = type('MotoDetailView', (ItemDetailView,), {'model': Service, 'title': 'Описание услуги',
+ServiceDetailView = type('ServiceDetailView', (ItemDetailView,), {'model': Service, 'title': 'Описание услуги',
                                                                'template_name': 'main_app/service_description.html'})
 
 
