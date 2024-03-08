@@ -1,7 +1,8 @@
 from django.urls import path
+
 from .views import (
     CarListCreateView, CarDetailView, CarUpdateView, CarDeleteView,
-    MotocycleListCreateView, MotocycleDetailView, MotocycleUpdateView, MotocycleDeleteView,
+    MotorcycleListCreateView, MotorcycleDetailView, MotorcycleUpdateView, MotorcycleDeleteView,
     ServiceListCreateView, ServiceDetailView, ServiceUpdateView, ServiceDeleteView,
     UserListCreateView, UserDetailView
 )
@@ -14,10 +15,10 @@ urlpatterns = [
     path('cars/update/<slug:slug>/', CarUpdateView.as_view(), name='car-update'),
     path('cars/delete/<slug:slug>/', CarDeleteView.as_view(), name='car-delete'),
 
-    path('motocycles/', MotocycleListCreateView.as_view(), name='moto-list-create'),
-    path('motocycles/<slug:slug>/', MotocycleDetailView.as_view(), name='moto-detail'),
-    path('motocycles/update/<slug:slug>/', MotocycleUpdateView.as_view(), name='moto-update'),
-    path('motocycles/delete/<slug:slug>/', MotocycleDeleteView.as_view(), name='moto-delete'),
+    path('motorcycles/', MotorcycleListCreateView.as_view(), name='moto-list-create'),
+    path('motorcycles/<slug:slug>/', MotorcycleDetailView.as_view(), name='moto-detail'),
+    path('motorcycles/update/<slug:slug>/', MotorcycleUpdateView.as_view(), name='moto-update'),
+    path('motorcycles/delete/<slug:slug>/', MotorcycleDeleteView.as_view(), name='moto-delete'),
 
     path('services/', ServiceListCreateView.as_view(), name='service-list-create'),
     path('services/<slug:slug>/', ServiceDetailView.as_view(), name='service-detail'),
