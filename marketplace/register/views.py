@@ -5,13 +5,13 @@ from django.views.generic.edit import FormView, UpdateView
 
 from main_app.models import User as CustomUser
 from .forms import UserRegistrationForm, ProfileForm
-from .utils import DataMixin
+from main_app.utils import DataMixin
 
 
 class RegisterView(FormView):
     form_class = UserRegistrationForm
     template_name = 'register/register.html'
-    success_url = reverse_lazy("register:login")
+    success_url = reverse_lazy('register:login')
 
     def form_valid(self, form):
         password = form.cleaned_data['password']
@@ -35,7 +35,7 @@ class UserEditProfileView(LoginRequiredMixin, DataMixin, UpdateView):
     form_class = ProfileForm
     template_name = 'register/profile.html'
     success_url = reverse_lazy('home')
-    login_url = "register:login"
+    login_url = 'register:login'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
