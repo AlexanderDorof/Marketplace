@@ -7,9 +7,10 @@
     <div class="container p-5 my-5 bg-dark text-white">
         <h1>Вы не авторизованы!</h1>
         <div class="d-grid">
-        <a href="{% url 'register:register' %}" class="btn btn-primary btn-block">Регистрация</a>
+            <a href="{% url 'register:register' %}" class="btn btn-primary btn-block">Регистрация</a>
         </div>
-        <p class="mt-5">Уже есть аккаунт? - <a class="btn btn-outline-info" href="{% url 'register:login' %}"> <i>Войти</i></a></p>
+        <p class="mt-5">Уже есть аккаунт? - <a class="btn btn-outline-info" href="{% url 'register:login' %}">
+            <i>Войти</i></a></p>
     </div>
 
 </main>

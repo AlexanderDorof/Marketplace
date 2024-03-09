@@ -1,0 +1,36 @@
+<table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+            <th>Исполнитель</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.in_charge }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo-{{ forloop.counter }}">Развернуть</button>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="5">
+            <div id="demo-{{ forloop.counter }}" class="collapse">
+                <div><p><b>Описание</b>: {{ item.description }}</p></div>
+                <div><p><b>Доступно</b>: {{ item.is_available }}</p></div>
+                <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
+                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
+
+            </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>

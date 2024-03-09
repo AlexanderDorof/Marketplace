@@ -1,9 +1,11 @@
 from django.http import Http404
-from icecream import ic
 
 
 class AuthorPermissionsMixin:
-    def has_permissions(self):
+    """provides functions to check if user is authorized to modify a record"""
+
+    def has_permissions(self) -> bool:
+        """checks if user is authenitcated and has permission to modify (moder/admin or creator)"""
         if not self.request.user.is_authenticated:
             return False
         seller = self.get_object().seller
@@ -11,6 +13,7 @@ class AuthorPermissionsMixin:
         return group in ('admin', 'moderator') or seller.user_django == self.request.user
 
     def dispatch(self, request, *args, **kwargs):
+        """if user doesn't have permission raises error, otherwise - calls dispatch function from generic class"""
         if not self.has_permissions():
             if self.__class__.__name__.endswith('EditView'):
                 action = 'Редактировать'
