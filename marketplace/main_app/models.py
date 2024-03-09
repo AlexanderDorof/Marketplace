@@ -6,23 +6,31 @@ from django.contrib.auth.models import User as DjangoUser
 from django.utils import timezone
 from django.urls import reverse
 from django.db import models
+from dateutil.relativedelta import relativedelta
 
 
 class Vehicle(models.Model):
     # consts
     COLOR_STYPE = (
-        ('red', 'Red'),
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-        ('yellow', 'Yellow'),
-        ('orange', 'Orange'),
-        ('purple', 'Purple'),
-        ('pink', 'Pink'),
-        ('brown', 'Brown'),
-        ('gray', 'Gray'),
-        ('teal', 'Teal'),
+        ('red', 'Красный'),
+        ('blue', 'Синий'),
+        ('green', 'Зеленый'),
+        ('yellow', 'Желтый'),
+        ('orange', 'Ораньжевый'),
+        ('purple', 'Фиолетовый'),
+        ('pink', 'Розовый'),
+        ('brown', 'Коричневый'),
+        ('gray', 'Серый'),
+        ('teal', 'Бирюзовый'),
     )
     ENGINE_TYPE = (('Electricity', 'Электромобиль'), ('Oil', 'ДВС'))
+    PERIOD = [
+        (6, '6 месяцев'),
+        (12, '12 месяцев'),
+        (24, '2 года'),
+        (36, '3 года'),
+        (60, '5 лет'),
+    ]
 
     brand = models.CharField(max_length=50, verbose_name='Марка')
     model = models.CharField(max_length=25, verbose_name='Модель')
@@ -35,7 +43,8 @@ class Vehicle(models.Model):
                                                      validators=[MaxValueValidator(datetime.now().year),
                                                                  MinValueValidator(1900)],
                                                      verbose_name='Год выпуска')
-    guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
+    guarantee = models.DateField(blank=True, verbose_name='Гарантийный срок')
+    guarantee_period = models.SmallIntegerField(choices=PERIOD, default=12, verbose_name='Гарантийный период')
     engine_type = models.CharField(choices=ENGINE_TYPE, max_length=15, default='Oil',
                                    help_text='ДВС или электрокар', verbose_name='Тип двигателя')
     engine_power = models.PositiveSmallIntegerField(help_text='В лошадиных силах(л/с)', default=1600,
@@ -47,6 +56,12 @@ class Vehicle(models.Model):
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+        current_date = timezone.now().date()
+        future_date = current_date + relativedelta(months=self.guarantee_period)
+        self.guarantee = future_date
+        super().save(*args, **kwargs)
 
 
 class Car(Vehicle):
@@ -67,6 +82,7 @@ class Car(Vehicle):
 
     def __str__(self):
         return f'{self.brand} {self.model} {self.year_produced}'
+
 
     def get_absolute_url(self):
         return reverse('car_url', kwargs={'slug': self.slug})
@@ -143,13 +159,21 @@ class Service(models.Model):
     # consts
     SPECIALISTS = (
         ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
+    PERIOD = [
+        (6, '6 месяцев'),
+        (12, '12 месяцев'),
+        (24, '2 года'),
+        (36, '3 года'),
+        (60, '5 лет'),
+    ]
 
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
     description = models.TextField(blank=True, default='no description',
                                    help_text='Для чего предназначено, опишите плюсы и минусы',
                                    verbose_name='Описание')
-    guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
+    guarantee = models.DateField(blank=True, verbose_name='Гарантийный срок')
+    guarantee_period = models.SmallIntegerField(choices=PERIOD, default=12, verbose_name='Гарантийный период')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
                                 help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Доступно сейчас')
@@ -161,6 +185,12 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def save(self, *args, **kwargs):
+        current_date = timezone.now().date()
+        future_date = current_date + relativedelta(months=self.guarantee_period)
+        self.guarantee = future_date
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Услуга'

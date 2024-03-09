@@ -2,6 +2,10 @@
 {% load static %}
 {% block content %}
 <main>
+    <div class="container">
+        <h1 class="display-6 p-3"><strong>Изменить {{ item.brand }} {{ item.model }}</strong></h1>
+        <img src="{{ item.photo.url }}" alt="image of motorcycle {{ item.brand }} {{ item.model }}"/>
+    </div>
     <form class="description" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row align-items-center">

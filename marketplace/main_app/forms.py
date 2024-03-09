@@ -7,7 +7,7 @@ from .models import *
 class AddCarForm(forms.ModelForm):
     class Meta:
         model = Car
-        exclude = ['used_car', 'seller']
+        exclude = ['used_car', 'seller', 'guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -17,8 +17,10 @@ class AddCarForm(forms.ModelForm):
             'body_type': Select(attrs={'class': 'form-select'}),
             'drive_type': Select(attrs={'class': 'form-select'}),
             'engine_type': Select(attrs={'class': 'form-select'}),
-            'distance': NumberInput(attrs={'class': 'form-control','min': 0}),
-            'year_produced': TextInput(attrs={'type': 'range', 'class': 'form-range','min': 1990,'max': 2024, 'steps': 1}),
+            'guarantee_period': Select(attrs={'class': 'form-select'}),
+            'distance': NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'year_produced': TextInput(
+                attrs={'type': 'range', 'class': 'form-range', 'min': 1990, 'max': 2024, 'steps': 1}),
             'price': NumberInput(attrs={'class': 'form-control', 'min': 0}),
             'engine_power': NumberInput(attrs={'class': 'form-control', 'min': 0}),
         }
@@ -32,7 +34,7 @@ class AddCarForm(forms.ModelForm):
 class AddMotoForm(forms.ModelForm):
     class Meta:
         model = Motocycle
-        exclude = ['used_car', 'seller']
+        exclude = ['used_car', 'seller', 'guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -41,8 +43,10 @@ class AddMotoForm(forms.ModelForm):
             'color': Select(attrs={'class': 'form-select'}),
             'body_type': Select(attrs={'class': 'form-select'}),
             'engine_type': Select(attrs={'class': 'form-select'}),
-            'distance': NumberInput(attrs={'class': 'form-control','min': 0}),
-            'year_produced': TextInput(attrs={'type': 'range', 'class': 'form-range','min': 1990,'max': 2024, 'steps': 1}),
+            'guarantee_period': Select(attrs={'class': 'form-select'}),
+            'distance': NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'year_produced': TextInput(
+                attrs={'type': 'range', 'class': 'form-range', 'min': 1990, 'max': 2024, 'steps': 1}),
             'price': NumberInput(attrs={'class': 'form-control', 'min': 0}),
             'engine_power': NumberInput(attrs={'class': 'form-control', 'min': 0}),
         }

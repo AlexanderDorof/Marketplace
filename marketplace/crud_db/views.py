@@ -92,6 +92,7 @@ class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     extra_context = {'title': 'Редактирование записи'}
     template_name = 'main_app/update.html'
     form_class = AddCarForm
+    context_object_name = 'item'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
