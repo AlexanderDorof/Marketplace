@@ -38,8 +38,8 @@ class CustomService(admin.ModelAdmin):
 
 admin.site.register(Car, CustomCar)
 admin.site.register(Motocycle, CustomMoto)
-admin.site.register(Item_for_car, CustomItem)
-admin.site.register(Item_for_moto, CustomItem)
+admin.site.register(ItemForCar, CustomItem)
+admin.site.register(ItemForMotorcycle, CustomItem)
 admin.site.register(Service, CustomService)
 admin.site.register(User)
 admin.site.register(Favorite)

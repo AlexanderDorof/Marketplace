@@ -58,8 +58,8 @@ class Car(Vehicle):
     body_type = models.CharField(choices=BODY_TYPE, max_length=15, default='Sedan',
                                  help_text='В соответствии с техпаспортом',
                                  verbose_name='Тип кузова')
-    drive_type = models.CharField(choices=DRIVE_TYPE, max_length=15, default="Front", verbose_name='Тип привода')
-    photo = models.ImageField(blank=True, upload_to="photos/cars/%Y/%m/%d",
+    drive_type = models.CharField(choices=DRIVE_TYPE, max_length=15, default='Front', verbose_name='Тип привода')
+    photo = models.ImageField(blank=True, upload_to='photos/cars/%Y/%m/%d',
                               default='default_pic/no_image_available.jpg', verbose_name='Фотография')
 
     # related models
@@ -78,10 +78,11 @@ class Car(Vehicle):
 
 class Motocycle(Vehicle):
     # consts
-    BODY_TYPE = (('Sport', 'Спортивный'), ('Classic', 'Классический'))
+    BODY_TYPE = (('Sport', 'Спортивный'), ('Classic', 'Классический'), ('Chopper', 'Чоппер'), ('Cross', 'Кросс'),
+                 ('Enduro', 'Эндуро'), ('Cruiser', 'Круизер'), ('Scooter', 'Скутер'))
 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
-    body_type = models.CharField(choices=BODY_TYPE, max_length=15, default="Sport",
+    body_type = models.CharField(choices=BODY_TYPE, max_length=15, default='Sport',
                                  help_text='В соответствии с техпаспортом',
                                  verbose_name='Типы')
     photo = models.ImageField(blank=True, upload_to='photos/motos/%Y/%m/%d',
@@ -91,7 +92,7 @@ class Motocycle(Vehicle):
     seller = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Продавец')
 
     def __str__(self):
-        return f"{self.brand} {self.model} {self.year_produced}"
+        return f'{self.brand} {self.model} {self.year_produced}'
 
     def get_absolute_url(self):
         return reverse('moto_url', kwargs={'slug': self.slug})
@@ -116,8 +117,8 @@ class Item(models.Model):
         abstract = True
 
 
-class Item_for_car(Item):
-    car_fit = models.ManyToManyField(Car, verbose_name='Подходит для:')
+class ItemForCar(Item):
+    cars_fit = models.ManyToManyField(Car, verbose_name='Подходит для:')
 
     def __str__(self):
         return f'{self.title}'
@@ -127,8 +128,8 @@ class Item_for_car(Item):
         verbose_name_plural = 'Допы для машины'
 
 
-class Item_for_moto(Item):
-    moto_fit = models.ManyToManyField(Motocycle, verbose_name='Подходит для:')
+class ItemForMotorcycle(Item):
+    motors_fit = models.ManyToManyField(Motocycle, verbose_name='Подходит для:')
 
     def __str__(self):
         return f'{self.title}'
@@ -141,7 +142,7 @@ class Item_for_moto(Item):
 class Service(models.Model):
     # consts
     SPECIALISTS = (
-    ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
+        ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
 
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL slug')
@@ -152,7 +153,7 @@ class Service(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
                                 help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Доступно сейчас')
-    in_charge = models.CharField(max_length=255, default="Smirnov", verbose_name='Исполнитель', choices=SPECIALISTS)
+    in_charge = models.CharField(max_length=255, default='Smirnov', verbose_name='Исполнитель', choices=SPECIALISTS)
 
     # related models
     cars_service = models.ManyToManyField(Car, blank=True, verbose_name='Подходит для:')
@@ -176,7 +177,7 @@ class User(models.Model):
     age = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(120)],
                                            verbose_name='Возраст')
     photo = models.ImageField(blank=True, upload_to='photos/users/%Y/%m/%d',
-                              default="default_pic/no_image_available.jpg", verbose_name='Фотография')
+                              default='default_pic/no_image_available.jpg', verbose_name='Фотография')
     date_registration = models.DateField(auto_now_add=True, verbose_name='Дата регистрации')
     blacklist = models.BooleanField(default=False, verbose_name='В черном списке')
     sold = models.PositiveSmallIntegerField(default=0, verbose_name='Продано автомобилей')
@@ -204,7 +205,7 @@ class Favorite(models.Model):
             user = User.objects.get(favorite__pk=self.pk)
             return f'Избранное: {user}'
         except ObjectDoesNotExist:
-            return f"{self.pk}"
+            return f'{self.pk}'
 
     class Meta:
         verbose_name = 'Список избранного'
