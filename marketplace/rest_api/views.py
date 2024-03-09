@@ -1,8 +1,10 @@
 from rest_framework import generics, permissions
+
 from main_app.models import Car, Motocycle, Service, User
-from .serializers import CarSerializer, MotocycleSerializer, ServiceSerializer, UserSerializer
+from .serializers import CarSerializer, MotorcycleSerializer, ServiceSerializer, UserSerializer
 
 
+# CAR
 class CarListCreateView(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
@@ -27,31 +29,32 @@ class CarDeleteView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class MotocycleListCreateView(generics.ListCreateAPIView):
+# MOTORCYCLE
+class MotorcycleListCreateView(generics.ListCreateAPIView):
     queryset = Motocycle.objects.all()
-    serializer_class = MotocycleSerializer
+    serializer_class = MotorcycleSerializer
     permission_classes = [permissions.AllowAny]
 
 
-class MotocycleDetailView(generics.RetrieveUpdateDestroyAPIView):
+class MotorcycleDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Motocycle.objects.all()
-    serializer_class = MotocycleSerializer
+    serializer_class = MotorcycleSerializer
     permission_classes = [permissions.AllowAny]
 
 
-class MotocycleUpdateView(generics.UpdateAPIView):
+class MotorcycleUpdateView(generics.UpdateAPIView):
     queryset = Motocycle.objects.all()
-    serializer_class = MotocycleSerializer
+    serializer_class = MotorcycleSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
-class MotocycleDeleteView(generics.DestroyAPIView):
+class MotorcycleDeleteView(generics.DestroyAPIView):
     queryset = Motocycle.objects.all()
-    serializer_class = MotocycleSerializer
+    serializer_class = MotorcycleSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
-# для Services и User
+# SERVICES
 
 class ServiceListCreateView(generics.ListCreateAPIView):
     queryset = Service.objects.all()
@@ -77,7 +80,7 @@ class ServiceDeleteView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
-# Дополнительно, для разграничения прав доступа для пользователя с правами администратора:
+# USER
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

@@ -56,7 +56,7 @@ CarDetailView = type('CarDetailList', (ItemDetailView,),
 MotoDetailView = type('MotoDetailView', (ItemDetailView,),
                       {'model': Motocycle, 'edit_ref': 'edit_moto', 'delete_ref': 'delete_moto'})
 ServiceDetailView = type('ServiceDetailView', (ItemDetailView,), {'model': Service, 'title': 'Описание услуги',
-                                                               'template_name': 'main_app/service_description.html'})
+                                                                  'template_name': 'main_app/service_description.html'})
 
 
 # CREATE
@@ -90,8 +90,9 @@ AddMoto = type('AddMoto', (AddItem,), {'form_class': AddMotoForm, 'vehicle': 'м
 
 class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
     extra_context = {'title': 'Редактирование записи'}
-    fields = '__all__'
     template_name = 'main_app/update.html'
+    form_class = AddCarForm
+    context_object_name = 'item'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +102,8 @@ class ItemEditView(AuthorPermissionsMixin, DataMixin, UpdateView):
 
 
 CarEditView = type('CarEditView', (ItemEditView,), {'model': Car, 'success_url': reverse_lazy('cars')})
-MotoEditView = type('MotoEditView', (ItemEditView,), {'model': Motocycle, 'success_url': reverse_lazy('motos')})
+MotoEditView = type('MotoEditView', (ItemEditView,),
+                    {'model': Motocycle, 'success_url': reverse_lazy('motos'), 'form_class': AddMotoForm})
 
 
 # DELETE

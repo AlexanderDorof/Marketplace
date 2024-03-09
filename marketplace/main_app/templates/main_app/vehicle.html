@@ -6,7 +6,7 @@
 <div class="col-lg-4 col-md-6 p-4">
     <div class="my_card card border-primary rounded custom-shadow">
         <a href="{{ item.get_absolute_url }}">
-            <img src="{{ item.photo.url }}" class="card-img-top" alt="...">
+            <img src="{{ item.photo.url }}" class="card-img-top" alt="image of {{ item|model_name }} {{ item.brand }} {{ item.model }}">
         </a>
         <div class="card-body">
             <a href="{{ item.get_absolute_url }}">

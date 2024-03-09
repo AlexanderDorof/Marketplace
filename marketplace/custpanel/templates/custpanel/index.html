@@ -1,7 +1,7 @@
 {% extends 'custpanel/base.html' %}
 {% block content %}
 <div class="form">
-    <h2>{{title}}</h2>
+    <h2>{{ title }}</h2>
     <p>Выберите категорию</p>
     <div class="form2">
         <div class="container">
@@ -14,8 +14,7 @@
             <a href="{% url 'admin-panel:create-motorcycle' %}" class="btn btn-primary">Создать мотоциклов</a>
             <a href="{% url 'admin-panel:create-service' %}" class="btn btn-primary">Создать Услуг</a>
         </div>
-        <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Delete Models </a>
-        <a href="{% url 'admin-panel:change' %}" class="btn btn-primary">Change Models </a>
+        <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Удалить модели</a>
         <br>
     </div>
     <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на сайт</a>
