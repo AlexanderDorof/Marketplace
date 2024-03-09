@@ -124,7 +124,7 @@ class Item(models.Model):
     description = models.TextField(blank=True, default='no description',
                                    help_text='Для чего предназначено, опишите плюсы и минусы',
                                    verbose_name='Описание')
-    guarantee = models.DateField(blank=True, default=timezone.now(), verbose_name='Гарантийный срок')
+    guarantee = models.DateField(blank=True, verbose_name='Гарантийный срок')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=9.99, validators=[MinValueValidator(0)],
                                 help_text='В долларах ($)', verbose_name='Цена')
     is_available = models.BooleanField(default=True, verbose_name='Имеется в наличии')

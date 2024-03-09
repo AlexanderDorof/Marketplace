@@ -21,8 +21,16 @@ urlpatterns = [
 
 
     path('delete/', delete, name='delete'),
-    path('change/', change, name='change'),
 
+    # delete models
+    path('car/delete/<slug:slug>/', CarDeleteView.as_view(), name='delete_car'),  # ModerPermission
+    path('motorcycle/delete/<slug:slug>/', MotoDeleteView.as_view(), name='delete_motorcycle'),  # ModerPermission
+    path('service/delete/<slug:slug>/', ServiceDeleteView.as_view(), name='delete_service'),  # ModerPermission
+
+    # edit model
+    path('car/edit/<slug:slug>/', CarEditView.as_view(), name='edit_car'),  # ModerPermission
+    path('motors/edit/<slug:slug>/', MotoEditView.as_view(), name='edit_motorcycle'),  # ModerPermission
+    path('service/edit/<slug:slug>/', ServiceEditView.as_view(), name='edit_service'),  # ModerPermission
 
 ]
 
