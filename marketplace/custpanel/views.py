@@ -1,11 +1,12 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView
 
 from .forms import *
-from .permissions import AdminPermissionsMixin
+from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
 
-
+@user_passes_test(test_func=user_is_admin, login_url='register:login')
 def admin_home(request):
     context = {'title': 'Панель администратора'}
     return render(request, 'custpanel/index.html', context=context)
