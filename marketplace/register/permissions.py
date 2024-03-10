@@ -33,8 +33,6 @@ class PasswordPermissionsMixin:
         """checks if user is authenitcated and has permission to modify (moder/admin or creator)"""
         if not self.request.user.is_authenticated:
             return False
-        print(self.kwargs['pk'])
-        print(self.request.user.pk)
         return self.kwargs['pk'] == self.request.user.pk
 
     def dispatch(self, request, *args, **kwargs):
