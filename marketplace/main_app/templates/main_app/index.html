@@ -1,26 +1,16 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
-
-
 {% block content %}
-
-
 <main>
     <div class="container">
         <h3 class='about-us' id='description'>Немного о нашем скромном магазинчике....</h3>
         <p class='description'>
-
             Добро пожаловать в наш магазин! Мы очень рады видеть вас здесь и стремимся изучить наш огромный выбор
             автомобилей и мотоциклов. В нашем заведении мы гордимся тем, что предлагаем беспрецедентный опыт для всех
             автолюбителей.<br><br>
-
             {% block info %}
             {% endblock info %}
-
         </p>
-
-
     </div>
 </main>
-
 {% endblock %}

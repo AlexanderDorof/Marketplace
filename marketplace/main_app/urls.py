@@ -1,24 +1,18 @@
-from django.urls import path
-from django.contrib.auth import views as auth_views
+from django.urls import path, include
+
 from .views import *
 
-# app_name = 'main'
+
 urlpatterns = [
     path('', index, name='home'),
-    path('info', info, name='info'),
-    path('contacts', contacts, name='contacts'),
-    path('cars/', CarsList.as_view(), name='cars'),
-    path('car/<slug:slug>/', CarDetailView.as_view(), name="car_url"),
-    path('moto/<slug:slug>/', MotoDetailView.as_view(), name="moto_url"),
-    path('services/<slug:slug>/', ServiceDetailView.as_view(), name="service_url"),
-    path('motos/', MotosList.as_view(), name='motos'),
-    path('services/', ServicesList.as_view(), name='services'),
-    path('favorite/', FavoriteList.as_view(), name='favorite'),
-    path('publish/car/', AddCar.as_view(), name='publish_car'),
-    path('publish/moto/', AddMoto.as_view(), name='publish_moto'),
-    path('car/edit/<slug:slug>/', CarEditView.as_view(), name='edit_car'),
-    path('motos/edit/<slug:slug>/', MotoEditView.as_view(), name='edit_moto'),
-    path('car/delete/<slug:slug>/', CarDeleteView.as_view(), name='delete_car'),  # Для удаления машины
-    path('motocycle/delete/<slug:slug>/', MotoDeleteView.as_view(), name='delete_moto'),  # Для удаления машины
-    path('adminpanel/', index, name='adminpanel'),
+    path('', include('crud_db.urls')),
+    path('info/', info, name='info'),
+    path('contacts/', contacts, name='contacts'),
+    path('ajax/', add_to_favorite, name='ajax'),
+
+
+    # authorized users
+    path('favorite/', FavoriteList.as_view(), name='favorite'),  # AuthorizedPermission
+    path('adminpanel/', index, name='adminpanel'),  # AdminPermission
+
 ]
