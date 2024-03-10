@@ -6,7 +6,6 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from icecream import ic
 from queryset_sequence import QuerySetSequence
 
-from main_app.forms import AddCarForm
 from .forms import *
 from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
@@ -82,7 +81,6 @@ def delete(request):
         query = QuerySetSequence(cars, motorcycles)
         query = QuerySetSequence(query, services)
         query = QuerySetSequence(query, users)
-        ic(list(query))
         query.delete()
         return redirect('admin-panel:delete')
 

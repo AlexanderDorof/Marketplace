@@ -6,6 +6,7 @@ from django.views.generic.edit import FormView, UpdateView
 from main_app.models import User as CustomUser
 from .forms import UserRegistrationForm, ProfileForm
 from main_app.utils import DataMixin
+from .permissions import ProfilePermissionsMixin
 
 
 class RegisterView(FormView):
@@ -29,7 +30,7 @@ class CustomLoginView(LoginView):
     template_name = 'register/login.html'
 
 
-class UserEditProfileView(LoginRequiredMixin, DataMixin, UpdateView):
+class UserEditProfileView(ProfilePermissionsMixin, DataMixin, UpdateView):
     model = CustomUser
     extra_context = {'title': 'Редактирование профиля'}
     form_class = ProfileForm
