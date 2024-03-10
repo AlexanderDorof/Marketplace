@@ -6,6 +6,7 @@
         {% csrf_token %}
         <table>{{ form.as_table }}</table>
         <button class="btn btn-primary" type="submit">Изменить данные профиля</button>
+        <a class="btn btn-dark" href="{% url 'register:profile-password' user.pk %}">Сменить пароль</a>
     </form>
     <div>
         <div style="height:100px;"></div>
