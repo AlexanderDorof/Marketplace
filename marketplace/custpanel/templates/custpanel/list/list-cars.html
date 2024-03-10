@@ -32,11 +32,11 @@
                 <div><p><b>Описание</b>: {{ item.description }}</p></div>
                 <div><p><b>Пробег</b>: {{ item.distance }}</p></div>
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
-                <div><p><b>Тип двигателя</b>: {{ item.engine_type }}</p></div>
+                <div><p><b>Тип двигателя</b>: {{ item.get_engine_type_display }}</p></div>
                 <div><p><b>Мощность двигателя</b>: {{ item.engine_power }}</p></div>
-                <div><p><b>Цвет</b>: {{ item.color }}</p></div>
-                <div><p><b>Тип кузова</b>: {{ item.body_type }}</p></div>
-                <div><p><b>Тип привода</b>: {{ item.drive_type }}</p></div>
+                <div><p><b>Цвет</b>: {{ item.get_color_display }}</p></div>
+                <div><p><b>Тип кузова</b>: {{ item.get_body_type_display }}</p></div>
+                <div><p><b>Тип привода</b>: {{ item.get_drive_type_display }}</p></div>
                 <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
                 <a href="{% url 'admin-panel:edit_car' item.slug %}" class="btn btn-primary">Редактировать</a>
                 <a href="{% url 'admin-panel:delete_car' item.slug %}" class="btn btn-danger">Удалить</a>

@@ -28,9 +28,18 @@
                 <div><p><b>Описание</b>: {{ item.description }}</p></div>
                 <div><p><b>Доступно</b>: {{ item.is_available }}</p></div>
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
-                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
-                <a href="{% url 'admin-panel:edit_service' item.slug %}" class="btn btn-primary">Редактировать</a>
-                <a href="{% url 'admin-panel:delete_service' item.slug %}" class="btn btn-danger">Удалить</a>
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'service_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:edit_service' item.slug %}"
+                           class="btn btn-primary">Редактировать</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:delete_service' item.slug %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
 
             </div>
         </td>
