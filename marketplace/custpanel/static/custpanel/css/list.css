@@ -32,3 +32,14 @@ body {
     max-height: 100px; /* можно изменить значение в зависимости от требований */
     width: auto;
 }
+
+.image-container {
+    max-height: 300px; /* Set your desired maximum height */
+    overflow: hidden;
+}
+
+.image-container img {
+    object-fit: cover;
+    width: 100%;
+}
+

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User, Group
-from django.forms import FileInput, NumberInput, TextInput
+from django.forms import FileInput, NumberInput, TextInput, PasswordInput
 
 from main_app.models import User as CustomUser
 from main_app.models import Favorite
@@ -42,4 +42,14 @@ class ProfileForm(forms.ModelForm):
             'surname': TextInput(attrs={'class': 'form-control'}),
             'age': NumberInput(attrs={'class': 'form-control', 'min': 0}),
             'photo': FileInput(attrs={'class': 'form-control form-control-lg'}),
+        }
+
+
+class ProfilePasswordForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'password': PasswordInput(attrs={'class': 'form-control','value':'','placeholder':'password'}),
         }

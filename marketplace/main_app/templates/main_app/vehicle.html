@@ -6,7 +6,8 @@
 <div class="col-lg-4 col-md-6 p-4">
     <div class="my_card card border-primary rounded custom-shadow">
         <a href="{{ item.get_absolute_url }}">
-            <img src="{{ item.photo.url }}" class="card-img-top" alt="image of {{ item|model_name }} {{ item.brand }} {{ item.model }}">
+            <img src="{{ item.photo.url }}" class="card-img-top"
+                 alt="image of {{ item|model_name }} {{ item.brand }} {{ item.model }}">
         </a>
         <div class="card-body">
             <a href="{{ item.get_absolute_url }}">
@@ -16,7 +17,7 @@
             <p class="product_id">id: {{ item.pk }}</p>
             <p class="card-text">Тип двигателя: {{ item.engine_type }}</p>
             <div class="d-flex justify-content-between">
-                <p><strong>{{ item.price }} $</strong></p>
+                <p><strong>$ {{ item.price }}</strong></p>
                 {% if is_authenticated %}
                 <a id="favorite" data-item-id="{{ item.pk }}" data-vehicle-type="{{ item|model_name }}" class="btn add-to-cart">
                     <img class="mx-1 enlage" id="myimage_{{ item.pk }}" src="{% static fav %}" alt="Favorite icon" width="32" height="32">
