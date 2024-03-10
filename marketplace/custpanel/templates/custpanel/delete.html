@@ -17,7 +17,9 @@
                 {% csrf_token %}
                 {% for model in items %}
                 <div class="form_centre">
-                    <label class="form-label m-3" for="{{model.0|model_name}}">Выберите записи: <b>{{model.0|model_name|capfirst}}</b></label>
+                    <label class="form-label m-3" for="{{model.0|model_name}}">Выберите записи: <b>
+                        {{model.0|model_name|capfirst}}</b>
+                    </label>
                     <select class="form-select" name="{{model.0|model_name}}" id="{{model.0|model_name}}" multiple
                             size="10">
                         {% for item in model %}
@@ -32,7 +34,6 @@
                         <button type="submit" class="btn btn-danger">Удалить записи</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

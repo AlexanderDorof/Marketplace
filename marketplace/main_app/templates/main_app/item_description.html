@@ -8,7 +8,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="border-primary rounded custom-shadow ">
-                    <img src="{{ item.photo.url }}" class="card-img-top" alt="...">
+                    <div class="position-relative mb-3">
+                        <div class="position-absolute top-0 end-0">
+                            <div class="container image-container">
+                                <img src="{{ item.photo.url }}" class="flower-image"
+                                     alt="{{ item|model_name }}: {{ item }}">
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h1 class="card-title">{{ item.brand }} {{ item.model }}</h1>
                         <p class="card-text text-truncate">Описание: {{ item.description }}</p>
@@ -22,7 +29,7 @@
                         <p class="card-text">Гарантия: {{ item.garantee }}</p>
                         <p class="card-text">Продавец: {{ item.seller }}</p>
                         <div class="d-flex justify-content-between">
-                            <p><strong>{{ item.price }} $</strong></p>
+                            <p><strong>${{ item.price }}</strong></p>
                             <div>
                                 {% if is_moderator or is_owner %}
                                 <a href="{% url edit_ref slug=item.slug %}" class="btn btn-primary">Редактировать</a>

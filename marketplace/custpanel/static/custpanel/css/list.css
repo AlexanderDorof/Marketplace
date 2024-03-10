@@ -34,7 +34,7 @@ body {
 }
 
 .image-container {
-    max-height: 100px; /* Set your desired maximum height */
+    max-height: 300px; /* Set your desired maximum height */
     overflow: hidden;
 }
 
