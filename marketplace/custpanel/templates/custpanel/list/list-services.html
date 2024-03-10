@@ -14,9 +14,10 @@
         <td>{{ forloop.counter }}</td>
         <td>{{ item.title }}</td>
         <td>{{ item.get_in_charge_display }}</td>
-        <td>{{ item.price }}</td>
+        <td>${{ item.price }}</td>
         <td>
-            <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo-{{ forloop.counter }}">
+            <button class="btn btn-info" id="expandButton" onclick="changeText()" data-bs-toggle="collapse"
+                    data-bs-target="#demo-{{ forloop.counter }}">
                 Развернуть
             </button>
         </td>
@@ -28,9 +29,9 @@
                 <div><p><b>Описание</b>: {{ item.description }}</p></div>
                 <div><p><b>Доступно</b>:
                     {% if item.is_available %}
-                     Да
+                    Да
                     {% else %}
-                     Нет
+                    Нет
                     {% endif %}
                 </p></div>
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>

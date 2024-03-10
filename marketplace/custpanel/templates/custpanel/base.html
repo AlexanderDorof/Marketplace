@@ -19,5 +19,15 @@
 <div style="height:100px;"></div>
 <script src="{% static 'custpanel/js/jquery-3.7.1.js' %}"></script>
 <script src="{% static 'custpanel/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    function changeText() {
+        const button = document.getElementById('expandButton');
+        if (button.textContent === 'Свернуть') {
+            button.textContent = 'Развернуть';
+        } else {
+            button.textContent = 'Свернуть';
+        }
+    }
+</script>
 </body>
 </html>
