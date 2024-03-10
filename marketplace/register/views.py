@@ -33,7 +33,7 @@ class CustomLoginView(LoginView):
 
 class UserEditProfileView(ProfilePermissionsMixin, DataMixin, UpdateView):
     model = CustomUser
-    extra_context = {'title': 'Редактирование профиля'}
+    extra_context = {'title': 'Редактирование профиля', 'password': True}
     form_class = ProfileForm
     template_name = 'register/profile.html'
     success_url = reverse_lazy('home')
@@ -47,7 +47,7 @@ class UserEditProfileView(ProfilePermissionsMixin, DataMixin, UpdateView):
 
 class UserEditPasswordView(PasswordPermissionsMixin, DataMixin, UpdateView):
     model = User
-    extra_context = {'title': 'Редактирование профиля'}
+    extra_context = {'title': 'Сменить пароль', 'password': False}
     form_class = ProfilePasswordForm
     template_name = 'register/profile.html'
     success_url = reverse_lazy('home')

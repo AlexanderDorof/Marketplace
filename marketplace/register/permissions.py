@@ -14,6 +14,8 @@ class ProfilePermissionsMixin:
 
     def dispatch(self, request, *args, **kwargs):
         """if user doesn't have permission raises error, otherwise - calls dispatch function from generic class"""
+        if not self.request.user.is_authenticated:
+            raise Http404(f'Вы не зарегистрированы')
         if not self.has_permissions():
             group = self.request.user.groups.values('name')[0]['name']
             if group == 'admin':
@@ -31,10 +33,14 @@ class PasswordPermissionsMixin:
         """checks if user is authenitcated and has permission to modify (moder/admin or creator)"""
         if not self.request.user.is_authenticated:
             return False
+        print(self.kwargs['pk'])
+        print(self.request.user.pk)
         return self.kwargs['pk'] == self.request.user.pk
 
     def dispatch(self, request, *args, **kwargs):
         """if user doesn't have permission raises error, otherwise - calls dispatch function from generic class"""
+        if not self.request.user.is_authenticated:
+            raise Http404(f'Вы не зарегистрированы')
         if not self.has_permissions():
             group = self.request.user.groups.values('name')[0]['name']
             if group == 'admin':
