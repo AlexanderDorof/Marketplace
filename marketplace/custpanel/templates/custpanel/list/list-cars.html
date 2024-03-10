@@ -37,9 +37,17 @@
                 <div><p><b>Цвет</b>: {{ item.get_color_display }}</p></div>
                 <div><p><b>Тип кузова</b>: {{ item.get_body_type_display }}</p></div>
                 <div><p><b>Тип привода</b>: {{ item.get_drive_type_display }}</p></div>
-                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
-                <a href="{% url 'admin-panel:edit_car' item.slug %}" class="btn btn-primary">Редактировать</a>
-                <a href="{% url 'admin-panel:delete_car' item.slug %}" class="btn btn-danger">Удалить</a>
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:edit_car' item.slug %}" class="btn btn-primary">Редактировать</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:delete_car' item.slug %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
             </div>
         </td>
     </tr>

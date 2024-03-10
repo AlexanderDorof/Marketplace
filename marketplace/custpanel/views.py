@@ -1,17 +1,22 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from icecream import ic
+from queryset_sequence import QuerySetSequence
 
 from main_app.forms import AddCarForm
 from .forms import *
 from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
 
+
 @user_passes_test(test_func=user_is_admin, login_url='register:login')
 def admin_home(request):
     context = {'title': 'Панель администратора'}
     return render(request, 'custpanel/index.html', context=context)
+
 
 # CREATE
 
@@ -36,8 +41,6 @@ class AddItem(AdminPermissionsMixin, CreateView):
         return initial
 
 
-
-
 AddCar = type('AddCarz', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
 AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
 AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
@@ -55,37 +58,37 @@ CarDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Car})
 MotoDeleteView = type('MotoDeleteView', (VehicleDeleteView,),
                       {'model': Motocycle})
 ServiceDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Service})
+
+@user_passes_test(test_func=user_is_admin, login_url='register:login')
 def delete(request):
+
+    if request.method == 'GET':
+        cars = Car.objects.all()
+        motocycles = Motocycle.objects.all()
+        services = Service.objects.all()
+        users = User.objects.all()
+        context = {'title': 'Удалить записи', 'items': [cars, motocycles, services, users]}
+
     if request.method == 'POST':
-        # Проверяем, к какой модели относится запрос
-        model_type = request.POST.get('model_type', None)
+        request_dict = dict(request.POST)
+        car_ids = request_dict.get('car', None)
+        motorcycle_ids = request_dict.get('motocycle', None)
+        service_ids = request_dict.get('service', None)
+        user_ids = request_dict.get('user', None)
+        cars = Car.objects.filter(pk__in=car_ids) if car_ids else Car.objects.none()
+        motorcycles = Motocycle.objects.filter(pk__in=motorcycle_ids) if motorcycle_ids else Motocycle.objects.none()
+        services = Service.objects.filter(pk__in=service_ids) if service_ids else Service.objects.none()
+        users = User.objects.filter(pk__in=user_ids) if user_ids else User.objects.none()
+        query = QuerySetSequence(cars, motorcycles)
+        query = QuerySetSequence(query, services)
+        query = QuerySetSequence(query, users)
+        ic(list(query))
+        query.delete()
+        return redirect('admin-panel:delete')
 
-        if model_type == 'car':
-            model_id = request.POST.get('car')
-            model = get_object_or_404(Car, id=model_id)
-        elif model_type == 'motocycle':
-            model_id = request.POST.get('motocycle')
-            model = get_object_or_404(Motocycle, id=model_id)
-        elif model_type == 'service':
-            model_id = request.POST.get('service')
-            model = get_object_or_404(Service, id=model_id)
-        elif model_type == 'user':
-            model_id = request.POST.get('user')
-            model = get_object_or_404(User, id=model_id)
-        else:
-            # Возможно, добавьте дополнительные обработки, если это необходимо
-            pass
-
-        model.delete()
-        return redirect('admin_home')
-
-    cars = Car.objects.all()
-    motocycles = Motocycle.objects.all()
-    service = Service.objects.all()
-    users = User.objects.all()
 
     return render(request, 'custpanel/delete.html',
-                  {'cars': cars, 'motocycles': motocycles, 'service': service, 'users': users})
+                  context=context)
 
 
 class ItemEditView(AdminPermissionsMixin, UpdateView):
@@ -95,13 +98,10 @@ class ItemEditView(AdminPermissionsMixin, UpdateView):
     context_object_name = 'item'
 
 
-
 CarEditView = type('CarEditView', (ItemEditView,), {'model': Car})
 MotoEditView = type('MotoEditView', (ItemEditView,),
-                    {'model': Motocycle,  'form_class': MotocycleForm})
-ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service,  'form_class': ServiceForm})
-
-
+                    {'model': Motocycle, 'form_class': MotocycleForm})
+ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service, 'form_class': ServiceForm})
 
 
 # display from db
