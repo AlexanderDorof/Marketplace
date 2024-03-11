@@ -7,30 +7,22 @@ from django.dispatch import receiver
 from icecream import ic
 
 from main_app.models import Car, Motocycle, Service
+from .views import create_image_preview
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
-login = 'blackbloodyring@gmail.com'
-password = ''
-sender_email = login
-sender_password = password
 
 
 @receiver(post_save, sender=Car)
 def car_created(sender, instance, created, **kwargs):
-    ic(car_created)
-    ic(kwargs)
-    ic(instance)
-    ic(sender)
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
+        create_image_preview(instance, 'car')
+        ic(instance)
 
         # Определяем текст сообщения в зависимости от статуса пользователя
         all_users = User.objects.filter(groups__name='moder')
         user_emails = [user.email for user in all_users]
-        print(user_emails)
+
 
         # # Добавляем тему и тело сообщения
         # message['Subject'] = 'Announcement Created'
@@ -48,14 +40,11 @@ def car_created(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Motocycle)
 def Motocycle_created(sender, instance, created, **kwargs):
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
-
+        create_image_preview(instance, 'moto')
         # Определяем текст сообщения в зависимости от статуса пользователя
         all_users = User.objects.filter(groups__name='moder')
         user_emails = [user.email for user in all_users]
-        print(user_emails)
+
 
         # # Добавляем тему и тело сообщения
         # message['Subject'] = 'Announcement Created'
@@ -73,14 +62,11 @@ def Motocycle_created(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Service)
 def Service_created(sender, instance, created, **kwargs):
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
 
         # Определяем текст сообщения в зависимости от статуса пользователя
         all_users = User.objects.filter(groups__name='moder')
         user_emails = [user.email for user in all_users]
-        print(user_emails)
+
 
         # Добавляем тему и тело сообщения
         # message['Subject'] = 'Announcement Created'
