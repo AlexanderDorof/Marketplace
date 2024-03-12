@@ -1,96 +1,41 @@
 {% extends 'custpanel/base.html' %}
 {% load static %}
+{% load simple_tags %}
 {% block content %}
-<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning">Вернуться на главную</a>
+<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5">Вернуться на главную</a>
 
 <div class="container">
     <div class="form-column">
         <div class="formH">
-            <h2>Delete Car</h2>
+            <h2>Удалить записи</h2>
+            <div class="position-relative mb-3">
+                <div class="position-absolute top-0 end-0">
+                    <button type="submit" class="btn btn-danger">Удалить записи</button>
+                </div>
+            </div>
             <form method="post" action="{% url 'admin-panel:delete' %}">
                 {% csrf_token %}
+                {% for model in items %}
                 <div class="form_centre">
-                    <label for="car">Select a Car</label>
-                    <select name="car" id="car">
-                        {% for car in cars %}
-                        <option value="{{ car.id }}">{{ car.brand }} - {{ car.model }} - ({{ car.seller.name }})
+                    <label class="form-label m-3" for="{{model.0|model_name}}">Выберите записи: <b>
+                        {{model.0|model_name|capfirst}}</b>
+                    </label>
+                    <select class="form-select" name="{{model.0|model_name}}" id="{{model.0|model_name}}" multiple
+                            size="10">
+                        {% for item in model %}
+                        <option value="{{ item.id }}">{{ item }}
                         </option>
                         {% endfor %}
                     </select>
                 </div>
-                <br>
-                <br>
-                <button type="submit" class="btn btn-danger">Delete Car</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="form-column">
-        <div class="formH">
-            <h2>Delete Motocycle</h2>
-            <form method="post" action="{% url 'admin-panel:delete' %}">
-                {% csrf_token %}
-                <input type="hidden" name="model_type" value="motocycle">
-                <div class="form_centre">
-                    <label for="motocycle">Select a Motocycle</label>
-                    <select name="motocycle" id="motocycle">
-                        {% for motocycle in motocycles %}
-                        <option value="{{ motocycle.id }}">{{ motocycle.brand }} - {{ motocycle.model }} - ({{
-                            motocycle.seller.name }})
-                        </option>
-                        {% endfor %}
-                    </select>
+                {% endfor %}
+                <div class="position-relative">
+                    <div class="position-absolute top-0 end-0">
+                        <button type="submit" class="btn btn-danger">Удалить записи</button>
+                    </div>
                 </div>
-                <br>
-                <br>
-                <button type="submit" class="btn btn-danger">Delete Motocycle</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="form-column">
-        <div class="formH">
-            <h2>Delete Service</h2>
-            <form method="post" action="{% url 'admin-panel:delete' %}">
-                {% csrf_token %}
-                <input type="hidden" name="model_type" value="service">
-                <div class="form_centre">
-                    <label for="service">Select a Service</label>
-                    <select name="service" id="service">
-                        {% for s in service %}
-                        <option value="{{ s.id }}">{{ s.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <br>
-                <br>
-                <button type="submit" class="btn btn-danger">Delete Service</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="form-column">
-        <div class="formH">
-            <h2>Delete User</h2>
-            <form method="post" action="{% url 'admin-panel:delete' %}">
-                {% csrf_token %}
-                <input type="hidden" name="model_type" value="user">
-                <div class="form_centre">
-                    <label for="user">Select a User</label>
-                    <select name="user" id="user">
-                        {% for user_instance in users %}
-                        <option value="{{ user_instance.id }}">{{ user_instance.name }} - {{ user_instance.second_name
-                            }} - {{ user_instance.surname }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <br>
-                <br>
-                <button type="submit" class="btn btn-danger">Delete User</button>
             </form>
         </div>
     </div>
 </div>
-
 {% endblock %}

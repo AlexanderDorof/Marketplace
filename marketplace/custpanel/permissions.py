@@ -16,3 +16,9 @@ class AdminPermissionsMixin:
         if not self.has_permissions():
             raise Http404('У вас нет статуса админа для вхождения в админ-панель')
         return super().dispatch(request, *args, **kwargs)
+
+def user_is_admin(user):
+    if not user.is_authenticated:
+        return False
+    group = user.groups.values('name')[0]['name']
+    return group == 'admin'

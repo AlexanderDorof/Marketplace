@@ -1,36 +1,56 @@
 <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Номер</th>
-            <th>Название</th>
-            <th>Исполнитель</th>
-            <th>Цена</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in items %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.in_charge }}</td>
-            <td>{{ item.price }}</td>
-            <td>
-                <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#demo-{{ forloop.counter }}">Развернуть</button>
-            </td>
+    <thead>
+    <tr>
+        <th>Номер</th>
+        <th>Название</th>
+        <th>Исполнитель</th>
+        <th>Цена</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.get_in_charge_display }}</td>
+        <td>${{ item.price }}</td>
+        <td>
+            <button class="btn btn-info" id="expandButton" onclick="changeText()" data-bs-toggle="collapse"
+                    data-bs-target="#demo-{{ forloop.counter }}">
+                Развернуть
+            </button>
+        </td>
 
-        </tr>
-        <tr>
-            <td colspan="5">
+    </tr>
+    <tr>
+        <td colspan="5">
             <div id="demo-{{ forloop.counter }}" class="collapse">
                 <div><p><b>Описание</b>: {{ item.description }}</p></div>
-                <div><p><b>Доступно</b>: {{ item.is_available }}</p></div>
+                <div><p><b>Доступно</b>:
+                    {% if item.is_available %}
+                    Да
+                    {% else %}
+                    Нет
+                    {% endif %}
+                </p></div>
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
-                <div><a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a></div>
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'service_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:edit_service' item.slug %}"
+                           class="btn btn-primary">Редактировать</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:delete_service' item.slug %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
 
             </div>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

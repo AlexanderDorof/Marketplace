@@ -1,122 +1,105 @@
+from django.contrib.auth.decorators import user_passes_test
+from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from icecream import ic
+from queryset_sequence import QuerySetSequence
 
 from .forms import *
-from .permissions import AdminPermissionsMixin
+from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
 
 
+@user_passes_test(test_func=user_is_admin, login_url='register:login')
 def admin_home(request):
     context = {'title': 'Панель администратора'}
     return render(request, 'custpanel/index.html', context=context)
+
 
 # CREATE
 
 class AddItem(AdminPermissionsMixin, CreateView):
     form_class = CarForm
     template_name = 'custpanel/create.html'
-    extra_context = {'title': 'Создать объявление'}
+    extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
     login_url = 'register:login'
-    vehicle = 'sdf'
+    success_url = reverse_lazy('admin-panel:admin_home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vehicle'] = self.vehicle
         return context
 
+    def get_initial(self):
+        initial = super().get_initial()
+        pk = self.request.user.pk
+        user = User.objects.get(user_django__pk=pk)
+        initial['seller'] = user
+        initial['used_car'] = True
+        return initial
 
 
-
-AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
+AddCar = type('AddCarz', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
 AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
 AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
 
 
+class VehicleDeleteView(AdminPermissionsMixin, DeleteView):
+    model = Car
+    extra_context = {'title': 'Подтвердить удаление'}
+    context_object_name = 'item'
+    success_url = reverse_lazy('admin-panel:admin_home')  # URL-name, redirected after successful deletion
+    template_name = 'custpanel/confirm_delete.html'  # Template for confirmation deletion
 
+
+CarDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Car})
+MotoDeleteView = type('MotoDeleteView', (VehicleDeleteView,),
+                      {'model': Motocycle})
+ServiceDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Service})
+
+@user_passes_test(test_func=user_is_admin, login_url='register:login')
 def delete(request):
+
+    if request.method == 'GET':
+        cars = Car.objects.all()
+        motocycles = Motocycle.objects.all()
+        services = Service.objects.all()
+        users = User.objects.all()
+        context = {'title': 'Удалить записи', 'items': [cars, motocycles, services, users]}
+
     if request.method == 'POST':
-        # Проверяем, к какой модели относится запрос
-        model_type = request.POST.get('model_type', None)
+        request_dict = dict(request.POST)
+        car_ids = request_dict.get('car', None)
+        motorcycle_ids = request_dict.get('motocycle', None)
+        service_ids = request_dict.get('service', None)
+        user_ids = request_dict.get('user', None)
+        cars = Car.objects.filter(pk__in=car_ids) if car_ids else Car.objects.none()
+        motorcycles = Motocycle.objects.filter(pk__in=motorcycle_ids) if motorcycle_ids else Motocycle.objects.none()
+        services = Service.objects.filter(pk__in=service_ids) if service_ids else Service.objects.none()
+        users = User.objects.filter(pk__in=user_ids) if user_ids else User.objects.none()
+        query = QuerySetSequence(cars, motorcycles)
+        query = QuerySetSequence(query, services)
+        query = QuerySetSequence(query, users)
+        query.delete()
+        return redirect('admin-panel:delete')
 
-        if model_type == 'car':
-            model_id = request.POST.get('car')
-            model = get_object_or_404(Car, id=model_id)
-        elif model_type == 'motocycle':
-            model_id = request.POST.get('motocycle')
-            model = get_object_or_404(Motocycle, id=model_id)
-        elif model_type == 'service':
-            model_id = request.POST.get('service')
-            model = get_object_or_404(Service, id=model_id)
-        elif model_type == 'user':
-            model_id = request.POST.get('user')
-            model = get_object_or_404(User, id=model_id)
-        else:
-            # Возможно, добавьте дополнительные обработки, если это необходимо
-            pass
-
-        model.delete()
-        return redirect('admin_home')
-
-    cars = Car.objects.all()
-    motocycles = Motocycle.objects.all()
-    service = Service.objects.all()
-    users = User.objects.all()
 
     return render(request, 'custpanel/delete.html',
-                  {'cars': cars, 'motocycles': motocycles, 'service': service, 'users': users})
+                  context=context)
 
 
-def change(request):
-    if request.method == 'POST':
-        if 'car' in request.POST:
-            car_id = request.POST.get('car')
-            car = get_object_or_404(Car, id=car_id)
-
-            form = CarForm(request.POST, instance=car)
-            if form.is_valid():
-                form.save()
-                return redirect('admin_home')
-        elif 'motocycle' in request.POST:
-            motocycle_id = request.POST.get('motocycle')
-            motocycle = get_object_or_404(Motocycle, id=motocycle_id)
-
-            motocycle_form = MotocycleForm(request.POST, instance=motocycle)
-            if motocycle_form.is_valid():
-                motocycle_form.save()
-                return redirect('admin_home')
-
-        elif 'service' in request.POST:
-            service_id = request.POST.get('service')
-            service = get_object_or_404(Service, id=service_id)
-
-            service_form = ServiceForm(request.POST, instance=service)
-            if service_form.is_valid():
-                service_form.save()
-                return redirect('admin_home')
-
-        elif 'user' in request.POST:
-            user_id = request.POST.get('user')
-            user = get_object_or_404(User, id=user_id)
-
-            user_form = UserForm(request.POST, instance=user)
-            if user_form.is_valid():
-                user_form.save()
-                return redirect('admin_home')
+class ItemEditView(AdminPermissionsMixin, UpdateView):
+    extra_context = {'title': 'Редактирование записи'}
+    template_name = 'custpanel/change.html'
+    form_class = CarForm
+    context_object_name = 'item'
 
 
-    else:
-        cars = Car.objects.all()
-        form = CarForm()
-        motocycles = Motocycle.objects.all()
-        motocycle_form = MotocycleForm()
-        service = Service.objects.all()
-        service_form = ServiceForm()
-        user = User.objects.all()
-        user_form = UserForm()
-
-    return render(request, 'custpanel/change.html',
-                  {'cars': cars, 'motocycles': motocycles, 'form': form, 'motocycle_form': motocycle_form,
-                   'service': service, 'service_form': service_form, 'user': user, 'user_form': user_form})
+CarEditView = type('CarEditView', (ItemEditView,), {'model': Car})
+MotoEditView = type('MotoEditView', (ItemEditView,),
+                    {'model': Motocycle, 'form_class': MotocycleForm})
+ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service, 'form_class': ServiceForm})
 
 
 # display from db

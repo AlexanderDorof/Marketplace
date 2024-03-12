@@ -1,22 +1,58 @@
 {% extends 'custpanel/base.html' %}
 {% block content %}
+
+
 <div class="form">
-    <h2>{{title}}</h2>
+    <h2>{{ title }}</h2>
     <p>Выберите категорию</p>
     <div class="form2">
-        <div class="container">
-            <a href="{% url 'admin-panel:list-cars' %}" class="btn btn-primary">Список машин</a>
-            <a href="{% url 'admin-panel:list-motorcycles' %}" class="btn btn-primary">Список мотоциклов</a>
-            <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary">Список Услуг</a>
+        <fieldset class="border border-3 border-primary rounded p-2 m-2">
+            <legend class="float-none w-auto">Список</legend>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:list-cars' %}" class="btn btn-primary">Список Машин</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:list-motorcycles' %}" class="btn btn-primary">Список
+                            Мотоциклов</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary">Список
+                            Услуг</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary">Список
+                            Пользователей</a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="border border-3 border-primary rounded p-2 m-2">
+            <legend class="float-none w-auto">Создать</legend>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:create-car' %}" class="btn btn-primary">Создать машину</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:create-motorcycle' %}" class="btn btn-primary">Создать
+                            мотоцикл</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:create-service' %}" class="btn btn-primary">Создать Услугу</a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'register:register' %}" class="btn btn-primary">Создать
+                            Пользователя</a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="container p-4">
+            <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Удалить модели</a>
+            <br>
         </div>
-        <div class="container">
-            <a href="{% url 'admin-panel:create-car' %}" class="btn btn-primary">Создать машин</a>
-            <a href="{% url 'admin-panel:create-motorcycle' %}" class="btn btn-primary">Создать мотоциклов</a>
-            <a href="{% url 'admin-panel:create-service' %}" class="btn btn-primary">Создать Услуг</a>
-        </div>
-        <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Delete Models </a>
-        <a href="{% url 'admin-panel:change' %}" class="btn btn-primary">Change Models </a>
-        <br>
     </div>
     <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на сайт</a>
 </div>
