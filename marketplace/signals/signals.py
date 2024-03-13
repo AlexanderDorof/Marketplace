@@ -79,3 +79,9 @@ def Service_created(sender, instance, created, **kwargs):
         #     server.starttls()
         #     server.login(sender_email, sender_password)
         #     server.send_message(message)
+
+@receiver(post_save, sender=User)
+def Service_created(sender, instance, created, **kwargs):
+    if created:
+        ic()
+

@@ -80,3 +80,9 @@ class UserForm(forms.ModelForm):
             'groups': Select(attrs={'class': 'form-control form-control-lg'}),
             'email': EmailInput(attrs={'class': 'form-select'}),
         }
+
+        def save(self, password):
+            user = super().save(commit=False)
+            user.set_password(password)
+            user.save()
+            return user

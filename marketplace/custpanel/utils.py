@@ -26,3 +26,4 @@ class PaginationMixin:
             middle_range = list(range(page_number - 2, page_number + 3))
             page_range_list += [None, *middle_range, None, total_pages]
         return page_range_list
+
