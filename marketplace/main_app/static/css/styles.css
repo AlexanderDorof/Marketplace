@@ -1,5 +1,5 @@
 body {
-  background-image: url("../static_imgs/bg_lamborghini_1920x1080.jpg");
+  background-image: url("../static_imgs/7e200508-cf9e-47d0-9c4e-2a8274a01c10.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
@@ -30,12 +30,17 @@ footer {
 }
 
 main {
-	background-color: Azure;
-    opacity: 0.85;
-	border: 2px solid;
-	width: 70%;
+	background-color: black;
+    opacity: 0.70;
+	border: 4px solid;
+	width: 60%;
 	position: absolute;
 	left: 20%;
+    top: 10%;
+    border-radius: 7px;
+    p{
+        color: white;
+    }
 }
 
 .about-us {
@@ -82,4 +87,14 @@ main {
 
 .image-container img {
     width: auto;
+}
+
+
+.about-us#description {
+  color: ghostwhite;
+}
+
+
+.container.mt-5 #contact{
+  color: ghostwhite;
 }

@@ -1,6 +1,4 @@
-body {
-    background: #ADD8E6;
-}
+
 
 .car-container {
     max-height: 600px;
@@ -17,7 +15,7 @@ body {
 }
 
 .car-table th, .car-table td {
-    border: 3px solid blue;
+    border: 3px solid black;
     padding: 8px;
     text-align: center;
     word-wrap: break-word;

@@ -2,7 +2,7 @@
 {% load static %}
 {% load simple_tags %}
 {% block content %}
-<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5">Вернуться на главную</a>
+<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5 btn-equal">Вернуться на главную</a>
 
 <div class="container">
     <div class="form-column">
@@ -10,7 +10,7 @@
             <h2>Удалить записи</h2>
             <div class="position-relative mb-3">
                 <div class="position-absolute top-0 end-0">
-                    <button type="submit" class="btn btn-danger">Удалить записи</button>
+                    <button type="submit" class="btn btn-danger btn-equal">Удалить записи</button>
                 </div>
             </div>
             <form method="post" action="{% url 'admin-panel:delete' %}">
@@ -31,7 +31,7 @@
                 {% endfor %}
                 <div class="position-relative">
                     <div class="position-absolute top-0 end-0">
-                        <button type="submit" class="btn btn-danger">Удалить записи</button>
+                        <button type="submit" class="btn btn-danger btn-equal">Удалить записи</button>
                     </div>
                 </div>
             </form>

@@ -10,8 +10,8 @@
                     <p class="card-text">Вы уверены, что хотите удалить <strong>{{ item }}</strong>?</p>
                     <form method="post">
                         {% csrf_token %}
-                        <input type="submit" value="Удалить" class="btn btn-danger">
-                        <a href="{{ item.get_absolute_url }}" class="btn btn-secondary">Отмена</a>
+                        <input type="submit" value="Удалить" class="btn btn-danger btn-equal">
+                        <a href="{{ item.get_absolute_url }}" class="btn btn-secondary btn-equal">Отмена</a>
                     </form>
                 </div>
             </div>

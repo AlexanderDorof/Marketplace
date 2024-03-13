@@ -1,7 +1,7 @@
 {% extends 'custpanel/base.html' %}
 {% load static %}
 {% block content %}
-<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning">Вернуться на главную</a>
+<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning btn-equal">Вернуться на главную</a>
 
 <div class="container">
     <div class="form-column">
@@ -21,7 +21,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <button class="btn btn-primary" type="submit">Обновить</button>
+                <button class="btn btn-primary btn-equal" type="submit">Обновить</button>
             </form>
         </div>
     </div>
