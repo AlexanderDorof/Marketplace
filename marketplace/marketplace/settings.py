@@ -151,11 +151,11 @@ EMAIL_PORT = '465'  # yandex requires 465 port because it uses SSL (587 port is 
 EMAIL_USE_SSL = True  # add your own settings here
 
 EMAIL_HOST_USER = 'aleksandar.dorofeichik@yandex.ru'  # my email address on yandex
-EMAIL_HOST_PASSWORD = ''  # password
+EMAIL_HOST_PASSWORD = secretkeys.YANDEX_EMAIL_PASSWORD  # password
 
 # environment variables - without'em django smtp protocol doesn't work
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # my email address
 EMAIL_SERVER = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
-recepient_email = EMAIL_HOST_USER
+

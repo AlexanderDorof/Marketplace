@@ -1,3 +1,4 @@
+{% load humanize %}
 <table class="table table-striped">
     <thead>
     <tr>
@@ -14,9 +15,9 @@
         <td>{{ forloop.counter|add:page }}</td>
         <td>{{ item.title }}</td>
         <td>{{ item.get_in_charge_display }}</td>
-        <td>${{ item.price }}</td>
+        <td>${{ item.price|intcomma }}</td>
         <td>
-            <button class="btn btn-info" id="expandButton" onclick="changeText()" data-bs-toggle="collapse"
+            <button class="btn btn-info" id="expandButton_{{ forloop.counter }}" onclick="changeText_{{ forloop.counter }}()" data-bs-toggle="collapse"
                     data-bs-target="#demo-{{ forloop.counter }}">
                 Развернуть
             </button>

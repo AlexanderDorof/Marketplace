@@ -24,7 +24,7 @@
             <div class="image-container"><img src="{{ item.photo.url }}" class="img-fluid"></div>
         </td>
         <td>
-            <button class="btn btn-info" id="expandButton" onclick="changeText()" data-bs-toggle="collapse"
+            <button class="btn btn-info" id="expandButton_{{ forloop.counter }}" onclick="changeText_{{ forloop.counter }}()" data-bs-toggle="collapse"
                     data-bs-target="#demo-{{ forloop.counter }}">
                 Развернуть
             </button>

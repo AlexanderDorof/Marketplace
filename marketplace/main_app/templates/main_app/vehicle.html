@@ -16,7 +16,7 @@
             </a>
             <p class="card-text text-truncate">Описание: {{ item.description }}</p>
             <p class="product_id">id: {{ item.pk }}</p>
-            <p class="card-text">Тип двигателя: {{ item.engine_type }}</p>
+            <p class="card-text">Тип двигателя: {{ item.get_engine_type_display }}</p>
             <div class="d-flex justify-content-between">
                 <p><strong>$ {{ item.price|intcomma }}</strong></p>
                 {% if is_authenticated %}

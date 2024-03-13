@@ -74,16 +74,20 @@ class ServiceForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = DjangoUser
-        fields = ['username', 'password', 'groups', 'email']
+        fields = ['username',  'groups', 'email']
         widgets = {
             'username': TextInput(attrs={'class': 'form-control'}),
-            'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
+            # 'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
             'groups': Select(attrs={'class': 'form-control form-control-lg'}),
             'email': EmailInput(attrs={'class': 'form-select'}),
         }
 
         def save(self, password):
+            ic()
             user = super().save(commit=False)
+            ic()
             user.set_password(password)
+            ic()
             user.save()
+            ic()
             return user
