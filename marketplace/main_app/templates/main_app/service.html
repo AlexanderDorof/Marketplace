@@ -1,5 +1,6 @@
 {% load static %}
 {% if item.is_available %}
+{% load humanize %}
 <div class="col-lg-4 col-md-6 p-4">
     <div class="card my_card border-primary rounded custom-shadow">
         <div class="card-body">
@@ -10,7 +11,7 @@
             <p class="product_id">id: {{ item.pk }}</p>
             <p class="card-text">Исполнитель: {{ item.in_charge }}</p>
             <div class="d-flex justify-content-between">
-                <p><strong>{{ item.price }} $</strong></p>
+                <p><strong>{{ item.price|intcomma }} $</strong></p>
             </div>
         </div>
     </div>
