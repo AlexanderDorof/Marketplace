@@ -35,7 +35,6 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-
     class Meta:
         model = CustomUser
         fields = ['name', 'second_name', 'surname', 'age', 'photo']
@@ -48,10 +47,12 @@ class ProfileForm(forms.ModelForm):
         }
 
 
-
 class ProfilePasswordForm(forms.ModelForm):
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control','value':'','placeholder':'password'}))
-    password_repeat = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(attrs={'class': 'form-control','value':'','placeholder':'password'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
+    password_repeat = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
+
     class Meta:
         model = User
         fields = ['username', 'password', 'password_repeat']
@@ -64,6 +65,7 @@ class ProfilePasswordForm(forms.ModelForm):
         if cd['password'] != cd['password_repeat']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password_repeat']
+
     def save(self, password):
         user = super().save(commit=False)
         user.set_password(password)

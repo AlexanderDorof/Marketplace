@@ -24,7 +24,7 @@
                         <p class="card-text">Тип двигателя: {{ item.get_engine_type_display }}</p>
                         <p class="card-text">Мощность двигателя: {{ item.engine_power }}</p>
                         <p class="card-text">Подержанное транспортное средство: {{ item.used_car }}</p>
-                        <p class="card-text">Пробег: {{ item.distance }}</p>
+                        <p class="card-text">Пробег: {{ item.distance|intcomma }}</p>
                         <p class="card-text">Цвет: {{ item.get_color_display }}</p>
                         <p class="card-text">Год выпуска: {{ item.year_produced }}</p>
                         <p class="card-text">Гарантия: {{ item.garantee }}</p>

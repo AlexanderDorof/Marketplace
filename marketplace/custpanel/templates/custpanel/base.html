@@ -20,21 +20,11 @@
 <script src="{% static 'custpanel/js/jquery-3.7.1.js' %}"></script>
 <script src="{% static 'custpanel/js/bootstrap.bundle.min.js' %}"></script>
 <script>
-    function changeText() {
-        const button = document.getElementById('expandButton');
-        if (button.textContent === 'Свернуть') {
-            button.textContent = 'Развернуть';
-        } else {
-            button.textContent = 'Свернуть';
-        }
-    }
-
     window.onload = function() {
     const elements = document.querySelectorAll('[id^="expandButton_"]');
     createFunctions(elements.length)
     console.log("Page is fully loaded!");
 };
-
 
     function createFunctions(n) {
         for (let i = 1; i <= n; i++) {
@@ -47,7 +37,7 @@
                 }
             };
         }
-    }
+}
 </script>
 </body>
 </html>

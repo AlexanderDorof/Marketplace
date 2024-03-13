@@ -1,3 +1,4 @@
+{% load humanize %}
 <table class="table table-striped">
     <thead>
     <tr>
@@ -18,7 +19,7 @@
         <td>{{ item.model }}</td>
         <td><img src="{{ item.photo.url }}" class="flower-image img-fluid"></td>
         <td>{{ item.year_produced }}</td>
-        <td>${{ item.price }}</td>
+        <td>${{ item.price|intcomma }}</td>
         <td>
             <button class="btn btn-info" id="expandButton_{{ forloop.counter }}" onclick="changeText_{{ forloop.counter }}()" data-bs-toggle="collapse"
                     data-bs-target="#demo-{{ forloop.counter }}">
@@ -31,7 +32,7 @@
         <td colspan="7">
             <div id="demo-{{ forloop.counter }}" class="collapse">
                 <div><p><b>Описание</b>: {{ item.description }}</p></div>
-                <div><p><b>Пробег</b>: {{ item.distance }} км</p></div>
+                <div><p><b>Пробег</b>: {{ item.distance|intcomma }} км</p></div>
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
                 <div><p><b>Тип двигателя</b>: {{ item.get_engine_type_display }}</p></div>
                 <div><p><b>Мощность двигателя</b>: {{ item.engine_power }} л.с.</p></div>

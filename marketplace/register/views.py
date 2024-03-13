@@ -46,6 +46,7 @@ class UserEditProfileView(ProfilePermissionsMixin, DataMixin, UpdateView):
         context = {**context, **c_def}
         return context
 
+
 class UserEditPasswordView(PasswordPermissionsMixin, DataMixin, UpdateView):
     model = User
     extra_context = {'title': 'Сменить пароль', 'password': False}
@@ -62,5 +63,7 @@ class UserEditPasswordView(PasswordPermissionsMixin, DataMixin, UpdateView):
 
     def form_valid(self, form):
         password = form.cleaned_data['password']
+        ic(form.cleaned_data)
+        ic(password)
         form.save(password=password)
         return super().form_valid(form)
