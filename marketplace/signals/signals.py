@@ -6,9 +6,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from icecream import ic
 
-from main_app.models import Car, Motocycle, Service
+from main_app.models import Car, Motocycle, Service, User
 from .views import create_image_preview
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
 
@@ -24,18 +23,6 @@ def car_created(sender, instance, created, **kwargs):
         user_emails = [user.email for user in all_users]
 
 
-        # # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
-
 
 @receiver(post_save, sender=Motocycle)
 def Motocycle_created(sender, instance, created, **kwargs):
@@ -45,18 +32,6 @@ def Motocycle_created(sender, instance, created, **kwargs):
         all_users = User.objects.filter(groups__name='moder')
         user_emails = [user.email for user in all_users]
 
-
-        # # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
 
 
 @receiver(post_save, sender=Service)
@@ -68,20 +43,9 @@ def Service_created(sender, instance, created, **kwargs):
         user_emails = [user.email for user in all_users]
 
 
-        # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
 
 @receiver(post_save, sender=User)
-def Service_created(sender, instance, created, **kwargs):
+def User_created(sender, instance, created, **kwargs):
     if created:
-        ic()
+        pass
 
