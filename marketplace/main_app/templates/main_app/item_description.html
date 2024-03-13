@@ -21,11 +21,11 @@
                         <h1 class="card-title">{{ item.brand }} {{ item.model }}</h1>
                         <p class="card-text text-truncate">Описание: {{ item.description }}</p>
                         <p class="product_id">id: {{ item.pk }}</p>
-                        <p class="card-text">Тип двигателя: {{ item.engine_type }}</p>
+                        <p class="card-text">Тип двигателя: {{ item.get_engine_type_display }}</p>
                         <p class="card-text">Мощность двигателя: {{ item.engine_power }}</p>
                         <p class="card-text">Подержанное транспортное средство: {{ item.used_car }}</p>
                         <p class="card-text">Пробег: {{ item.distance }}</p>
-                        <p class="card-text">Цвет: {{ item.color }}</p>
+                        <p class="card-text">Цвет: {{ item.get_color_display }}</p>
                         <p class="card-text">Год выпуска: {{ item.year_produced }}</p>
                         <p class="card-text">Гарантия: {{ item.garantee }}</p>
                         <p class="card-text">Продавец: {{ item.seller }}</p>
