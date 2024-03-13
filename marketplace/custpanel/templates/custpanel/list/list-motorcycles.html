@@ -13,7 +13,7 @@
     <tbody>
     {% for item in items %}
     <tr>
-        <td>{{ forloop.counter }}</td>
+        <td>{{ forloop.counter|add:page }}</td>
         <td>{{ item.brand }}</td>
         <td>{{ item.model }}</td>
         <td>

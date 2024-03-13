@@ -61,9 +61,9 @@ MotoDeleteView = type('MotoDeleteView', (VehicleDeleteView,),
 ServiceDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Service})
 UserDeleteView = type('UserDeleteView', (VehicleDeleteView,), {'model': DjangoUser})
 
+
 @user_passes_test(test_func=user_is_admin, login_url='register:login')
 def delete(request):
-
     if request.method == 'GET':
         cars = Car.objects.all()
         motocycles = Motocycle.objects.all()
@@ -86,7 +86,6 @@ def delete(request):
         query = QuerySetSequence(query, users)
         query.delete()
         return redirect('admin-panel:delete')
-
 
     return render(request, 'custpanel/delete.html',
                   context=context)
@@ -117,6 +116,7 @@ class VehicleList(AdminPermissionsMixin, PaginationMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         context['item_name'] = self.item_name
+        context['page'] = (int(self.request.GET.get('page', '1')) - 1) * self.paginate_by
         context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
         context['page_range'] = self.paginate_page_range(total_pages=context['items'].paginator.num_pages,
                                                          page_number=context['items'].number)
@@ -125,9 +125,9 @@ class VehicleList(AdminPermissionsMixin, PaginationMixin, ListView):
 
 
 CarsList = type('CarsList', (VehicleList,), {'model': Car, 'title': 'Каталог машин'})
-MotorcyclesList = type('MotosList', (VehicleList,), {'model': Motocycle, 'title': 'Каталог мотоциклов',
-                                                     'item_name': 'custpanel/list/list-motorcycles.html'})
+MotorcyclesList = type('MotorcyclesList', (VehicleList,), {'model': Motocycle, 'title': 'Каталог мотоциклов',
+                                                           'item_name': 'custpanel/list/list-motorcycles.html'})
 ServicesList = type('ServicesList', (VehicleList,),
                     {'model': Service, 'title': 'Услуги', 'item_name': 'custpanel/list/list-services.html'})
 UserList = type('UserList', (VehicleList,),
-                    {'model': CustomUser, 'title': 'Пользователи', 'item_name': 'custpanel/list/list-users.html'})
+                {'model': CustomUser, 'title': 'Пользователи', 'item_name': 'custpanel/list/list-users.html'})
