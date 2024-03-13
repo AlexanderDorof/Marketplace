@@ -1,5 +1,7 @@
 from django import forms
-from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple
+from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple, \
+    PasswordInput, EmailInput
+from django.contrib.auth.models import User as DjangoUser
 
 from main_app.models import *
 
@@ -7,7 +9,7 @@ from main_app.models import *
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -27,10 +29,12 @@ class CarForm(forms.ModelForm):
             'seller': Select(attrs={'class': 'form-select'}),
         }
 
+
+
 class MotocycleForm(forms.ModelForm):
     class Meta:
         model = Motocycle
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -49,10 +53,11 @@ class MotocycleForm(forms.ModelForm):
             'seller': Select(attrs={'class': 'form-select'}),
         }
 
+
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control'}),
             'description': Textarea(attrs={'class': 'form-control', 'cols': 4, 'rows': 3}),
@@ -65,7 +70,20 @@ class ServiceForm(forms.ModelForm):
             'in_charge': Select(attrs={'class': 'form-select'}),
         }
 
+
 class UserForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = '__all__'
+        model = DjangoUser
+        fields = ['username', 'password', 'groups', 'email']
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
+            'groups': Select(attrs={'class': 'form-control form-control-lg'}),
+            'email': EmailInput(attrs={'class': 'form-select'}),
+        }
+
+        def save(self, password):
+            user = super().save(commit=False)
+            user.set_password(password)
+            user.save()
+            return user

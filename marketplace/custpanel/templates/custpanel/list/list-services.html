@@ -11,7 +11,7 @@
     <tbody>
     {% for item in items %}
     <tr>
-        <td>{{ forloop.counter }}</td>
+        <td>{{ forloop.counter|add:page }}</td>
         <td>{{ item.title }}</td>
         <td>{{ item.get_in_charge_display }}</td>
         <td>${{ item.price }}</td>
@@ -37,7 +37,7 @@
                 <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
                 <div class="row">
                     <div class="col-xl">
-                        <a href="{% url 'service_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a>
+                        <a href="{% url 'service_url' item.slug %}" class="btn btn-dark">Смотреть на сайте</a>
                     </div>
                     <div class="col-xl">
                         <a href="{% url 'admin-panel:edit_service' item.slug %}"

@@ -3,10 +3,14 @@ from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.models import User as DjangoUser
 from icecream import ic
+from django.utils.text import slugify
 from queryset_sequence import QuerySetSequence
 
 from .forms import *
+from main_app.models import Car, Motocycle, Service
+from main_app.models import User as CustomUser
 from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
 
@@ -40,7 +44,8 @@ class AddItem(AdminPermissionsMixin, CreateView):
         return initial
 
 
-AddCar = type('AddCarz', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
+
+AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
 AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
 AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
 
@@ -57,10 +62,11 @@ CarDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Car})
 MotoDeleteView = type('MotoDeleteView', (VehicleDeleteView,),
                       {'model': Motocycle})
 ServiceDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Service})
+UserDeleteView = type('UserDeleteView', (VehicleDeleteView,), {'model': DjangoUser})
+
 
 @user_passes_test(test_func=user_is_admin, login_url='register:login')
 def delete(request):
-
     if request.method == 'GET':
         cars = Car.objects.all()
         motocycles = Motocycle.objects.all()
@@ -84,7 +90,6 @@ def delete(request):
         query.delete()
         return redirect('admin-panel:delete')
 
-
     return render(request, 'custpanel/delete.html',
                   context=context)
 
@@ -94,12 +99,27 @@ class ItemEditView(AdminPermissionsMixin, UpdateView):
     template_name = 'custpanel/change.html'
     form_class = CarForm
     context_object_name = 'item'
+    login_url = 'register:login'
+
+    def form_valid(self, form):
+        if 'password' in form.cleaned_data:
+            password = form.cleaned_data['password']
+            form.save(password=password)
+        else:
+            form.save()
+        return super().form_valid(form)
 
 
-CarEditView = type('CarEditView', (ItemEditView,), {'model': Car})
+CarEditView = type('CarEditView', (ItemEditView,), {'model': Car, 'success_url': reverse_lazy('admin-panel:list-cars')})
 MotoEditView = type('MotoEditView', (ItemEditView,),
-                    {'model': Motocycle, 'form_class': MotocycleForm})
-ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service, 'form_class': ServiceForm})
+                    {'model': Motocycle, 'form_class': MotocycleForm,
+                     'success_url': reverse_lazy('admin-panel:list-motorcycles')})
+ServiceEditView = type('ServiceEditView', (ItemEditView,),
+                       {'model': Service, 'form_class': ServiceForm,
+                        'success_url': reverse_lazy('admin-panel:list-services')})
+UserEditView = type('UserEditView', (ItemEditView,),
+                    {'model': DjangoUser, 'form_class': UserForm,
+                     'success_url': reverse_lazy('admin-panel:list-users')})
 
 
 # display from db
@@ -113,6 +133,7 @@ class VehicleList(AdminPermissionsMixin, PaginationMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         context['item_name'] = self.item_name
+        context['page'] = (int(self.request.GET.get('page', '1')) - 1) * self.paginate_by
         context['items'] = self.paginated_object(self.model.objects.all().order_by('id'))
         context['page_range'] = self.paginate_page_range(total_pages=context['items'].paginator.num_pages,
                                                          page_number=context['items'].number)
@@ -121,7 +142,9 @@ class VehicleList(AdminPermissionsMixin, PaginationMixin, ListView):
 
 
 CarsList = type('CarsList', (VehicleList,), {'model': Car, 'title': 'Каталог машин'})
-MotorcyclesList = type('MotosList', (VehicleList,), {'model': Motocycle, 'title': 'Каталог мотоциклов',
-                                                     'item_name': 'custpanel/list/list-motorcycles.html'})
+MotorcyclesList = type('MotorcyclesList', (VehicleList,), {'model': Motocycle, 'title': 'Каталог мотоциклов',
+                                                           'item_name': 'custpanel/list/list-motorcycles.html'})
 ServicesList = type('ServicesList', (VehicleList,),
                     {'model': Service, 'title': 'Услуги', 'item_name': 'custpanel/list/list-services.html'})
+UserList = type('UserList', (VehicleList,),
+                {'model': CustomUser, 'title': 'Пользователи', 'item_name': 'custpanel/list/list-users.html'})

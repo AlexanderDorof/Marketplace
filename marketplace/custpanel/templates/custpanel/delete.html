@@ -8,12 +8,13 @@
     <div class="form-column">
         <div class="formH">
             <h2>Удалить записи</h2>
-            <div class="position-relative mb-3">
-                <div class="position-absolute top-0 end-0">
-                    <button type="submit" class="btn btn-danger">Удалить записи</button>
-                </div>
-            </div>
+
             <form method="post" action="{% url 'admin-panel:delete' %}">
+                <div class="position-relative mb-3">
+                    <div class="position-absolute top-0 end-0">
+                        <button type="submit" class="btn btn-danger">Удалить записи</button>
+                    </div>
+                </div>
                 {% csrf_token %}
                 {% for model in items %}
                 <div class="form_centre">

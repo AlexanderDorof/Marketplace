@@ -11,10 +11,15 @@
             {% for field in form %}
             <div class="mb-3">
                 <label class="col-sm-2 col-form-label col-form-label-lg" for="{{ field.auto_id }}">
-                    {{ field.label}}
+                    {{ field.label }}
                 </label>
                 <div class="col-sm-10">
                     {{ field }}
+                    {% if field.name == "year_produced" %}
+                    <label class="col-sm-2 col-form-label col-form-label-lg">Год:
+                        <output class="d-inline" id="value"></output>
+                    </label>
+                    {% endif %}
                 </div>
 
             </div>
@@ -26,4 +31,12 @@
         <div style="height:100px;"></div>
     </div>
 </main>
+<script>
+    const value = document.querySelector("#value");
+const input = document.querySelector("#id_year_produced");
+value.textContent = input.value;
+input.addEventListener("input", (event) => {
+  value.textContent = event.target.value;
+});
+</script>
 {% endblock %}
