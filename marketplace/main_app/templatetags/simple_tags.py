@@ -1,5 +1,6 @@
 from django import template
 from django.db.models import Model
+from django.contrib.auth.models import User as DjangoUser
 
 from main_app.models import *
 
@@ -14,8 +15,14 @@ def user_is_seller(seller: User, user: User) -> bool:
 
 @register.filter
 def model_name(obj: Model) -> str:
-    """tag retrun name of the model"""
+    """tag returns name of the model"""
     return obj._meta.model_name
+
+@register.filter
+def django_user(pk: int) -> int:
+    """tag returns pk of django user on pk of custom user"""
+    user = DjangoUser.objects.get(pk=pk)
+    return user.pk
 
 
 @register.simple_tag

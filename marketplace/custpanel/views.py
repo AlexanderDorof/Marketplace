@@ -3,10 +3,12 @@ from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
-from icecream import ic
+from django.contrib.auth.models import User as DjangoUser
 from queryset_sequence import QuerySetSequence
 
 from .forms import *
+from main_app.models import Car, Motocycle, Service
+from main_app.models import User as CustomUser
 from .permissions import AdminPermissionsMixin, user_is_admin
 from .utils import PaginationMixin
 
@@ -40,7 +42,7 @@ class AddItem(AdminPermissionsMixin, CreateView):
         return initial
 
 
-AddCar = type('AddCarz', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
+AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})
 AddMoto = type('AddMoto', (AddItem,), {'form_class': MotocycleForm, 'vehicle': 'мотоцикл'})
 AddService = type('AddService', (AddItem,), {'form_class': ServiceForm, 'vehicle': 'услуга'})
 
@@ -57,6 +59,7 @@ CarDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Car})
 MotoDeleteView = type('MotoDeleteView', (VehicleDeleteView,),
                       {'model': Motocycle})
 ServiceDeleteView = type('CarDeleteView', (VehicleDeleteView,), {'model': Service})
+UserDeleteView = type('UserDeleteView', (VehicleDeleteView,), {'model': DjangoUser})
 
 @user_passes_test(test_func=user_is_admin, login_url='register:login')
 def delete(request):
@@ -125,3 +128,5 @@ MotorcyclesList = type('MotosList', (VehicleList,), {'model': Motocycle, 'title'
                                                      'item_name': 'custpanel/list/list-motorcycles.html'})
 ServicesList = type('ServicesList', (VehicleList,),
                     {'model': Service, 'title': 'Услуги', 'item_name': 'custpanel/list/list-services.html'})
+UserList = type('UserList', (VehicleList,),
+                    {'model': CustomUser, 'title': 'Пользователи', 'item_name': 'custpanel/list/list-users.html'})
