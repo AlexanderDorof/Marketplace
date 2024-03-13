@@ -1,5 +1,7 @@
 from django import forms
-from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple
+from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple, \
+    PasswordInput, EmailInput
+from django.contrib.auth.models import User as DjangoUser
 
 from main_app.models import *
 
@@ -27,6 +29,7 @@ class CarForm(forms.ModelForm):
             'seller': Select(attrs={'class': 'form-select'}),
         }
 
+
 class MotocycleForm(forms.ModelForm):
     class Meta:
         model = Motocycle
@@ -49,6 +52,7 @@ class MotocycleForm(forms.ModelForm):
             'seller': Select(attrs={'class': 'form-select'}),
         }
 
+
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
@@ -65,7 +69,14 @@ class ServiceForm(forms.ModelForm):
             'in_charge': Select(attrs={'class': 'form-select'}),
         }
 
+
 class UserForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = '__all__'
+        model = DjangoUser
+        fields = ['username', 'password', 'groups', 'email']
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
+            'groups': Select(attrs={'class': 'form-control form-control-lg'}),
+            'email': EmailInput(attrs={'class': 'form-select'}),
+        }
