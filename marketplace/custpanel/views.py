@@ -103,6 +103,7 @@ CarEditView = type('CarEditView', (ItemEditView,), {'model': Car})
 MotoEditView = type('MotoEditView', (ItemEditView,),
                     {'model': Motocycle, 'form_class': MotocycleForm})
 ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service, 'form_class': ServiceForm})
+UserEditView = type('UserEditView', (ItemEditView,), {'model': DjangoUser, 'form_class': UserForm})
 
 
 # display from db
