@@ -11,8 +11,8 @@ def create_image_preview(instance, model):
     full_path = os.path.join(BASE_DIR, img_url)
     image = Image.open(full_path)
     resized_image = image.resize((300, 200))
-    rel = f'media/photos/{model}s/{model}_previews/preview_image_{instance.pk}.jpg'
+    rel = f'media/photos/{model}s/{model}s_previews/preview_image_{instance.pk}.jpg'
     img_path_new = os.path.join(BASE_DIR, rel)
     resized_image.save(img_path_new)
-    instance.photo = f'/photos/{model}s/{model}_previews/preview_image_{instance.pk}.jpg'
+    instance.photo = f'/photos/{model}s/{model}s_previews/preview_image_{instance.pk}.jpg'
     instance.save()

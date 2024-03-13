@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.models import User as DjangoUser
+from icecream import ic
+from django.utils.text import slugify
 from queryset_sequence import QuerySetSequence
 
 from .forms import *
@@ -40,6 +42,7 @@ class AddItem(AdminPermissionsMixin, CreateView):
         initial['seller'] = user
         initial['used_car'] = True
         return initial
+
 
 
 AddCar = type('AddCar', (AddItem,), {'form_class': CarForm, 'vehicle': 'автомобиль'})

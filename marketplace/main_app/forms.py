@@ -7,7 +7,7 @@ from .models import *
 class AddCarForm(forms.ModelForm):
     class Meta:
         model = Car
-        exclude = ['used_car', 'seller', 'guarantee']
+        exclude = ['used_car', 'seller', 'guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -34,7 +34,7 @@ class AddCarForm(forms.ModelForm):
 class AddMotoForm(forms.ModelForm):
     class Meta:
         model = Motocycle
-        exclude = ['used_car', 'seller', 'guarantee']
+        exclude = ['used_car', 'seller', 'guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
