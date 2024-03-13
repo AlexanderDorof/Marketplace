@@ -13,6 +13,7 @@ urlpatterns = [
     path('list/cars/', CarsList.as_view(), name='list-cars'),
     path('list/motorcycles/', MotorcyclesList.as_view(), name='list-motorcycles'),
     path('list/services/', ServicesList.as_view(), name='list-services'),
+    path('list/users/', UserList.as_view(), name='list-users'),
 
     # publish item
     path('create/car/', AddCar.as_view(), name='create-car'),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('car/delete/<slug:slug>/', CarDeleteView.as_view(), name='delete_car'),  # ModerPermission
     path('motorcycle/delete/<slug:slug>/', MotoDeleteView.as_view(), name='delete_motorcycle'),  # ModerPermission
     path('service/delete/<slug:slug>/', ServiceDeleteView.as_view(), name='delete_service'),  # ModerPermission
+    path('user/delete/<int:pk>/', UserDeleteView.as_view(), name='delete_user'),  # ModerPermission
 
     # edit model
     path('car/edit/<slug:slug>/', CarEditView.as_view(), name='edit_car'),  # ModerPermission

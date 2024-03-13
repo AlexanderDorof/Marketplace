@@ -214,7 +214,7 @@ class User(models.Model):
 
     # related models
     favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
-    user_django = models.OneToOneField(DjangoUser, on_delete=models.SET_NULL, related_name='user_django', blank=True,
+    user_django = models.OneToOneField(DjangoUser, on_delete=models.CASCADE, related_name='user_django', blank=True,
                                        null=True)
 
     def __str__(self):
