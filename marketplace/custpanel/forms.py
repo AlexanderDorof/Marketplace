@@ -9,7 +9,7 @@ from main_app.models import *
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -30,10 +30,11 @@ class CarForm(forms.ModelForm):
         }
 
 
+
 class MotocycleForm(forms.ModelForm):
     class Meta:
         model = Motocycle
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'brand': TextInput(attrs={'class': 'form-control'}),
             'model': TextInput(attrs={'class': 'form-control'}),
@@ -56,7 +57,7 @@ class MotocycleForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        exclude = ['guarantee']
+        exclude = ['guarantee', 'slug']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control'}),
             'description': Textarea(attrs={'class': 'form-control', 'cols': 4, 'rows': 3}),
