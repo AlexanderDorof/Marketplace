@@ -96,13 +96,27 @@ class ItemEditView(AdminPermissionsMixin, UpdateView):
     template_name = 'custpanel/change.html'
     form_class = CarForm
     context_object_name = 'item'
+    login_url = 'register:login'
+
+    def form_valid(self, form):
+        if 'password' in form.cleaned_data:
+            password = form.cleaned_data['password']
+            form.save(password=password)
+        else:
+            form.save()
+        return super().form_valid(form)
 
 
-CarEditView = type('CarEditView', (ItemEditView,), {'model': Car})
+CarEditView = type('CarEditView', (ItemEditView,), {'model': Car, 'success_url': reverse_lazy('admin-panel:list-cars')})
 MotoEditView = type('MotoEditView', (ItemEditView,),
-                    {'model': Motocycle, 'form_class': MotocycleForm})
-ServiceEditView = type('ServiceEditView', (ItemEditView,), {'model': Service, 'form_class': ServiceForm})
-UserEditView = type('UserEditView', (ItemEditView,), {'model': DjangoUser, 'form_class': UserForm})
+                    {'model': Motocycle, 'form_class': MotocycleForm,
+                     'success_url': reverse_lazy('admin-panel:list-motorcycles')})
+ServiceEditView = type('ServiceEditView', (ItemEditView,),
+                       {'model': Service, 'form_class': ServiceForm,
+                        'success_url': reverse_lazy('admin-panel:list-services')})
+UserEditView = type('UserEditView', (ItemEditView,),
+                    {'model': DjangoUser, 'form_class': UserForm,
+                     'success_url': reverse_lazy('admin-panel:list-users')})
 
 
 # display from db
