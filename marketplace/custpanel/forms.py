@@ -30,7 +30,6 @@ class CarForm(forms.ModelForm):
         }
 
 
-
 class MotocycleForm(forms.ModelForm):
     class Meta:
         model = Motocycle
@@ -71,23 +70,25 @@ class ServiceForm(forms.ModelForm):
         }
 
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = DjangoUser
-        fields = ['username',  'groups', 'email']
-        widgets = {
-            'username': TextInput(attrs={'class': 'form-control'}),
-            # 'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
-            'groups': Select(attrs={'class': 'form-control form-control-lg'}),
-            'email': EmailInput(attrs={'class': 'form-select'}),
-        }
+class UserForm(forms.Form):
+    choices = [
+        ('user', 'Пользователь'),
+        ('moderator', 'Модератор'),
+        ('admin', 'Администратор'),
+    ]
+    username = forms.CharField(max_length=50, label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Новый пароль', required=False,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    group = forms.ChoiceField(label='Группа', initial='user', choices=choices,
+                              widget=forms.Select(attrs={'class': 'form-control form-control-lg'}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control form-control-lg'}))
 
-        def save(self, password):
-            ic()
-            user = super().save(commit=False)
-            ic()
-            user.set_password(password)
-            ic()
-            user.save()
-            ic()
-            return user
+    def __init__(self, *args, **kwargs):
+        username = kwargs.pop('username', None)
+        group = kwargs.pop('group', None)
+        email = kwargs.pop('email', None)
+        super().__init__(*args, **kwargs)
+        self.fields['username'].initial = username
+        self.fields['group'].initial = group
+        self.fields['email'].initial = email
+

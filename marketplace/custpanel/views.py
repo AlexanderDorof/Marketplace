@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import QuerySet
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.models import User as DjangoUser
 from icecream import ic
 from django.utils.text import slugify
+from django.contrib.auth.models import Group
 from queryset_sequence import QuerySetSequence
 
 from .forms import *
@@ -102,10 +104,12 @@ class ItemEditView(AdminPermissionsMixin, UpdateView):
     login_url = 'register:login'
 
     def form_valid(self, form):
+        ic()
         if 'password' in form.cleaned_data:
             password = form.cleaned_data['password']
             form.save(password=password)
         else:
+            ic()
             form.save()
         return super().form_valid(form)
 
@@ -120,6 +124,37 @@ ServiceEditView = type('ServiceEditView', (ItemEditView,),
 UserEditView = type('UserEditView', (ItemEditView,),
                     {'model': DjangoUser, 'form_class': UserForm,
                      'success_url': reverse_lazy('admin-panel:list-users')})
+@user_passes_test(test_func=user_is_admin, login_url='register:login')
+def user_edit_view(request, pk):
+    user = DjangoUser.objects.get(pk=pk)
+    username = user.username
+    group = user.groups.values('name')[0]['name']
+    email = user.email
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = UserForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            ic()
+            user = DjangoUser.objects.get(pk=pk)
+            new_username = form.cleaned_data['username']
+            new_password = form.cleaned_data['password']
+            new_group = form.cleaned_data['group']
+            new_email = form.cleaned_data['email']
+            if new_username != username:
+                user.username = new_username
+            if new_password:
+                user.set_password(new_password)
+            if new_group != group:
+                ic()
+                new_group_model = Group.objects.get(name=new_group)
+                user.groups.set([new_group_model])
+            user.save()
+
+            return redirect('admin-panel:admin_home')
+    form = UserForm(username=username, group=group, email=email)
+
+    return render(request, 'custpanel/change.html', {'form': form})
 
 
 # display from db

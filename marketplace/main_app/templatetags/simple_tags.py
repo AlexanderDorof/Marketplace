@@ -21,8 +21,8 @@ def model_name(obj: Model) -> str:
 @register.filter
 def django_user(pk: int) -> int:
     """tag returns pk of django user on pk of custom user"""
-    user = DjangoUser.objects.get(pk=pk)
-    return user.pk
+    user = User.objects.get(pk=pk)
+    return user.user_django.pk
 
 
 @register.simple_tag
