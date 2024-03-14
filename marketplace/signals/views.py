@@ -35,3 +35,5 @@ def owner_email(instance):
     django_user = user.user_django
     email = django_user.email
     return email
+
+
