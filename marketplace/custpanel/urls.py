@@ -33,7 +33,7 @@ urlpatterns = [
     path('car/edit/<slug:slug>/', CarEditView.as_view(), name='edit_car'),
     path('motors/edit/<slug:slug>/', MotoEditView.as_view(), name='edit_motorcycle'),
     path('service/edit/<slug:slug>/', ServiceEditView.as_view(), name='edit_service'),
-    path('user/edit/<int:pk>/', UserEditView.as_view(), name='edit_user'),
+    path('user/edit/<int:pk>/', user_edit_view, name='edit_user'),
 
 ]
 

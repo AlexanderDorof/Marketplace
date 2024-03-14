@@ -11,7 +11,7 @@
                     <form method="post">
                         {% csrf_token %}
                         <input type="submit" value="Удалить" class="btn btn-danger">
-                        <a href="{{ item.get_absolute_url }}" class="btn btn-secondary">Отмена</a>
+                        <a href="{% url 'admin-panel:admin_home' %}" class="btn btn-secondary">Отмена</a>
                     </form>
                 </div>
             </div>
