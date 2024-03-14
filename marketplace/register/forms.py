@@ -48,26 +48,26 @@ class ProfileForm(forms.ModelForm):
 
 
 class ProfilePasswordForm(forms.ModelForm):
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
+    username = forms.CharField(max_length=50, label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password_first = forms.CharField(label='Пароль',required=False, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
-    password_repeat = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(
+    password_repeat = forms.CharField(label='Повторите пароль',required=False, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
-
     class Meta:
         model = User
-        fields = ['username', 'password', 'password_repeat']
-        widgets = {
-            'username': TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ('username', 'password_first', 'password_repeat')
+
+
 
     def clean_password_repeat(self):
         cd = self.cleaned_data
-        if cd['password'] != cd['password_repeat']:
+        if cd['password_first'] != cd['password_repeat']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password_repeat']
 
-    def save(self, password):
-        user = super().save(commit=False)
-        user.set_password(password)
-        user.save()
-        return user
+    # def save(self, **kwargs):
+    #     user = super().save(commit=False)
+    #     username = kwargs.pop('username', None)
+    #     password = kwargs.pop('password', None)
+    #
+    #     return user

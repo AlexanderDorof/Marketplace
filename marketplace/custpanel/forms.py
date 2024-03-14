@@ -76,7 +76,7 @@ class UserForm(forms.Form):
         ('moderator', 'Модератор'),
         ('admin', 'Администратор'),
     ]
-    username = forms.CharField(max_length=50, label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length=50, label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Новый пароль', required=False,
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     group = forms.ChoiceField(label='Группа', initial='user', choices=choices,

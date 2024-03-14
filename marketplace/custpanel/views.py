@@ -146,15 +146,16 @@ def user_edit_view(request, pk):
             if new_password:
                 user.set_password(new_password)
             if new_group != group:
-                ic()
                 new_group_model = Group.objects.get(name=new_group)
                 user.groups.set([new_group_model])
+            if new_email != email:
+                user.email = new_email
             user.save()
 
             return redirect('admin-panel:admin_home')
     form = UserForm(username=username, group=group, email=email)
 
-    return render(request, 'custpanel/change.html', {'form': form})
+    return render(request, 'custpanel/change.html', {'form': form, 'title': 'Редактирование записи'})
 
 
 # display from db
