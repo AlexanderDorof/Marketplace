@@ -1,12 +1,10 @@
 from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User as DjangoUser
-from icecream import ic
 
 from main_app.models import Car, Motocycle, Service, User
 from .views import create_image_preview, moders_emails, owner_email, admins_emails
-from main_app.tasks import send_email_task
-
+from main_app.tasks import send_email_task, send_email_task_smtp
 
 
 @receiver(post_save, sender=Car)
@@ -41,7 +39,7 @@ def car_deleted(sender, instance, **kwargs):
     subject = 'Deletion...'
     message = f'Your car was deleted: {instance}'
     recipient_emails = 'aleksandar.dorofeichik@yandex.ru'
-    send_email_task(subject, message, recipient_emails)
+    send_email_task_smtp.delay(subject, message, recipient_emails)
 
 @receiver(post_delete, sender=Motocycle)
 def motorcycle_deleted(sender, instance, **kwargs):
