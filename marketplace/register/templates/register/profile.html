@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <main>
-    <h1 class="m-3">Изменить данные профиля</h1>
+    <h1 class="m-3 text-light">Изменить данные профиля</h1>
     <form class="description" method="post">
         {% csrf_token %}
         <table>{{ form.as_table }}</table>
