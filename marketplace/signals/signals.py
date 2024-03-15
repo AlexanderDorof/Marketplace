@@ -39,7 +39,7 @@ def car_deleted(sender, instance, **kwargs):
     subject = 'Deletion...'
     message = f'Your car was deleted: {instance}'
     recipient_emails = 'aleksandar.dorofeichik@yandex.ru'
-    # send_email_task_smtp.delay(subject, message, recipient_emails)
+    send_email_task_smtp.delay(subject, message, recipient_emails)
 
 @receiver(post_delete, sender=Motocycle)
 def motorcycle_deleted(sender, instance, **kwargs):
