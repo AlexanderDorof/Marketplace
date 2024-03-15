@@ -4,13 +4,13 @@ body {
 
 
 .form {
-    border: 5px solid blue;
-    /* Добавляем рамку с цветом midnightblue */
-    padding: 20px;
-    /* Задаем отступ внутри рамки */
+    border: 5px solid rgba(255, 217, 13, 0.73); /* Добавляем рамку с цветом midnightblue */
+    padding: 20px; /* Задаем отступ внутри рамки */
     text-align: center;
     border-radius: 25px;
     margin: 200px;
+    color: gold;
+
 }
 
 .form ul {
@@ -46,6 +46,58 @@ body {
     width: 5%;
 }
 
+
+.border-primary.rounded {
+    border-color: #ffbb3c !important;
+}
+
+
+.btn-primary {
+    background-color: darkblue;
+}
+
+
+.btn-equal {
+    width: 100%;
+    height: 100%;
+}
+
+p {
+    color: gold;
+}
+
+
+.float-none {
+    color: gold;
+}
+
+
+.title {
+    color: gold;
+}
+
+.text-center {
+    color: gold;
+}
+
+
+.btn.btn-primary.btn-equal#back{
+    background-color: olive;
+}
+
+.flower-image {
+    max-height: 200px;
+
+}
+
+.image-container {
+    max-height: 200px;
+
+}
+
+.image-container img {
+    width: auto;
+}
 
 * {
     padding: 0;

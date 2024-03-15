@@ -63,13 +63,15 @@ ServiceDetailView = type('ServiceDetailView', (ItemDetailView,), {'model': Servi
 class AddItem(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCarForm
     template_name = 'main_app/publish.html'
-    extra_context = {'title': 'Создать объявление', 'vehicle': 'автомобиль'}
+    extra_context = {'title': 'Создать объявление'}
     login_url = 'register:login'
+    vehicle = 'автомобиль'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_auth_mixin = self.get_user_context()
         context = {**context, **user_auth_mixin}
+        context['vehicle'] = self.vehicle
         return context
 
     def get_initial(self):
@@ -81,7 +83,7 @@ class AddItem(LoginRequiredMixin, DataMixin, CreateView):
         return initial
 
 
-AddCar = type('AddCar', (AddItem,), {'form_class': AddCarForm})
+AddCar = type('AddCar', (AddItem,), {'form_class': AddCarForm, 'vehicle': 'автомобиль'})
 AddMoto = type('AddMoto', (AddItem,), {'form_class': AddMotoForm, 'vehicle': 'мотоцикл'})
 
 

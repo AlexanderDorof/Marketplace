@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1 class="text-center">{{ title }}</h1>
-<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5">Вернуться на главную</a>
+<a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5 btn-equal">Вернуться на главную</a>
 <div class="container">
     <div class="form-column">
         <div class="form">
@@ -23,7 +23,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <button class="btn btn-primary" type="submit">Создать</button>
+                <button class="btn btn-primary btn-equal" type="submit">Опубликовать объявление</button>
             </form>
         </div>
     </div>

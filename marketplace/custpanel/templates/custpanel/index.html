@@ -11,14 +11,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:list-cars' %}" class="btn btn-primary">Список Машин</a>
+                        <a href="{% url 'admin-panel:list-cars' %}" class="btn btn-primary btn-equal">Список Машин</a>
                     </div>
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:list-motorcycles' %}" class="btn btn-primary">Список
+                        <a href="{% url 'admin-panel:list-motorcycles' %}" class="btn btn-primary btn-equal">Список
                             Мотоциклов</a>
                     </div>
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary">Список
+                        <a href="{% url 'admin-panel:list-services' %}" class="btn btn-primary btn-equal">Список
                             Услуг</a>
                     </div>
                     <div class="col-xl">
@@ -33,27 +33,27 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:create-car' %}" class="btn btn-primary">Создать машину</a>
+                        <a href="{% url 'admin-panel:create-car' %}" class="btn btn-primary btn-equal">Создать машину</a>
                     </div>
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:create-motorcycle' %}" class="btn btn-primary">Создать
+                        <a href="{% url 'admin-panel:create-motorcycle' %}" class="btn btn-primary btn-equal">Создать
                             мотоцикл</a>
                     </div>
                     <div class="col-xl">
-                        <a href="{% url 'admin-panel:create-service' %}" class="btn btn-primary">Создать Услугу</a>
+                        <a href="{% url 'admin-panel:create-service' %}" class="btn btn-primary btn-equal">Создать Услугу</a>
                     </div>
                     <div class="col-xl">
-                        <a href="{% url 'register:register' %}" class="btn btn-primary">Создать
+                        <a href="{% url 'register:register' %}" class="btn btn-primary btn-equal">Создать
                             Пользователя</a>
                     </div>
                 </div>
             </div>
         </fieldset>
         <div class="container p-4">
-            <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary">Удалить модели</a>
+            <a href="{% url 'admin-panel:delete' %}" class="btn btn-primary btn-equal">Удалить модели</a>
             <br>
         </div>
     </div>
-    <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на сайт</a>
+    <a href="{% url 'home' %}" class="btn btn-primary btn-equal" id="back">Вернуться на сайт</a>
 </div>
 {% endblock %}

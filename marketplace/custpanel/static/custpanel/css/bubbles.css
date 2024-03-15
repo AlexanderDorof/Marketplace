@@ -1,0 +1,110 @@
+@keyframes mygradient {
+    0% {
+        background-position: 0%
+    }
+
+    100% {
+        background-position: 100%
+    }
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(90deg, rgb(141, 103, 66), rgb(157, 143, 94), rgb(148, 127, 27), rgb(169, 119, 0));
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: mygradient 24s linear infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-container {
+    position: relative;
+    padding: 20px;
+    z-index: 2;
+}
+
+@keyframes wave {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50% {
+        transform: rotate(90deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+#wave {
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+#wave:before {
+    content: '';
+    overflow: hidden;
+    position: absolute;
+    bottom: 12%;
+    left: -250vw;
+    width: 600vw;
+    height: 600vw;
+    background: rgba(0, 0, 0, .375);
+    border-radius: 48% 52% 52% 48% / 48% 52% 48% 52%;
+    animation: wave 9s ease-in-out infinite;
+    animation-delay: -3s;
+}
+
+#wave:after {
+    content: '';
+    overflow: hidden;
+    position: absolute;
+    bottom: 12%;
+    left: -250vw;
+    width: 600vw;
+    height: 600vw;
+    background: rgba(0, 0, 0, .375);
+    border-radius: 48% 52% 52% 48% / 48% 52% 48% 52%;
+    animation: wave 9s linear infinite;
+}
+
+.arrow_up {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.arrow_up.active {
+    display: block;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
