@@ -10,9 +10,9 @@ urlpatterns = [
     path('services/', ServicesList.as_view(), name='services'),
 
     # display one item
-    path('car/<slug:slug>/', CarDetailView.as_view(), name="car_url"),
-    path('moto/<slug:slug>/', MotoDetailView.as_view(), name="moto_url"),
-    path('services/<slug:slug>/', ServiceDetailView.as_view(), name="service_url"),
+    path('car/<slug:slug>/', CarDetailView.as_view(), name='car_url'),
+    path('moto/<slug:slug>/', MotoDetailView.as_view(), name='moto_url'),
+    path('services/<slug:slug>/', ServiceDetailView.as_view(), name='service_url'),
 
     # publish item
     path('publish/car/', AddCar.as_view(), name='publish_car'),  # AuthorizedPermission

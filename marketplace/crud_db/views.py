@@ -1,12 +1,11 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from icecream import ic
+from django.urls import reverse_lazy
 
+from main_app.permissions import AuthorPermissionsMixin
+from main_app.utils import DataMixin, PaginationMixin
 from main_app.forms import AddCarForm, AddMotoForm
 from main_app.models import *
-from main_app.utils import *
-from main_app.permissions import AuthorPermissionsMixin
 
 
 # READ
