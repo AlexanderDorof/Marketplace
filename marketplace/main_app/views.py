@@ -1,10 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from asgiref.sync import sync_to_async
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 from .utils import *
+import asyncio
 
 
 def index(request):
@@ -17,23 +19,53 @@ def info(request):
     return render(request, 'main_app/info.html', context=context)
 
 
-def add_to_favorite(request):
+async def add_to_favorite(request):
+
+    def get_current_user():
+        return User.objects.get(user_django__pk=request.user.pk)
+
+    def favorite_cars_by_item_pk(user, item_pk):
+        return user.favorite.favorite_cars.filter(pk=item_pk).exists()
+    def favorite_motos_by_item_pk(user, item_pk):
+        return user.favorite.favorite_moto.filter(pk=item_pk).exists()
+
+    def car_by_item_pk(item_pk):
+        return Car.objects.get(pk=item_pk)
+
+    def car_add_to_favorite(user, instance):
+        user.favorite.favorite_cars.add(instance)
+
+    def car_remove_from_favorite(user, instance):
+        user.favorite.favorite_cars.remove(instance)
+
+
+    def moto_by_item_pk(item_pk):
+        return Motocycle.objects.get(pk=item_pk)
+
+    def moto_add_to_favorite(user, instance):
+        user.favorite.favorite_moto.add(instance)
+
+    def moto_remove_from_favorite(user, instance):
+        user.favorite.favorite_moto.remove(instance)
+
     item_pk = request.GET.get('pk')
     item_type = request.GET.get('vehicle')
-    pk = request.user.pk
-    user = User.objects.get(user_django__pk=pk)
+    user = await sync_to_async(get_current_user)()
     if item_type == 'car':
-        if not user.favorite.favorite_cars.filter(pk=item_pk).exists():
-            user.favorite.favorite_cars.add(Car.objects.get(pk=item_pk))
+        car_instance = await sync_to_async(car_by_item_pk)(item_pk)
+        car_in_favorite = await sync_to_async(favorite_cars_by_item_pk)(user, item_pk)
+        if not car_in_favorite:
+            await sync_to_async(car_add_to_favorite)(user, car_instance)
         else:
-            car_instance = Car.objects.get(pk=item_pk)
-            user.favorite.favorite_cars.remove(car_instance)
+            await sync_to_async(car_remove_from_favorite)(user, car_instance)
     elif item_type == 'motocycle':
-        if not user.favorite.favorite_moto.filter(pk=item_pk).exists():
-            user.favorite.favorite_moto.add(Motocycle.objects.get(pk=item_pk))
+        moto_instance = await sync_to_async(moto_by_item_pk)(item_pk)
+        moto_in_favorite = await sync_to_async(favorite_motos_by_item_pk)(user, item_pk)
+        if not moto_in_favorite:
+            await sync_to_async(moto_add_to_favorite)(user, moto_instance)
         else:
-            moto_instance = Motocycle.objects.get(pk=item_pk)
-            user.favorite.favorite_moto.remove(moto_instance)
+            await sync_to_async(moto_remove_from_favorite)(user, moto_instance)
+
     return JsonResponse({'image': '/static/static_imgs/heart-icon.svg', 'pk': item_pk})
 
 
