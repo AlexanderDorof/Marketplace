@@ -36,7 +36,7 @@ class PaginationMixin:
         page = self.request.GET.get('page')
         return paginator.get_page(page)
 
-    def paginate_page_range(self, total_pages: int, page_number: int) -> list[int, None]:
+    def paginate_page_range(self, total_pages: int, page_number: int) -> list[int]:
         """returns list of pages to display depending on what user's current page"""
         page_range_list = [1]  # first page is always exist
 

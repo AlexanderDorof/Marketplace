@@ -1,14 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView, LoginView
-from django.urls import reverse_lazy
 from django.views.generic.edit import FormView, UpdateView
-from icecream import ic
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
-from main_app.models import User as CustomUser
-from .forms import UserRegistrationForm, ProfileForm, ProfilePasswordForm
-from main_app.utils import DataMixin
 from .permissions import ProfilePermissionsMixin, PasswordPermissionsMixin
+from .forms import UserRegistrationForm, ProfileForm, ProfilePasswordForm
+from main_app.models import User as CustomUser
+from main_app.utils import DataMixin
 
 
 class RegisterView(FormView):
@@ -46,6 +44,7 @@ class UserEditProfileView(ProfilePermissionsMixin, DataMixin, UpdateView):
         context = {**context, **c_def}
         return context
 
+
 class UserEditPasswordView(PasswordPermissionsMixin, DataMixin, UpdateView):
     model = User
     extra_context = {'title': 'Сменить пароль', 'password': False}
@@ -61,6 +60,12 @@ class UserEditPasswordView(PasswordPermissionsMixin, DataMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        password = form.cleaned_data['password']
-        form.save(password=password)
+        new_username = form.cleaned_data['username']
+        password = form.cleaned_data['password_first']
+        user = self.request.user
+        if new_username != user.username:
+            user.username = new_username
+        if password:
+            user.set_password(password)
+        user.save()
         return super().form_valid(form)

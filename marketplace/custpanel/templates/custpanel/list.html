@@ -4,12 +4,12 @@
 {% block content %}
     <h1 class="text-center">{{ title }}</h1>
     <a href="{% url 'admin-panel:admin_home' %}" class="btn btn-warning m-5">Вернуться на главную</a>
+
     {% include 'custpanel/pagination.html' %}
-<div class="container">
 
-    {% include item_name %}
-
-</div>
+    <div class="container">
+        {% include item_name %}
+    </div>
 {% include 'custpanel/pagination.html' %}
 {% endblock %}
 

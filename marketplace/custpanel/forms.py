@@ -1,9 +1,7 @@
+from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple
 from django import forms
-from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple, \
-    PasswordInput, EmailInput
-from django.contrib.auth.models import User as DjangoUser
 
-from main_app.models import *
+from main_app.models import Car, Motocycle, Service
 
 
 class CarForm(forms.ModelForm):
@@ -28,7 +26,6 @@ class CarForm(forms.ModelForm):
             'used_car': CheckboxInput(attrs={'class': 'form-check-input'}),
             'seller': Select(attrs={'class': 'form-select'}),
         }
-
 
 
 class MotocycleForm(forms.ModelForm):
@@ -71,19 +68,25 @@ class ServiceForm(forms.ModelForm):
         }
 
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = DjangoUser
-        fields = ['username', 'password', 'groups', 'email']
-        widgets = {
-            'username': TextInput(attrs={'class': 'form-control'}),
-            'password': PasswordInput(attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}),
-            'groups': Select(attrs={'class': 'form-control form-control-lg'}),
-            'email': EmailInput(attrs={'class': 'form-select'}),
-        }
+class UserForm(forms.Form):
+    CHOICES_GROUPS = [
+        ('user', 'Пользователь'),
+        ('moderator', 'Модератор'),
+        ('admin', 'Администратор'),
+    ]
+    username = forms.CharField(max_length=50, label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Новый пароль', required=False,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    group = forms.ChoiceField(label='Права пользователя', initial='user', choices=CHOICES_GROUPS,
+                              widget=forms.Select(attrs={'class': 'form-control form-control-lg'}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control form-control-lg'}))
 
-        def save(self, password):
-            user = super().save(commit=False)
-            user.set_password(password)
-            user.save()
-            return user
+    def __init__(self, *args, **kwargs):
+        # if kwargs contains redundant keys - __init__ raises exception
+        username = kwargs.pop('username', None)
+        group = kwargs.pop('group', None)
+        email = kwargs.pop('email', None)
+        super().__init__(*args, **kwargs)
+        self.fields['username'].initial = username
+        self.fields['group'].initial = group
+        self.fields['email'].initial = email

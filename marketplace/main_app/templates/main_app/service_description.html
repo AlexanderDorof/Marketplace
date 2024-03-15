@@ -11,7 +11,7 @@
                         <h1 class="card-title">{{ item.title }}</h1>
                         <p class="card-text text-truncate">Описание: {{ item.description }}</p>
                         <p class="product_id">id: {{ item.pk }}</p>
-                        <p class="card-text">Исполнитель: {{ item.in_charge }}</p>
+                        <p class="card-text">Исполнитель: {{ item.get_in_charge_display }}</p>
                         <p class="card-text">Гарантия: {{ item.garantee }}</p>
                         <div class="d-flex justify-content-between">
                             <p><strong>{{ item.price|intcomma }} $</strong></p>
