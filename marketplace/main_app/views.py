@@ -1,12 +1,11 @@
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponseNotFound
+from django.shortcuts import render, redirect
 from asgiref.sync import sync_to_async
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 from .utils import *
-import asyncio
 
 
 def index(request):
@@ -97,3 +96,8 @@ class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
         cars = list(fav.favorite_cars.all())
         motos = list(fav.favorite_moto.all())
         return cars + motos
+
+
+def pageNotFoundRedirect(request, exception):
+    context = funcmixin(request, title='Страница не найдена')
+    return render(request, 'main_app/404.html',context=context, status=404)
