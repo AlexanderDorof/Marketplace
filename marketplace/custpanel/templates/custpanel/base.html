@@ -9,8 +9,8 @@
     <link rel="icon" type="image/x-icon" href="{% static 'static_imgs/tire_favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'custpanel/css/models.css' %}">
     <title> {{ title }} </title>
-
 </head>
+
 <body>
 <div id="header"></div>
 {% block content %}
@@ -19,25 +19,6 @@
 <div style="height:100px;"></div>
 <script src="{% static 'custpanel/js/jquery-3.7.1.js' %}"></script>
 <script src="{% static 'custpanel/js/bootstrap.bundle.min.js' %}"></script>
-<script>
-    window.onload = function() {
-    const elements = document.querySelectorAll('[id^="expandButton_"]');
-    createFunctions(elements.length)
-    console.log("Page is fully loaded!");
-};
-
-    function createFunctions(n) {
-        for (let i = 1; i <= n; i++) {
-            window['changeText_' + i] = function() {
-                const button = document.getElementById('expandButton_' + i);
-                if (button.textContent === 'Свернуть') {
-                    button.textContent = 'Развернуть';
-                } else {
-                    button.textContent = 'Свернуть';
-                }
-            };
-        }
-}
-</script>
+<script src="{% static 'custpanel/js/scripts.js' %}"></script>
 </body>
 </html>

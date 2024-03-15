@@ -1,9 +1,7 @@
+from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple
 from django import forms
-from django.forms import Textarea, FileInput, Select, NumberInput, TextInput, CheckboxInput, SelectMultiple, \
-    PasswordInput, EmailInput
-from django.contrib.auth.models import User as DjangoUser
 
-from main_app.models import *
+from main_app.models import Car, Motocycle, Service
 
 
 class CarForm(forms.ModelForm):
@@ -71,7 +69,7 @@ class ServiceForm(forms.ModelForm):
 
 
 class UserForm(forms.Form):
-    choices = [
+    CHOICES_GROUPS = [
         ('user', 'Пользователь'),
         ('moderator', 'Модератор'),
         ('admin', 'Администратор'),
@@ -79,11 +77,12 @@ class UserForm(forms.Form):
     username = forms.CharField(max_length=50, label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Новый пароль', required=False,
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    group = forms.ChoiceField(label='Группа', initial='user', choices=choices,
+    group = forms.ChoiceField(label='Права пользователя', initial='user', choices=CHOICES_GROUPS,
                               widget=forms.Select(attrs={'class': 'form-control form-control-lg'}))
     email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control form-control-lg'}))
 
     def __init__(self, *args, **kwargs):
+        # if kwargs contains redundant keys - __init__ raises exception
         username = kwargs.pop('username', None)
         group = kwargs.pop('group', None)
         email = kwargs.pop('email', None)
@@ -91,4 +90,3 @@ class UserForm(forms.Form):
         self.fields['username'].initial = username
         self.fields['group'].initial = group
         self.fields['email'].initial = email
-
