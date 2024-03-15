@@ -2,14 +2,13 @@ from datetime import datetime
 import random
 
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User as DjangoUser
-from django.utils import timezone
-from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
+from dateutil.relativedelta import relativedelta
 from django.db import models, IntegrityError
 from django.utils.text import slugify
-from dateutil.relativedelta import relativedelta
-from icecream import ic
+from django.utils import timezone
+from django.urls import reverse
 
 
 class Vehicle(models.Model):
@@ -70,6 +69,8 @@ class Vehicle(models.Model):
         try:
             super().save(*args, **kwargs)
         except IntegrityError:
+
+            # guarantees all slugs will be unique
             self.slug += timezone.now().strftime('_%Y-%m-%d_time%H:%M:%S_')
             self.slug += str(random.randint(0, 10_000_000))
             super().save(*args, **kwargs)
@@ -93,7 +94,6 @@ class Car(Vehicle):
 
     def __str__(self):
         return f'{self.brand} {self.model} {self.year_produced}'
-
 
     def get_absolute_url(self):
         return reverse('car_url', kwargs={'slug': self.slug})
@@ -170,7 +170,7 @@ class Service(models.Model):
 
     @classmethod
     def russian_to_english_transliteration(cls, russian_sentence):
-        # Define a mapping of Russian letters to their English equivalents
+        """Define a mapping of Russian letters to their English equivalents"""
         translit_map = {
             'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
             'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
@@ -182,6 +182,7 @@ class Service(models.Model):
         }
 
         return ''.join(translit_map.get(letter, letter) for letter in russian_sentence.lower())
+
     # consts
     SPECIALISTS = (
         ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
@@ -222,6 +223,8 @@ class Service(models.Model):
         try:
             super().save(*args, **kwargs)
         except IntegrityError:
+
+            # guarantees all slugs will be unique
             self.slug += timezone.now().strftime('_%Y-%m-%d_time%H:%M:%S_')
             self.slug += str(random.randint(0, 10_000_000))
             super().save(*args, **kwargs)

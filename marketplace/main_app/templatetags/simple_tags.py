@@ -1,8 +1,7 @@
 from django import template
 from django.db.models import Model
-from django.contrib.auth.models import User as DjangoUser
 
-from main_app.models import *
+from main_app.models import User
 
 register = template.Library()
 
@@ -17,6 +16,7 @@ def user_is_seller(seller: User, user: User) -> bool:
 def model_name(obj: Model) -> str:
     """tag returns name of the model"""
     return obj._meta.model_name
+
 
 @register.filter
 def django_user(pk: int) -> int:

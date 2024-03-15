@@ -33,8 +33,8 @@
                             <p><strong>${{ item.price|intcomma }}</strong></p>
                             <div>
                                 {% if is_moderator or is_owner %}
-                                <a href="{% url edit_ref slug=item.slug %}" class="btn btn-primary">Редактировать</a>
-                                <a href="{% url delete_ref slug=item.slug %}" class="btn btn-danger">Удалить</a>
+                                    <a href="{% url edit_ref slug=item.slug %}" class="btn btn-primary">Редактировать</a>
+                                    <a href="{% url delete_ref slug=item.slug %}" class="btn btn-danger">Удалить</a>
                                 {% endif %}
                                 <div style="height:100px;"></div>
                             </div>

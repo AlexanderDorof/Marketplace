@@ -1,14 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView, LoginView
-from django.urls import reverse_lazy
 from django.views.generic.edit import FormView, UpdateView
-from icecream import ic
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
-from main_app.models import User as CustomUser
-from .forms import UserRegistrationForm, ProfileForm, ProfilePasswordForm
-from main_app.utils import DataMixin
 from .permissions import ProfilePermissionsMixin, PasswordPermissionsMixin
+from .forms import UserRegistrationForm, ProfileForm, ProfilePasswordForm
+from main_app.models import User as CustomUser
+from main_app.utils import DataMixin
 
 
 class RegisterView(FormView):
