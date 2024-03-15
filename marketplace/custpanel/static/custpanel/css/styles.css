@@ -1,0 +1,53 @@
+body {
+    background: #ADD8E6;
+}
+
+
+.form {
+    border: 5px solid blue;
+    /* Добавляем рамку с цветом midnightblue */
+    padding: 20px;
+    /* Задаем отступ внутри рамки */
+    text-align: center;
+    border-radius: 25px;
+    margin: 200px;
+}
+
+.form ul {
+    list-style: none;
+    /* Применяется к элементу списка внутри .form */
+}
+
+
+.form {
+    text-align: center;
+    /* Центрируем содержимое по горизонтали */
+}
+
+.form2 a {
+    text-decoration: none;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form2 a:hover {
+    background-color: #0056b3;
+}
+
+.arrow_up {
+    position: fixed;
+    right: 2%;
+    bottom: 10%;
+    z-index: 5;
+    width: 5%;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
