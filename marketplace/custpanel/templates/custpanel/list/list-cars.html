@@ -31,14 +31,14 @@
     <tr>
         <td colspan="7">
             <div id="demo-{{ forloop.counter }}" class="collapse">
-                <div><p><b>Описание</b>: {{ item.description }}</p></div>
-                <div><p><b>Пробег</b>: {{ item.distance|intcomma }} км</p></div>
-                <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
-                <div><p><b>Тип двигателя</b>: {{ item.get_engine_type_display }}</p></div>
-                <div><p><b>Мощность двигателя</b>: {{ item.engine_power }} л.с.</p></div>
-                <div><p><b>Цвет</b>: {{ item.get_color_display }}</p></div>
-                <div><p><b>Тип кузова</b>: {{ item.get_body_type_display }}</p></div>
-                <div><p><b>Тип привода</b>: {{ item.get_drive_type_display }}</p></div>
+                <div><p class="text-dark"><b>Описание</b>: {{ item.description }}</p></div>
+                <div><p class="text-dark"><b>Пробег</b>: {{ item.distance|intcomma }} км</p></div>
+                <div><p class="text-dark"><b>Гарантия</b>: {{ item.guarantee }}</p></div>
+                <div><p class="text-dark"><b>Тип двигателя</b>: {{ item.get_engine_type_display }}</p></div>
+                <div><p class="text-dark"><b>Мощность двигателя</b>: {{ item.engine_power }} л.с.</p></div>
+                <div><p class="text-dark"><b>Цвет</b>: {{ item.get_color_display }}</p></div>
+                <div><p class="text-dark"><b>Тип кузова</b>: {{ item.get_body_type_display }}</p></div>
+                <div><p class="text-dark"><b>Тип привода</b>: {{ item.get_drive_type_display }}</p></div>
                 <div class="row">
                     <div class="col-xl">
                         <a href="{% url 'car_url' item.slug%}" class="btn btn-dark">Смотреть на сайте</a>

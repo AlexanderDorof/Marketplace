@@ -27,15 +27,15 @@
     <tr>
         <td colspan="5">
             <div id="demo-{{ forloop.counter }}" class="collapse">
-                <div><p><b>Описание</b>: {{ item.description }}</p></div>
-                <div><p><b>Доступно</b>:
+                <div><p class="text-dark"><b>Описание</b>: {{ item.description }}</p></div>
+                <div><p class="text-dark"><b>Доступно</b>:
                     {% if item.is_available %}
                     Да
                     {% else %}
                     Нет
                     {% endif %}
                 </p></div>
-                <div><p><b>Гарантия</b>: {{ item.guarantee }}</p></div>
+                <div><p class="text-dark"><b>Гарантия</b>: {{ item.guarantee }}</p></div>
                 <div class="row">
                     <div class="col-xl">
                         <a href="{% url 'service_url' item.slug %}" class="btn btn-dark">Смотреть на сайте</a>
