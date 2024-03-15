@@ -4,7 +4,6 @@ import random
 from django.db import IntegrityError
 from django.utils.text import slugify
 from django.utils import timezone
-from icecream import ic
 
 from main_app.models import Car, Motocycle, User, Service, ItemForCar, ItemForMotorcycle
 from ._fake_data import CARS_BRAND_MODELS, MOTORS_BRAND_MODELS, SERVICES_TITLE, ITEMS_CARS, ITEMS_MOTORCYCLES
@@ -18,7 +17,7 @@ def users_id():
 
 
 def russian_to_english_transliteration(russian_sentence):
-    # Define a mapping of Russian letters to their English equivalents
+    """Define a mapping of Russian letters to their English equivalents"""
     translit_map = {
         'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
         'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',

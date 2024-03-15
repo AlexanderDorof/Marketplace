@@ -1,95 +1,53 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
-from icecream import ic
+from django.contrib.auth.models import User as DjangoUser
 
-from main_app.models import Car, Motocycle, Service
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-
-login = 'blackbloodyring@gmail.com'
-password = ''
-sender_email = login
-sender_password = password
+from main_app.models import Car, Motocycle, Service, User
+from .views import create_image_preview, moders_emails, owner_email, admins_emails
+from main_app.tasks import send_email_task, send_email_task_smtp
 
 
 @receiver(post_save, sender=Car)
 def car_created(sender, instance, created, **kwargs):
-    ic(car_created)
-    ic(kwargs)
-    ic(instance)
-    ic(sender)
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
-
-        # Определяем текст сообщения в зависимости от статуса пользователя
-        all_users = User.objects.filter(groups__name='moder')
-        user_emails = [user.email for user in all_users]
-        print(user_emails)
-
-        # # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
+        create_image_preview(instance, 'car')
+        emails = moders_emails()
 
 
 @receiver(post_save, sender=Motocycle)
-def Motocycle_created(sender, instance, created, **kwargs):
+def motorcycle_created(sender, instance, created, **kwargs):
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
-
-        # Определяем текст сообщения в зависимости от статуса пользователя
-        all_users = User.objects.filter(groups__name='moder')
-        user_emails = [user.email for user in all_users]
-        print(user_emails)
-
-        # # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
+        create_image_preview(instance, 'motor')
+        emails = moders_emails()
 
 
-@receiver(post_save, sender=Service)
-def Service_created(sender, instance, created, **kwargs):
+@receiver(post_delete, sender=User)
+def user_deleted(sender, instance, **kwargs):
+    fav = instance.favorite
+    fav.delete()
+
+
+@receiver(pre_delete, sender=DjangoUser)
+def django_user_deleted(sender, instance, **kwargs):
+    email = owner_email(instance)
+    message = f'We are sorry to inform you, but your account was deleted: {instance}'
+
+
+@receiver(post_delete, sender=Car)
+def car_deleted(sender, instance, **kwargs):
+    email = owner_email(instance)
+    subject = 'Deletion...'
+    message = f'Your car was deleted: {instance}'
+    recipient_emails = 'aleksandar.dorofeichik@yandex.ru'
+    # send_email_task_smtp.delay(subject, message, recipient_emails)
+
+@receiver(post_delete, sender=Motocycle)
+def motorcycle_deleted(sender, instance, **kwargs):
+    email = owner_email(instance)
+    message = f'Your motorcycle was deleted: {instance}'
+
+@receiver(post_save, sender=User)
+def user_created(sender, instance, created, **kwargs):
     if created:
-        # Создаем объект MIMEMultipart
-        message = MIMEMultipart()
-        message['From'] = sender_email
-
-        # Определяем текст сообщения в зависимости от статуса пользователя
-        all_users = User.objects.filter(groups__name='moder')
-        user_emails = [user.email for user in all_users]
-        print(user_emails)
-
-        # Добавляем тему и тело сообщения
-        # message['Subject'] = 'Announcement Created'
-        # message.attach(MIMEText('Announcement created for the car with details:\n\n{}'.format(instance), 'plain'))
-        #
-        # # Добавляем адреса получателей
-        # message['To'] = ', '.join(user_emails)
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        #     server.starttls()
-        #     server.login(sender_email, sender_password)
-        #     server.send_message(message)
+        emails = admins_emails()
+        message = f'New user added: {instance}'

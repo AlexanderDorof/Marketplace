@@ -1,12 +1,14 @@
 from datetime import datetime
+import random
 
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User as DjangoUser
+from django.core.exceptions import ObjectDoesNotExist
+from dateutil.relativedelta import relativedelta
+from django.db import models, IntegrityError
+from django.utils.text import slugify
 from django.utils import timezone
 from django.urls import reverse
-from django.db import models
-from dateutil.relativedelta import relativedelta
 
 
 class Vehicle(models.Model):
@@ -61,7 +63,17 @@ class Vehicle(models.Model):
         current_date = timezone.now().date()
         future_date = current_date + relativedelta(months=self.guarantee_period)
         self.guarantee = future_date
-        super().save(*args, **kwargs)
+        if not self.slug:
+            slug = f'{self.brand}-{self.model}-{self.price}'
+            self.slug = slugify(slug)
+        try:
+            super().save(*args, **kwargs)
+        except IntegrityError:
+
+            # guarantees all slugs will be unique
+            self.slug += timezone.now().strftime('_%Y-%m-%d_time%H:%M:%S_')
+            self.slug += str(random.randint(0, 10_000_000))
+            super().save(*args, **kwargs)
 
 
 class Car(Vehicle):
@@ -82,7 +94,6 @@ class Car(Vehicle):
 
     def __str__(self):
         return f'{self.brand} {self.model} {self.year_produced}'
-
 
     def get_absolute_url(self):
         return reverse('car_url', kwargs={'slug': self.slug})
@@ -156,6 +167,22 @@ class ItemForMotorcycle(Item):
 
 
 class Service(models.Model):
+
+    @classmethod
+    def russian_to_english_transliteration(cls, russian_sentence):
+        """Define a mapping of Russian letters to their English equivalents"""
+        translit_map = {
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+            'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
+            'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+            'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+            'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+            'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+            'э': 'e', 'ю': 'yu', 'я': 'ya'
+        }
+
+        return ''.join(translit_map.get(letter, letter) for letter in russian_sentence.lower())
+
     # consts
     SPECIALISTS = (
         ('Smirnov', 'Смирнов И.И.'), ('Sidorov', 'Сидоров А.К.'), ('Petrov', 'Петров Г.С.'), ('Anohin', 'Анохин Е.З.'))
@@ -190,7 +217,17 @@ class Service(models.Model):
         current_date = timezone.now().date()
         future_date = current_date + relativedelta(months=self.guarantee_period)
         self.guarantee = future_date
-        super().save(*args, **kwargs)
+        if not self.slug:
+            slug = Service.russian_to_english_transliteration(f'{self.title}-{self.price}-{self.in_charge}')
+            self.slug = slugify(slug)
+        try:
+            super().save(*args, **kwargs)
+        except IntegrityError:
+
+            # guarantees all slugs will be unique
+            self.slug += timezone.now().strftime('_%Y-%m-%d_time%H:%M:%S_')
+            self.slug += str(random.randint(0, 10_000_000))
+            super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Услуга'
@@ -214,7 +251,7 @@ class User(models.Model):
 
     # related models
     favorite = models.OneToOneField('Favorite', on_delete=models.CASCADE)
-    user_django = models.OneToOneField(DjangoUser, on_delete=models.SET_NULL, related_name='user_django', blank=True,
+    user_django = models.OneToOneField(DjangoUser, on_delete=models.CASCADE, related_name='user_django', blank=True,
                                        null=True)
 
     def __str__(self):

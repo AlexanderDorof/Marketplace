@@ -6,13 +6,13 @@ class PaginationMixin:
     """mixin adds pagination to class-based view"""
 
     def paginated_object(self, queryset: QuerySet) -> QuerySet:
-        """function excepts full queryset and return one page"""
+        """function excepts full queryset and returns one page"""
         item_list = queryset
         paginator = Paginator(item_list, self.paginate_by)
         page = self.request.GET.get('page')
         return paginator.get_page(page)
 
-    def paginate_page_range(self, total_pages: int, page_number: int) -> list[int, None]:
+    def paginate_page_range(self, total_pages: int, page_number: int) -> list[int]:
         """returns list of pages to display depending on what user's current page"""
         page_range_list = [1]  # first page is always exist
 

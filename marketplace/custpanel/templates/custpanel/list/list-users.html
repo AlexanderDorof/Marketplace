@@ -1,0 +1,58 @@
+{% load humanize %}
+{% load simple_tags %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Номер</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>Фото</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+    <tr>
+        <td>{{ forloop.counter|add:page }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.second_name }}</td>
+        <td>{{ item.surname }}</td>
+        <td>{{ item.age }}</td>
+        <td>
+            <div class="image-container"><img src="{{ item.photo.url }}" class="img-fluid"></div>
+        </td>
+        <td>
+            <button class="btn btn-info" id="expandButton_{{ forloop.counter }}"
+                    onclick="changeText_{{ forloop.counter }}()" data-bs-toggle="collapse"
+                    data-bs-target="#demo-{{ forloop.counter }}">
+                Развернуть
+            </button>
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="7">
+            <div id="demo-{{ forloop.counter }}" class="collapse">
+                <div><p><b>Дата регистрации</b>: {{ item.date_registration }}</p></div>
+                <div><p><b>В черном списке</b>: {{ item.blacklist|yesno:"Да,Нет" }}</p></div>
+                <div><p><b>Продано транспортных средств</b>: {{ item.sold }}</p></div>
+                <div class="row">
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:edit_user' item.pk|django_user %}"
+                           class="btn btn-primary">Редактировать профиля
+                        </a>
+                    </div>
+                    <div class="col-xl">
+                        <a href="{% url 'admin-panel:delete_user' item.pk|django_user %}"
+                           class="btn btn-danger">Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
