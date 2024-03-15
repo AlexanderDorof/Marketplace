@@ -1,5 +1,5 @@
-import time
 import smtplib as smtp
+import time
 
 from django.core.mail import send_mail, BadHeaderError
 from celery.utils.log import get_task_logger
@@ -12,6 +12,7 @@ logger = get_task_logger(__name__)
 
 @app.task
 def send_email_task(subject, message, RECIPIENT_EMAILS):
+    """sends email using built in django send_mail method"""
     time.sleep(5)
     logger.info(f'from={DEFAULT_FROM_EMAIL}, {RECIPIENT_EMAILS=}, {subject=}, {message=}')
     try:
@@ -27,6 +28,7 @@ def send_email_task(subject, message, RECIPIENT_EMAILS):
 
 @app.task
 def send_email_task_smtp(subject, email_text, recipient_email):
+    """sends email using built-in python smtp module"""
     login_email = DEFAULT_FROM_EMAIL
     password = EMAIL_HOST_PASSWORD
 

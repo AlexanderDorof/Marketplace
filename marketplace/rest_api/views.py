@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 
-from main_app.models import Car, Motocycle, Service, User
 from .serializers import CarSerializer, MotorcycleSerializer, ServiceSerializer, UserSerializer
+from main_app.models import Car, Motocycle, Service, User
 
 
 # CAR

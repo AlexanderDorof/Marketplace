@@ -1,7 +1,6 @@
-from django import forms
+from django.forms import FileInput, NumberInput, TextInput
 from django.contrib.auth.models import User, Group
-from django.forms import FileInput, NumberInput, TextInput, PasswordInput
-from icecream import ic
+from django import forms
 
 from main_app.models import User as CustomUser
 from main_app.models import Favorite
@@ -22,7 +21,6 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password_repeat']
 
     def save(self, password, *, commit=True):
-        ic()
         user = super().save(commit=False)
         if commit:
             user.set_password(password)
@@ -49,25 +47,17 @@ class ProfileForm(forms.ModelForm):
 
 class ProfilePasswordForm(forms.ModelForm):
     username = forms.CharField(max_length=50, label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password_first = forms.CharField(label='Пароль',required=False, widget=forms.PasswordInput(
+    password_first = forms.CharField(label='Пароль', required=False, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
-    password_repeat = forms.CharField(label='Повторите пароль',required=False, widget=forms.PasswordInput(
+    password_repeat = forms.CharField(label='Повторите пароль', required=False, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'value': '', 'placeholder': 'password'}))
+
     class Meta:
         model = User
         fields = ('username', 'password_first', 'password_repeat')
-
-
 
     def clean_password_repeat(self):
         cd = self.cleaned_data
         if cd['password_first'] != cd['password_repeat']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password_repeat']
-
-    # def save(self, **kwargs):
-    #     user = super().save(commit=False)
-    #     username = kwargs.pop('username', None)
-    #     password = kwargs.pop('password', None)
-    #
-    #     return user

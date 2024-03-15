@@ -1,9 +1,8 @@
 from django.test import TestCase
-
-from django.test import TestCase
-from .models import *
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
+
+from .models import Car, Favorite, User
 
 
 class CarTestCase(TestCase):
