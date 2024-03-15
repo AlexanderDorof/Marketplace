@@ -99,5 +99,6 @@ class FavoriteList(LoginRequiredMixin, DataMixin, PaginationMixin, ListView):
 
 
 def pageNotFoundRedirect(request, exception):
-    context = funcmixin(request, title='Страница не найдена')
-    return render(request, 'main_app/404.html',context=context, status=404)
+    context = funcmixin(request, title='Страница не найдена', message=exception)
+    print(exception)
+    return render(request, 'main_app/404.html', context=context, status=404)

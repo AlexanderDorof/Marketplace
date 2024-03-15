@@ -3,9 +3,13 @@
 {% block content %}
 <main>
     <div class="container">
-        <h3 class='about-us' id='description'>Что-то пошло не так....</h3>
+        <h3 class='about-us' id='description'>ОЙ! Что-то пошло не так....</h3>
         <p class='description'>
-            Данная страница не найдена :(
+            {% if message %}
+                {{ message }}
+            {% else %}
+                Данная страница не найдена :(
+            {% endif %}
         </p>
 
     </div>
