@@ -13,16 +13,16 @@ class DataMixin:
         django_user_pk, django_user"""
         context = kwargs
         if self.request.user.is_authenticated:
-            group_queryset = self.request.user.groups.values('name')
-            group = group_queryset[0]['name']
-            context['is_authenticated'] = self.request.user.is_authenticated
-            context['is_moderator'] = group in ('moderator', 'admin')
-            context['is_admin'] = group in ('admin',)
-            context['username'] = self.request.user.username
+            group_queryset = self.request.user.groups.values("name")
+            group = group_queryset[0]["name"]
+            context["is_authenticated"] = self.request.user.is_authenticated
+            context["is_moderator"] = group in ("moderator", "admin")
+            context["is_admin"] = group in ("admin",)
+            context["username"] = self.request.user.username
             pk = self.request.user.pk
             user = User.objects.get(user_django__pk=pk)
-            context['django_user_pk'] = user.pk
-            context['django_user'] = user
+            context["django_user_pk"] = user.pk
+            context["django_user"] = user
         return context
 
 
@@ -33,7 +33,7 @@ class PaginationMixin:
         """function excepts full queryset and return one page"""
         item_list = queryset
         paginator = Paginator(item_list, self.paginate_by)
-        page = self.request.GET.get('page')
+        page = self.request.GET.get("page")
         return paginator.get_page(page)
 
     def paginate_page_range(self, total_pages: int, page_number: int) -> list[int]:
@@ -57,13 +57,13 @@ def funcmixin(request, **kwargs) -> dict:
     user belong"""
     context = kwargs
     if request.user.is_authenticated:
-        group_queryset = request.user.groups.values('name')
-        group = group_queryset[0]['name']
-        context['is_authenticated'] = request.user.is_authenticated
-        context['is_moderator'] = group in ('moderator', 'admin')
-        context['is_admin'] = group in ('admin',)
-        context['username'] = request.user.username
+        group_queryset = request.user.groups.values("name")
+        group = group_queryset[0]["name"]
+        context["is_authenticated"] = request.user.is_authenticated
+        context["is_moderator"] = group in ("moderator", "admin")
+        context["is_admin"] = group in ("admin",)
+        context["username"] = request.user.username
         pk = request.user.pk
         user = User.objects.get(user_django__pk=pk)
-        context['django_user_pk'] = user.pk
+        context["django_user_pk"] = user.pk
     return context

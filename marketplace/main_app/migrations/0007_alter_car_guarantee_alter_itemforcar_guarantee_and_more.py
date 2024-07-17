@@ -4,35 +4,34 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main_app', '0006_car_guarantee_period_motocycle_guarantee_period_and_more'),
+        ("main_app", "0006_car_guarantee_period_motocycle_guarantee_period_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='car',
-            name='guarantee',
-            field=models.DateField(blank=True, verbose_name='Гарантийный срок'),
+            model_name="car",
+            name="guarantee",
+            field=models.DateField(blank=True, verbose_name="Гарантийный срок"),
         ),
         migrations.AlterField(
-            model_name='itemforcar',
-            name='guarantee',
-            field=models.DateField(blank=True, verbose_name='Гарантийный срок'),
+            model_name="itemforcar",
+            name="guarantee",
+            field=models.DateField(blank=True, verbose_name="Гарантийный срок"),
         ),
         migrations.AlterField(
-            model_name='itemformotorcycle',
-            name='guarantee',
-            field=models.DateField(blank=True, verbose_name='Гарантийный срок'),
+            model_name="itemformotorcycle",
+            name="guarantee",
+            field=models.DateField(blank=True, verbose_name="Гарантийный срок"),
         ),
         migrations.AlterField(
-            model_name='motocycle',
-            name='guarantee',
-            field=models.DateField(blank=True, verbose_name='Гарантийный срок'),
+            model_name="motocycle",
+            name="guarantee",
+            field=models.DateField(blank=True, verbose_name="Гарантийный срок"),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='guarantee',
-            field=models.DateField(blank=True, verbose_name='Гарантийный срок'),
+            model_name="service",
+            name="guarantee",
+            field=models.DateField(blank=True, verbose_name="Гарантийный срок"),
         ),
     ]

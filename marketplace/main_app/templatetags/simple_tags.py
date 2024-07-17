@@ -30,13 +30,13 @@ def in_favorite(obj: Model, pk: int) -> str:
     """tag return heart type whether item in favorite or not"""
     item_type = obj._meta.model_name
     user = User.objects.get(user_django__pk=pk)
-    if item_type == 'car':
+    if item_type == "car":
         if user.favorite.favorite_cars.filter(pk=obj.pk).exists():
-            return '/static_imgs/heart-icon.svg'
+            return "/static_imgs/heart-icon.svg"
         else:
-            return '/static_imgs/add-to-favorites-icon.svg'
-    elif item_type == 'motocycle':
+            return "/static_imgs/add-to-favorites-icon.svg"
+    elif item_type == "motocycle":
         if user.favorite.favorite_moto.filter(pk=obj.pk).exists():
-            return '/static_imgs/heart-icon.svg'
+            return "/static_imgs/heart-icon.svg"
         else:
-            return '/static_imgs/add-to-favorites-icon.svg'
+            return "/static_imgs/add-to-favorites-icon.svg"

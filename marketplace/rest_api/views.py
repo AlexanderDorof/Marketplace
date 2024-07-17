@@ -1,8 +1,14 @@
 from rest_framework import generics, permissions
+from rest_framework.pagination import LimitOffsetPagination
 
 from main_app.models import Car, Motocycle, Service, User
-from rest_framework.pagination import LimitOffsetPagination
-from .serializers import CarSerializer, MotorcycleSerializer, ServiceSerializer, UserSerializer
+
+from .serializers import (
+    CarSerializer,
+    MotorcycleSerializer,
+    ServiceSerializer,
+    UserSerializer,
+)
 
 
 # pagination
@@ -19,19 +25,16 @@ class CarListCreateView(generics.ListCreateAPIView):
     pagination_class = CustomPagination
 
 
-
 class CarDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = [permissions.AllowAny]
 
 
-
 class CarUpdateView(generics.UpdateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = [permissions.IsAuthenticated]
-
 
 
 class CarDeleteView(generics.DestroyAPIView):
@@ -68,6 +71,7 @@ class MotorcycleDeleteView(generics.DestroyAPIView):
 
 # SERVICES
 
+
 class ServiceListCreateView(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -79,7 +83,6 @@ class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     permission_classes = [permissions.AllowAny]
-
 
 
 class ServiceUpdateView(generics.UpdateAPIView):
@@ -106,4 +109,3 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-
