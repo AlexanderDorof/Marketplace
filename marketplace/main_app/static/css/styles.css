@@ -126,3 +126,7 @@ main {
 .container.mt-5 #contact{
   color: ghostwhite;
 }
+
+.row.align-items-center {
+    color: white;
+}
