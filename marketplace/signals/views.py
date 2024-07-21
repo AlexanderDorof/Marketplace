@@ -1,7 +1,6 @@
 import os
 
 from django.contrib.auth.models import User as DjangoUser
-from django.shortcuts import render
 from PIL import Image
 
 from marketplace.settings import BASE_DIR

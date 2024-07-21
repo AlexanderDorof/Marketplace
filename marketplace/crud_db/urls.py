@@ -1,6 +1,19 @@
 from django.urls import path
 
-from .views import *
+from .views import (
+    AddCar,
+    AddMoto,
+    CarDeleteView,
+    CarDetailView,
+    CarEditView,
+    CarsList,
+    MotoDeleteView,
+    MotoDetailView,
+    MotoEditView,
+    MotosList,
+    ServiceDetailView,
+    ServicesList,
+)
 
 urlpatterns = [
     # display all models

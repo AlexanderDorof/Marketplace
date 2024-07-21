@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import *
+from .views import FavoriteList, add_to_favorite, contacts, index, info
 
 urlpatterns = [
     path("", index, name="home"),

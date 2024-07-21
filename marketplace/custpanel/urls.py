@@ -1,6 +1,24 @@
 from django.urls import path
 
-from .views import *
+from .views import (
+    AddCar,
+    AddMoto,
+    AddService,
+    CarDeleteView,
+    CarEditView,
+    CarsList,
+    MotoDeleteView,
+    MotoEditView,
+    MotorcyclesList,
+    ServiceDeleteView,
+    ServiceEditView,
+    ServicesList,
+    UserDeleteView,
+    UserList,
+    admin_home,
+    delete_multiselect,
+    user_edit_view,
+)
 
 app_name = "admin-panel"
 
